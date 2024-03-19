@@ -1,8 +1,12 @@
-﻿using ProjetPompier_API.Logics.Modeles;
-using System.Text.RegularExpressions;
-
+﻿
+/// <summary>
+/// Namespace pour les classe de type DTOs.
+/// </summary>
 namespace ProjetPompier_API.Logics.DTOs
 {
+    /// <summary>
+    /// Classe représentant le DTO d'une caserne.
+    /// </summary>
     public class CaserneDTO
     {
         #region Proprietes

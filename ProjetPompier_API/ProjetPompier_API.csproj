@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <Folder Include="Logics\Controleurs\" />
-    <Folder Include="Logics\Exceptions\" />
   </ItemGroup>
 
 </Project>

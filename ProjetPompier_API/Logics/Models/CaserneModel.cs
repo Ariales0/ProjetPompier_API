@@ -1,13 +1,38 @@
-﻿namespace ProjetPompier_API.Logics.Modeles
+﻿/// <summary>
+/// Namespace pour les classe de type Models.
+/// </summary>
+namespace ProjetPompier_API.Logics.Models
 {
+    /// <summary>
+    /// Classe représentant un repository.
+    /// </summary>
     public class CaserneModel
     {
         #region AttributsProprietes
 
+        /// <summary>
+        /// Attribut représentant le nom de la caserne.
+        /// </summary>
         private string nom;
+
+        /// <summary>
+        /// Attribut représentant le adresse de la caserne.
+        /// </summary>
         private string adresse;
+
+        /// <summary>
+        /// Attribut représentant le ville de la caserne.
+        /// </summary>
         private string ville;
+
+        /// <summary>
+        /// Attribut représentant le province de la caserne.
+        /// </summary>
         private string province;
+
+        /// <summary>
+        /// Attribut représentant le telephone de la caserne.
+        /// </summary>
         private string telephone;
 
         #endregion AttributsProprietes
