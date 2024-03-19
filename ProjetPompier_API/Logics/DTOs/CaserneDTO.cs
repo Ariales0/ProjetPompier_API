@@ -1,7 +1,7 @@
 ﻿using ProjetPompier_API.Logics.Modeles;
 using System.Text.RegularExpressions;
 
-namespace ProjetPompier_API.Logics.DAOs
+namespace ProjetPompier_API.Logics.DTOs
 {
     public class CaserneDTO
     {
