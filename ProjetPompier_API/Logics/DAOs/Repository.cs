@@ -3,7 +3,7 @@
 /// <summary>
 /// Namespace pour les classe de type DAO.
 /// </summary>
-namespace TPCegepAPI.Logics.DAOs
+namespace ProjetPompier_API.Logics.DAOs
 {
     /// <summary>
     /// Classe représentant un repository.
