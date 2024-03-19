@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34607.119
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjetPompier_API", "ProjetPompier_API\ProjetPompier_API.csproj", "{8446F442-4057-419F-A789-B40571B90472}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8446F442-4057-419F-A789-B40571B90472}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8446F442-4057-419F-A789-B40571B90472}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8446F442-4057-419F-A789-B40571B90472}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8446F442-4057-419F-A789-B40571B90472}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {30AFE89F-0D1A-4F0C-BA77-3BC4FD7A0594}
+	EndGlobalSection
+EndGlobal
