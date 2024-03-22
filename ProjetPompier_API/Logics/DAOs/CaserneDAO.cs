@@ -58,7 +58,7 @@ namespace ProjetPompier_API.Logics.DAOs
         public List<CaserneDTO> ObtenirListeCaserne()
         {
             SqlCommand command = new SqlCommand(" SELECT * " +
-                                                "   FROM Casernes ", connexion);
+                                                "   FROM T_Casernes ", connexion);
 
             List<CaserneDTO> liste = new List<CaserneDTO>();
 
@@ -91,11 +91,11 @@ namespace ProjetPompier_API.Logics.DAOs
         /// <returns>Le ID de la caserne.</returns>
         public int ObtenirIdCaserne(string nomCaserne)
         {
-            SqlCommand command = new SqlCommand(" SELECT Id " +
-                                                "   FROM Casernes " +
+            SqlCommand command = new SqlCommand(" SELECT IdCaserne " +
+                                                "   FROM T_Casernes " +
                                                 "  WHERE Nom = @nom ", connexion);
 
-            SqlParameter nomCaserneParam = new SqlParameter("@nom", SqlDbType.VarChar, 50);
+            SqlParameter nomCaserneParam = new SqlParameter("@nom", SqlDbType.VarChar, 100);
 
             nomCaserneParam.Value = nomCaserne;
 
@@ -108,7 +108,7 @@ namespace ProjetPompier_API.Logics.DAOs
                 OuvrirConnexion();
                 SqlDataReader reader = command.ExecuteReader();
                 reader.Read();
-                id = reader.GetInt16(0);
+                id = reader.GetInt32(0);
                 reader.Close();
                 return id;
             }
@@ -130,10 +130,10 @@ namespace ProjetPompier_API.Logics.DAOs
         public CaserneDTO ObtenirCaserne(string nomCaserne)
         {
             SqlCommand command = new SqlCommand(" SELECT * " +
-                                                " FROM Casernes " +
+                                                " FROM T_Casernes " +
                                                 " WHERE nom = @nom ", connexion);
 
-            SqlParameter nomCaserneParam = new SqlParameter("@nom", SqlDbType.VarChar, 50);
+            SqlParameter nomCaserneParam = new SqlParameter("@nom", SqlDbType.VarChar, 100);
 
             nomCaserneParam.Value = nomCaserne;
 
@@ -168,12 +168,12 @@ namespace ProjetPompier_API.Logics.DAOs
         {
             SqlCommand command = new SqlCommand(null, connexion);
 
-            command.CommandText = " INSERT INTO Casernes (Nom, Adresse, Ville, Province, Telephone) " +
+            command.CommandText = " INSERT INTO T_Casernes (Nom, Adresse, Ville, Province, Telephone) " +
                                   " VALUES (@nom, @adresse, @ville, @province, @telephone) ";
 
-            SqlParameter nomParam = new SqlParameter("@nom", SqlDbType.VarChar, 50);
-            SqlParameter adresseParam = new SqlParameter("@adresse", SqlDbType.VarChar, 100);
-            SqlParameter villeParam = new SqlParameter("@ville", SqlDbType.VarChar, 75);
+            SqlParameter nomParam = new SqlParameter("@nom", SqlDbType.VarChar, 100);
+            SqlParameter adresseParam = new SqlParameter("@adresse", SqlDbType.VarChar, 200);
+            SqlParameter villeParam = new SqlParameter("@ville", SqlDbType.VarChar, 100);
             SqlParameter provinceParam = new SqlParameter("@province", SqlDbType.VarChar, 50);
             SqlParameter telephoneParam = new SqlParameter("@telephone", SqlDbType.VarChar, 12);
 
@@ -215,16 +215,16 @@ namespace ProjetPompier_API.Logics.DAOs
         {
             SqlCommand command = new SqlCommand(null, connexion);
 
-            command.CommandText = " UPDATE Casernes " +
+            command.CommandText = " UPDATE T_Casernes " +
                                      " SET Adresse = @adresse, " +
                                      "     Ville = @ville, " +
                                      "     Province = @province, " +
                                      "     Telephone = @telephone " +
                                    " WHERE Nom = @nom ";
 
-            SqlParameter nomParam = new SqlParameter("@nom", SqlDbType.VarChar, 50);
-            SqlParameter adresseParam = new SqlParameter("@adresse", SqlDbType.VarChar, 100);
-            SqlParameter villeParam = new SqlParameter("@ville", SqlDbType.VarChar, 75);
+            SqlParameter nomParam = new SqlParameter("@nom", SqlDbType.VarChar, 100);
+            SqlParameter adresseParam = new SqlParameter("@adresse", SqlDbType.VarChar, 200);
+            SqlParameter villeParam = new SqlParameter("@ville", SqlDbType.VarChar, 100);
             SqlParameter provinceParam = new SqlParameter("@province", SqlDbType.VarChar, 50);
             SqlParameter telephoneParam = new SqlParameter("@telephone", SqlDbType.VarChar, 12);
 
@@ -267,8 +267,8 @@ namespace ProjetPompier_API.Logics.DAOs
             SqlCommand command = new SqlCommand(null, connexion);
 
             command.CommandText = " DELETE " +
-                                    " FROM Casernes " +
-                                   " WHERE Id = @id ";
+                                    " FROM T_Casernes " +
+                                   " WHERE IdCaserne = @id ";
 
             SqlParameter idParam = new SqlParameter("@id", SqlDbType.Int);
 
@@ -309,7 +309,7 @@ namespace ProjetPompier_API.Logics.DAOs
         {
             SqlCommand command = new SqlCommand(null, connexion);
 
-            command.CommandText = " DELETE FROM Casernes";
+            command.CommandText = " DELETE FROM T_Casernes";
             try
             {
                 OuvrirConnexion();
