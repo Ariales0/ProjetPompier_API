@@ -108,7 +108,7 @@ namespace ProjetPompier_API.Logics.DAOs
                 OuvrirConnexion();
                 SqlDataReader reader = command.ExecuteReader();
                 reader.Read();
-                id = reader.GetInt32(0);
+                id = reader.GetInt16(0);
                 reader.Close();
                 return id;
             }

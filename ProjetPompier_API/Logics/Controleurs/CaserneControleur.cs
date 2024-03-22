@@ -130,7 +130,7 @@ namespace ProjetPompier_API.Logics.Controleurs
         public void SupprimerCaserne(string nomCaserne)
         {
             CaserneDTO CaserneDTOBD = ObtenirCaserne(nomCaserne);
-            CaserneRepository.Instance.SupprimerCaserne(CaserneDTOBD);
+            CaserneRepository.Instance.SupprimerCaserne(CaserneDTOBD.Nom);
         }
 
         /// <summary>
