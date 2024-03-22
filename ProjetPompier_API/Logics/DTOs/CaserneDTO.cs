@@ -1,4 +1,4 @@
-﻿
+﻿using ProjetPompier_API.Logics.Modeles;
 /// <summary>
 /// Namespace pour les classe de type DTOs.
 /// </summary>
@@ -60,18 +60,18 @@ namespace ProjetPompier_API.Logics.DTOs
             Telephone = telephone;
         }
 
-        ///// <summary>
-        ///// Constructeur avec le modèle CaserneModel en paramètre.
-        ///// </summary>
-        ///// <param name="laCaserne">L'objet du modèle CaserneModel.</param>
-        //public CaserneDTO(CaserneModel laCaserne)
-        //{
-        //    Nom = laCaserne.Nom;
-        //    Adresse = laCaserne.Adresse;
-        //    Ville = laCaserne.Ville;
-        //    Province = laCaserne.Province;
-        //    Telephone = laCaserne.Telephone;
-        //}
+        /// <summary>
+        /// Constructeur avec le modèle CaserneModel en paramètre.
+        /// </summary>
+        /// <param name="laCaserne">L'objet du modèle CaserneModel.</param>
+        public CaserneDTO(CaserneModel laCaserne)
+        {
+            Nom = laCaserne.Nom;
+            Adresse = laCaserne.Adresse;
+            Ville = laCaserne.Ville;
+            Province = laCaserne.Province;
+            Telephone = laCaserne.Telephone;
+        }
 
         #endregion Constructeurs
     }
