@@ -262,7 +262,7 @@ namespace ProjetPompier_API.Logics.DAOs
         /// Méthode de service permettant de supprimer une caserne.
         /// </summary>
         /// <param name="caserneDTO">Le DTO d'une caserne.</param>
-        public bool SupprimerCaserne(CaserneDTO caserneDTO)
+        public bool SupprimerCaserne(string nomCaserne)
         {
             SqlCommand command = new SqlCommand(null, connexion);
 
@@ -272,7 +272,7 @@ namespace ProjetPompier_API.Logics.DAOs
 
             SqlParameter idParam = new SqlParameter("@id", SqlDbType.Int);
 
-            idParam.Value = ObtenirIdCaserne(caserneDTO.Nom);
+            idParam.Value = ObtenirIdCaserne(nomCaserne);
 
             command.Parameters.Add(idParam);
 
