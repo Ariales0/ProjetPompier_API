@@ -194,17 +194,17 @@ namespace ProjetPompier_API.Logics.DAOs
                 OuvrirConnexion();
                 command.Prepare();
                 command.ExecuteNonQuery();
+                return true;
             }
             catch (Exception ex)
             {
                 throw new DBUniqueException("Erreur lors de l'ajout d'une caserne...", ex);
+                return false;
             }
             finally
             {
                 FermerConnexion();
             }
-
-            return true;
         }
 
         /// <summary>

@@ -1,7 +1,7 @@
 ﻿/// <summary>
 /// Namespace pour les classe de type Models.
 /// </summary>
-namespace ProjetPompier_API.Logics.Modeles
+namespace ProjetPompier_API.Logics.Models
 {
     /// <summary>
     /// Classe représentant un repository.

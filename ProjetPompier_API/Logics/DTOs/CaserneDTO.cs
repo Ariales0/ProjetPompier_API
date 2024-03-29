@@ -1,4 +1,4 @@
-﻿using ProjetPompier_API.Logics.Modeles;
+﻿using ProjetPompier_API.Logics.Models;
 /// <summary>
 /// Namespace pour les classe de type DTOs.
 /// </summary>
