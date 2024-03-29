@@ -26,7 +26,7 @@ namespace ProjetPompier_API.Logics.Models
                 if (value.Length <= 100)
                     nom = value;
                 else
-                    throw new Exception("Le nom de la Caserne doit avoir un maximum de 50 caractères.");
+                    throw new Exception("Le nom de la Caserne doit avoir un maximum de 100 caractères.");
             }
         }
 
@@ -46,7 +46,7 @@ namespace ProjetPompier_API.Logics.Models
                 if (value.Length <= 200)
                     nom = value;
                 else
-                    throw new Exception("L'adresse de la Caserne doit avoir un maximum de 100 caractères.");
+                    throw new Exception("L'adresse de la Caserne doit avoir un maximum de 200 caractères.");
             }
         }
 
@@ -66,7 +66,7 @@ namespace ProjetPompier_API.Logics.Models
                 if (value.Length <= 100)
                     nom = value;
                 else
-                    throw new Exception("La ville de la Caserne doit avoir un maximum de 75 caractères.");
+                    throw new Exception("La ville de la Caserne doit avoir un maximum de 100 caractères.");
             }
         }
 
@@ -106,7 +106,7 @@ namespace ProjetPompier_API.Logics.Models
                 if (value.Length <= 12)
                     nom = value;
                 else
-                    throw new Exception("Le telephone de la Caserne doit avoir un maximum de 50 caractères.");
+                    throw new Exception("Le telephone de la Caserne doit avoir un maximum de 12 caractères.");
             }
         }
 
