@@ -10,7 +10,7 @@ using ProjetPompier_API.Logics.Exceptions;
 namespace ProjetPompier_API.Logics.DAOs
 {
     /// <summary>
-    /// Classe représentant le répository d'une caserne.
+    /// Classe représentant le répository d'un pompier.
     /// </summary>
     public class PompierRepository : Repository
     {
@@ -75,7 +75,7 @@ namespace ProjetPompier_API.Logics.DAOs
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    PompierDTO pompierDTO = new PompierDTO(reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5));
+                    PompierDTO pompierDTO = new PompierDTO(reader.GetInt32(1), reader.GetString(2), reader.GetString(3), reader.GetString(4));
                     liste.Add(pompierDTO);
                 }
                 reader.Close();
