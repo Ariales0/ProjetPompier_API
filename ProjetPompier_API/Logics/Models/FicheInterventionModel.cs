@@ -1,0 +1,123 @@
+﻿/// <summary>
+/// Namespace pour les classe de type Models.
+/// </summary>
+namespace ProjetPompier_API.Logics.Models
+{
+    /// <summary>
+    /// Classe représentant un repository.
+    /// </summary>
+    public class FicheInterventionModel
+    {
+        #region AttributsProprietes
+        /// <summary>
+        /// Attribut représentant la date et l'heure de l'intervention.
+        /// </summary>
+        private string dateTemps;
+        /// <summary>
+        /// Propriété représentant la date et l'heure de l'intervention.
+        /// </summary>
+        public string DateTemps
+        {
+            get { return dateTemps; }
+            set { dateTemps = value; }
+        }
+
+        /// <summary>
+        /// Attribut représentant l'adresse de l'intervention.
+        /// </summary>
+        private string adresse;
+        /// <summary>
+        /// Propriété représentant l'adresse de l'intervention.
+        /// </summary>
+        public string Adresse {
+            get { return adresse; }
+            set
+            {
+                if (value.Length <= 200)
+                    adresse = value;
+                else
+                    throw new Exception("L'adresse de l'intervention doit avoir un maximum de 200 caractères.");
+            }
+        }
+
+        /// <summary>
+        /// Attribut représentant le type d'intervention.
+        /// </summary>
+        private string typeIntervention;
+        /// <summary>
+        /// Propriété représentant le type d'intervention.
+        /// </summary>
+        public string TypeIntervention {
+            get { return typeIntervention; }
+            set
+            {
+                if (value.Length <= 50)
+                    typeIntervention = value;
+                else
+                    throw new Exception("Le type d'intervention doit avoir un maximum de 50 caractères.");
+            }
+        }
+
+        /// <summary>
+        /// Attribut représentant le resumé de l'intervention.
+        /// </summary>
+        private string resume;
+        /// <summary>
+        /// Propriété représentant le resumé de l'intervention.
+        /// </summary>
+        public string Resume {
+            get { return resume; }
+            set
+            {
+                if (value.Length <= 500)
+                    resume = value;
+                else
+                    throw new Exception("Le resumé de l'intervention doit avoir un maximum de 500 caractères.");
+            }
+        }
+
+        /// <summary>
+        /// Attribut représentant le matricule du pompier capitaine.
+        /// </summary>
+        private int matriculeCapitaine;
+        /// <summary>
+        /// Propriété représentant le matricule du pompier capitaine.
+        /// </summary>
+        public int MatriculeCapitaine
+        {
+            get { return matriculeCapitaine; }
+            set
+            {
+                string matriculeStr = value.ToString();
+                if (matriculeStr.Length <= 6)
+                    matriculeCapitaine = value;
+                else
+                    throw new Exception("Le matricule du pompier capitaine doit contenir six chiffres, mettre des 0 si vide");
+            }
+        }
+
+
+        #endregion AttributsProprietes
+
+        #region Constructeurs
+
+        /// <summary>
+        /// Constructeur paramétré
+        /// </summary>
+        /// <param name="dateTemps">Date et heure de l'intervention</param>
+        /// <param name="adresse">Adresse de l'intervention</param>
+        /// <param name="typeIntervention">Type d'intervention</param>
+        /// <param name="resume">Resumé de l'intervention</param>
+        /// <param name="matriculeCapitaine">Matricule du pompier capitaine</param>
+        public FicheInterventionModel(string dateTemps = "1999-01-01 00:00:00", string adresse = "", string typeIntervention = "", string resume = "", int matriculeCapitaine = 000000)
+        {
+            DateTemps = dateTemps;
+            Adresse = adresse;
+            TypeIntervention = typeIntervention;
+            Resume = resume;
+            MatriculeCapitaine = matriculeCapitaine;
+        }
+
+        #endregion Constructeurs
+    }
+}

@@ -114,7 +114,8 @@ namespace ProjetPompier_API.Logics.DAOs
             command.CommandText = " INSERT INTO T_FichesIntervention " +
                                   "(DateTemps, Adresse, TypeIntervention, Resume, IdPompier, IdCaserne)" +
                                   "SELECT @dateTemps, @adresse, @typeIntervention, @resume, T_Pompiers.IdPompier, T_Casernes.IdCaserne" +
-                                  "FROM T_Pompiers, T_Casernes\r\nWHERE T_Pompiers.Matricule = @matricule AND T_Casernes.Nom = @nomCaserne;";
+                                  "FROM T_Pompiers, T_Casernes" +
+                                  "WHERE T_Pompiers.Matricule = @matricule AND T_Casernes.Nom = @nomCaserne;";
 
             SqlParameter dateTempsParam = new SqlParameter("@dateTemps", SqlDbType.DateTime);
             SqlParameter adresseParam = new SqlParameter("@adresse", SqlDbType.VarChar, 200);

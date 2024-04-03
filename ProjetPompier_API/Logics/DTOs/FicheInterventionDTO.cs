@@ -53,7 +53,7 @@ namespace ProjetPompier_API.Logics.DTOs
         /// <param name="typeIntervention">Type d'intervention</param>
         /// <param name="resume">Resumé de l'intervention</param>
         /// <param name="matriculeCapitaine">Matricule du pompier capitaine</param>
-        public FicheInterventionDTO(string dateTemps="1999-01-01", string adresse="", string typeIntervention="",string resume="", int matriculeCapitaine = 000000)
+        public FicheInterventionDTO(string dateTemps="1999-01-01 00:00:00", string adresse="", string typeIntervention="",string resume="", int matriculeCapitaine = 000000)
         {
             DateTemps=dateTemps;
             Adresse=adresse;
