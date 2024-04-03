@@ -67,7 +67,7 @@ namespace ProjetPompier_API.Logics.DAOs
 
             command.Parameters.Add(idParam);
 
-            List<CaserneDTO> liste = new List<CaserneDTO>();
+            List<PompierDTO> liste = new List<PompierDTO>();
 
             try
             {
