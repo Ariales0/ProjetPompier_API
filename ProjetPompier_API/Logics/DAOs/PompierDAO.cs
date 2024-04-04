@@ -59,7 +59,7 @@ namespace ProjetPompier_API.Logics.DAOs
         public List<PompierDTO> ObtenirListePompier(string nomCaserne)
         {
             SqlCommand command = new SqlCommand(" SELECT * " +
-                                                "   FROM T_Pompier WHERE IdCasere=@id ", connexion);
+                                                "   FROM T_Pompiers WHERE IdCaserne=@id ", connexion);
 
             SqlParameter idParam = new SqlParameter("@id", SqlDbType.Int);
 

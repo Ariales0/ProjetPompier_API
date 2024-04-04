@@ -12,7 +12,7 @@ namespace ProjetPompier_API.Controllers
     /// <summary>
     /// Classe représentant le controleur de l'API'.
     /// </summary>
-    [ApiController]
+    
     public class InterventionController : Controller
     {
         #region AttributsProprietes
@@ -62,7 +62,7 @@ namespace ProjetPompier_API.Controllers
         /// <param name="adresse">Adresse de l'intervention</param>
         /// <param name="resume">Resumé de l'intervention</param>
         /// <param name="matriculeCapitaine">Matricule du Capitaine de l'intervention</param>
-        /// [Route("Intervention/ObtenirListeFicheIntervention")]
+        [Route("Intervention/OuvrirFicheIntervention")]
         [HttpPost]
         public void OuvrirFicheIntervention(string nomCaserne, string dateTemps, string typeIntervention, string adresse, string resume, int matriculeCapitaine)
         {

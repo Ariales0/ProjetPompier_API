@@ -89,7 +89,7 @@ namespace ProjetPompier_API.Logics.Controleurs
             }
             catch (Exception)
             {
-                throw new Exception("Erreur - La caserne est déjà existant.");
+                throw new Exception("Erreur - Une fiche d'intervention existe deja a cette date.");
             }
         }
 

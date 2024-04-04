@@ -11,7 +11,6 @@ namespace ProjetPompier_API.Controllers
     /// <summary>
     /// Classe représentant le controleur de l'API'.
     /// </summary>
-    [ApiController]
     public class PompierController : Controller
     {
         #region AttributsProprietes

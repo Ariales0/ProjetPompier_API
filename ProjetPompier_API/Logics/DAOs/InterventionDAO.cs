@@ -70,9 +70,17 @@ namespace ProjetPompier_API.Logics.DAOs
                                                         "INNER JOIN T_Pompiers " +
                                                         "ON T_FichesIntervention.IdPompier=T_Pompiers.IdPompier" +
 
-                                                        " WHERE T_Casernes.Nom='Test' " +
-                                                        "AND T_Pompiers.Matricule=154456; ", connexion);
+                                                        " WHERE T_Casernes.Nom=@nomCaserne " +
+                                                        "AND T_Pompiers.Matricule=@matriculeCapitaine; ", connexion);
 
+            SqlParameter matriculeParam = new SqlParameter("@matriculeCapitaine", SqlDbType.Int, 6);
+            SqlParameter nomCaserneParam = new SqlParameter("@nomCaserne", SqlDbType.VarChar, 100);
+
+            matriculeParam.Value = matriculeCapitaine;
+            nomCaserneParam.Value = nomCaserne;
+
+            command.Parameters.Add(matriculeParam);
+            command.Parameters.Add(nomCaserneParam);
 
             List<FicheInterventionDTO> liste = new List<FicheInterventionDTO>();
 
@@ -82,7 +90,9 @@ namespace ProjetPompier_API.Logics.DAOs
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    FicheInterventionDTO ficheInterventionDTO = new FicheInterventionDTO(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4));
+                    DateTime dateTempsIntervention = reader.GetDateTime(0);
+                    string dateTempsInterventionSTR = dateTempsIntervention.ToString();
+                    FicheInterventionDTO ficheInterventionDTO = new FicheInterventionDTO(dateTempsInterventionSTR, reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4));
                     liste.Add(ficheInterventionDTO);
                 }
                 reader.Close();
@@ -112,9 +122,9 @@ namespace ProjetPompier_API.Logics.DAOs
             SqlCommand command = new SqlCommand(null, connexion);
 
             command.CommandText = " INSERT INTO T_FichesIntervention " +
-                                  "(DateTemps, Adresse, TypeIntervention, Resume, IdPompier, IdCaserne)" +
-                                  "SELECT @dateTemps, @adresse, @typeIntervention, @resume, T_Pompiers.IdPompier, T_Casernes.IdCaserne" +
-                                  "FROM T_Pompiers, T_Casernes" +
+                                  "(DateTemps, Adresse, TypeIntervention, Resume, IdPompier, IdCaserne) " +
+                                  "SELECT @dateTemps, @adresse, @typeIntervention, @resume, T_Pompiers.IdPompier, T_Casernes.IdCaserne " +
+                                  "FROM T_Pompiers, T_Casernes " +
                                   "WHERE T_Pompiers.Matricule = @matricule AND T_Casernes.Nom = @nomCaserne;";
 
             SqlParameter dateTempsParam = new SqlParameter("@dateTemps", SqlDbType.DateTime);
