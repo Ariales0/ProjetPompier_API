@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProjetPompier_API.Logics.Controleurs;
 using ProjetPompier_API.Logics.DAOs;
 using ProjetPompier_API.Logics.DTOs;
 
@@ -22,7 +23,7 @@ namespace ProjetPompier_API.Controllers
         [HttpGet]
         public List<CaserneDTO> ObtenirListeCaserne()
         {
-            return CaserneRepository.Instance.ObtenirListeCaserne();
+            return CaserneControleur.Instance.ObtenirListeCaserne();
         }
 
         /// <summary>
@@ -34,7 +35,7 @@ namespace ProjetPompier_API.Controllers
         [HttpGet]
         public CaserneDTO ObtenirCaserne([FromQuery]string nomCaserne)
         {
-            return CaserneRepository.Instance.ObtenirCaserne(nomCaserne);
+            return CaserneControleur.Instance.ObtenirCaserne(nomCaserne);
         }
 
         /// <summary>
@@ -44,8 +45,8 @@ namespace ProjetPompier_API.Controllers
         [Route("Caserne/AjouterCaserne")]
         [HttpPost]
         public void AjouterCaserne ([FromBody]CaserneDTO caserneDTO) 
-        { 
-            CaserneRepository.Instance.AjouterCaserne(caserneDTO);
+        {
+            CaserneControleur.Instance.AjouterCaserne(caserneDTO);
         }
 
         /// <summary>
@@ -56,7 +57,7 @@ namespace ProjetPompier_API.Controllers
         [HttpPost]
         public void ModifierCaserne([FromBody] CaserneDTO caserneDTO)
         {
-            CaserneRepository.Instance.ModifierCaserne(caserneDTO);
+            CaserneControleur.Instance.ModifierCaserne(caserneDTO);
         }
 
         /// <summary>
@@ -67,7 +68,7 @@ namespace ProjetPompier_API.Controllers
         [HttpPost]
         public void SupprimerCaserne([FromQuery] string nomCaserne)
         {
-            CaserneRepository.Instance.SupprimerCaserne(nomCaserne);
+            CaserneControleur.Instance.SupprimerCaserne(nomCaserne);
         }
 
         /// <summary>
@@ -77,7 +78,7 @@ namespace ProjetPompier_API.Controllers
         [HttpPost]
         public void ViderListeCaserne()
         {
-            CaserneRepository.Instance.ViderListeCaserne();
+            CaserneControleur.Instance.ViderListeCaserne();
         }
     }
 }
