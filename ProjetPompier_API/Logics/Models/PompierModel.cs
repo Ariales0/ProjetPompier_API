@@ -82,7 +82,7 @@ namespace ProjetPompier_API.Logics.Models
                     throw new Exception("Le prennom du pompier doit avoir un maximum de 100 caractères.");
             }
         }
-        
+
 
         #endregion AttributsProprietes
 
@@ -91,11 +91,10 @@ namespace ProjetPompier_API.Logics.Models
         /// <summary>
         /// Constructeur paramétré
         /// </summary>
-        /// <param name="unNom">Le nom d'une caserne</param>
-        /// <param name="uneAdresse">L'adresse d'une caserne</param>
-        /// <param name="uneVille">La ville d'une caserne</param>
-        /// <param name="uneProvince">La province d'une caserne</param>
-        /// <param name="unTelephone">Le téléphone d'une caserne</param>
+        /// <param name="matricule">Matricule du pompier</param>
+        /// <param name="grade">Grade du pompier</param>
+        /// <param name="nom">Nom du pompier</param>
+        /// <param name="prenom">Prenom du pompier</param>
         public PompierModel(int unMatricule = 000000, string unGrade = "", string unNom = "", string unPrenom = "")
         {
             Matricule = unMatricule;
