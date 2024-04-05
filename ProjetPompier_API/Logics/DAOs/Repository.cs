@@ -25,17 +25,19 @@ namespace ProjetPompier_API.Logics.DAOs
         /// </summary>
         protected Repository()
         {
-            connexion = new SqlConnection("Server=127.0.0.1; Database=ProjetPompier; User Id=quentin; Password=password;");
-        }
+			//connexion = new SqlConnection("Server=127.0.0.1; Database=ProjetPompier; User Id=quentin; Password=password;");
+			connexion = new SqlConnection("Server=127.0.0.1; Database=Caserne; User Id=vincent; Password=Patate123;");
 
-        #endregion Constructeurs
+		}
 
-        #region MethodesService
+		#endregion Constructeurs
 
-        /// <summary>
-        /// Méthode permettant d'ouvrir la connexion.
-        /// </summary>
-        protected void OuvrirConnexion()
+		#region MethodesService
+
+		/// <summary>
+		/// Méthode permettant d'ouvrir la connexion.
+		/// </summary>
+		protected void OuvrirConnexion()
         {
             connexion.Open();
         }
