@@ -57,17 +57,39 @@ namespace ProjetPompier_API.Logics.Controleurs
         public List<PompierDTO> ObtenirListePompier(string nomCaserne, bool seulementCapitaine)
         {
             List<PompierDTO> listePompierDTO = PompierRepository.Instance.ObtenirListePompier(nomCaserne);
-            List<PompierModel> listePompier = new List<PompierModel>();
-
-            foreach (PompierDTO pompier in listePompierDTO)
+            if (seulementCapitaine)
             {
-                listePompier.Add(new PompierModel(pompier.Matricule, pompier.Grade, pompier.Nom, pompier.Prenom));
-            }
+                List<PompierDTO> listePompierCapitaineDTO = new List<PompierDTO>();
+                List<PompierModel> listePompierCapitaine = new List<PompierModel>();
 
-            if (listePompier.Count == listePompierDTO.Count)
-                return listePompierDTO;
-            else
-                throw new Exception("Erreur lors du chargement des pompiers de la caserne, problème avec l'intégrité des données de la base de données.");
+                foreach (PompierDTO pompier in listePompierDTO)
+                {
+                    if(pompier.Grade=="Capitaine")
+                    {
+                        listePompierCapitaine.Add(new PompierModel(pompier.Matricule, pompier.Grade, pompier.Nom, pompier.Prenom));
+                        listePompierCapitaineDTO.Add(new PompierDTO(pompier.Matricule, pompier.Grade, pompier.Nom, pompier.Prenom));
+                    }
+                }
+                if (listePompierCapitaine.Count == listePompierCapitaineDTO.Count)
+                    return listePompierCapitaineDTO;
+                else
+                    throw new Exception("Erreur lors du chargement des capitaines de la caserne, problème avec l'intégrité des données de la base de données.");
+            }
+            else 
+            {
+                List<PompierModel> listePompier = new List<PompierModel>();
+
+                foreach (PompierDTO pompier in listePompierDTO)
+                {
+                    listePompier.Add(new PompierModel(pompier.Matricule, pompier.Grade, pompier.Nom, pompier.Prenom));
+                }
+                if (listePompier.Count == listePompierDTO.Count)
+                    return listePompierDTO;
+                else
+                    throw new Exception("Erreur lors du chargement des pompiers de la caserne, problème avec l'intégrité des données de la base de données.");
+            }   
+
+            
         }
 
 
