@@ -56,17 +56,18 @@ namespace ProjetPompier_API.Logics.Controleurs
         /// <returns>Liste contenant les pompiers d'une caserne.</returns>
         public List<PompierDTO> ObtenirListePompier(string nomCaserne, bool seulementCapitaine)
         {
-
+            List<PompierDTO> listePompierDTO = PompierRepository.Instance.ObtenirListePompier(nomCaserne);
             if (seulementCapitaine)
             {
-                List<PompierDTO> listePompierCapitaineDTO = PompierRepository.Instance.ObtenirListePompier(nomCaserne);
+                List<PompierDTO> listePompierCapitaineDTO = new List<PompierDTO>();
                 List<PompierModel> listePompierCapitaine = new List<PompierModel>();
 
-                foreach (PompierDTO capitaine in listePompierCapitaineDTO)
+                foreach (PompierDTO pompier in listePompierDTO)
                 {
-                    if(capitaine.Grade=="Capitaine")
+                    if(pompier.Grade=="Capitaine")
                     {
-                        listePompierCapitaine.Add(new PompierModel(capitaine.Matricule, capitaine.Grade, capitaine.Nom, capitaine.Prenom));
+                        listePompierCapitaine.Add(new PompierModel(pompier.Matricule, pompier.Grade, pompier.Nom, pompier.Prenom));
+                        listePompierCapitaineDTO.Add(new PompierDTO(pompier.Matricule, pompier.Grade, pompier.Nom, pompier.Prenom));
                     }
                 }
                 if (listePompierCapitaine.Count == listePompierCapitaineDTO.Count)
@@ -76,7 +77,6 @@ namespace ProjetPompier_API.Logics.Controleurs
             }
             else 
             {
-                List<PompierDTO> listePompierDTO = PompierRepository.Instance.ObtenirListePompier(nomCaserne);
                 List<PompierModel> listePompier = new List<PompierModel>();
 
                 foreach (PompierDTO pompier in listePompierDTO)
