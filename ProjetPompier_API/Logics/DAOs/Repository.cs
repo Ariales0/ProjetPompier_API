@@ -26,9 +26,10 @@ namespace ProjetPompier_API.Logics.DAOs
         protected Repository()
         {
 			//connexion = new SqlConnection("Server=127.0.0.1; Database=ProjetPompier; User Id=quentin; Password=password;");
-			connexion = new SqlConnection("Server=127.0.0.1; Database=Caserne; User Id=vincent; Password=Patate123;");
+			//connexion = new SqlConnection("Server=127.0.0.1; Database=Caserne; User Id=vincent; Password=Patate123;");
+            connexion = new SqlConnection("Server = 127.0.0.1; Database = Caserne; User Id=lyes2;Password=Patate123;");
 
-		}
+        }
 
 		#endregion Constructeurs
 
