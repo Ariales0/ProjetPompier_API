@@ -172,17 +172,16 @@ namespace ProjetPompier_API.Logics.Controleurs
         /// <param name="adresse">Adresse de l'intervention</param>
         /// <param name="resume">Resumé de l'intervention</param>
         /// <param name="matriculeCapitaine">Matricule du Capitaine de l'intervention</param>
-        public void OuvrirFicheIntervention(string nomCaserne, string dateTemps, string typeIntervention, string adresse, string resume, int matriculeCapitaine)
+        public void OuvrirFicheIntervention(string nomCaserne, FicheInterventionDTO fiche)
         {
             try
             {
-                FicheInterventionModel uneFicheIntervention = new FicheInterventionModel(dateTemps, adresse, typeIntervention, resume, matriculeCapitaine);
-                FicheInterventionDTO uneFicheInterventionDTO = new FicheInterventionDTO(uneFicheIntervention);
-                InterventionRepository.Instance.OuvrirFicheIntervention(nomCaserne, dateTemps, typeIntervention, adresse, resume, matriculeCapitaine);
+                FicheInterventionModel uneFicheIntervention = new FicheInterventionModel(fiche.DateTemps, fiche.Adresse, fiche.TypeIntervention, fiche.Resume, fiche.MatriculeCapitaine);
+                InterventionRepository.Instance.OuvrirFicheIntervention(nomCaserne, fiche);
             }
             catch (Exception)
             {
-                throw new Exception("Erreur - La caserne est déjà existant.");
+                throw new Exception("Erreur - Une fiche d'intervention existe deja a cette date.");
             }
         }
         #endregion MethodesCaserne

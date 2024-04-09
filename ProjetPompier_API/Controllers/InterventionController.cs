@@ -57,16 +57,12 @@ namespace ProjetPompier_API.Controllers
         /// Méthode de service permettant d'ouvrir une fiche d'intervention'.
         /// </summary>
         /// <param name="nomCaserne">Le nom de la caserne qui prend en charge l'intervention.</param>
-        /// <param name="dateTemps">Date et heure le l'intervention</param>
-        /// <param name="typeIntervention">Type d'intervention</param>
-        /// <param name="adresse">Adresse de l'intervention</param>
-        /// <param name="resume">Resumé de l'intervention</param>
-        /// <param name="matriculeCapitaine">Matricule du Capitaine de l'intervention</param>
+        /// <param name="fiche">DTO de l'intervention</param>
         [Route("Intervention/OuvrirFicheIntervention")]
         [HttpPost]
         public void OuvrirFicheIntervention(string nomCaserne, FicheInterventionDTO fiche)
         {
-            InterventionControleur.Instance.OuvrirFicheIntervention(nomCaserne, fiche.DateTemps, fiche.TypeIntervention, fiche.Adresse, fiche.Resume, fiche.MatriculeCapitaine);
+            InterventionControleur.Instance.OuvrirFicheIntervention(nomCaserne, fiche);
         }
 
     }

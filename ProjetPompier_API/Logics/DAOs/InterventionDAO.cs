@@ -117,7 +117,7 @@ namespace ProjetPompier_API.Logics.DAOs
         /// <param name="adresse">Adresse de l'intervention</param>
         /// <param name="resume">Resumé de l'intervention</param>
         /// <param name="matriculeCapitaine">Matricule du Capitaine de l'intervention</param>
-        public void OuvrirFicheIntervention(string nomCaserne, string dateTemps, string typeIntervention, string adresse, string resume, int matriculeCapitaine)
+        public void OuvrirFicheIntervention(string nomCaserne, FicheInterventionDTO fiche)
         {
             SqlCommand command = new SqlCommand(null, connexion);
 
@@ -134,11 +134,11 @@ namespace ProjetPompier_API.Logics.DAOs
             SqlParameter matriculeParam = new SqlParameter("@matricule", SqlDbType.Int, 6);
             SqlParameter nomCaserneParam = new SqlParameter("@nomCaserne", SqlDbType.VarChar, 100);
 
-            dateTempsParam.Value = dateTemps;
-            adresseParam.Value = adresse;
-            typeInterventionParam.Value = typeIntervention;
-            resumeParam.Value = resume;
-            matriculeParam.Value = matriculeCapitaine;
+            dateTempsParam.Value = fiche.DateTemps;
+            adresseParam.Value = fiche.Adresse;
+            typeInterventionParam.Value = fiche.TypeIntervention;
+            resumeParam.Value = fiche.Resume;
+            matriculeParam.Value = fiche.MatriculeCapitaine;
             nomCaserneParam.Value = nomCaserne;
 
             command.Parameters.Add(dateTempsParam);
