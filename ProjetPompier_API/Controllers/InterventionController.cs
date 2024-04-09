@@ -64,9 +64,9 @@ namespace ProjetPompier_API.Controllers
         /// <param name="matriculeCapitaine">Matricule du Capitaine de l'intervention</param>
         [Route("Intervention/OuvrirFicheIntervention")]
         [HttpPost]
-        public void OuvrirFicheIntervention(string nomCaserne, string dateTemps, string typeIntervention, string adresse, string resume, int matriculeCapitaine)
+        public void OuvrirFicheIntervention(string nomCaserne, FicheInterventionDTO fiche)
         {
-            InterventionControleur.Instance.OuvrirFicheIntervention(nomCaserne, dateTemps, typeIntervention, adresse, resume, matriculeCapitaine);
+            InterventionControleur.Instance.OuvrirFicheIntervention(nomCaserne, fiche.DateTemps, fiche.TypeIntervention, fiche.Adresse, fiche.Resume, fiche.MatriculeCapitaine);
         }
 
     }
