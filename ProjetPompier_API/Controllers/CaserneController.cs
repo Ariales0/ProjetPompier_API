@@ -80,28 +80,5 @@ namespace ProjetPompier_API.Controllers
         {
             CaserneControleur.Instance.ViderListeCaserne();
         }
-
-        /// <summary>
-		/// Méthode de service GET ObtenirListeFicheIntervention
-		/// </summary>
-		/// <returns>List<PompierDTO> La liste des fiches d'intervention d'une caserne</returns>
-        [Route("Caserne/ObtenirListeFicheIntervention")]
-        [HttpGet]
-        public List<FicheInterventionDTO> ObtenirListeFicheIntervention(string nomCaserne, int matriceCapitaine)
-        {
-            return InterventionControleur.Instance.ObtenirListeFicheIntervention(nomCaserne, matriceCapitaine);
-        }
-
-        /// <summary>
-        /// Méthode de service permettant d'ouvrir une fiche d'intervention'.
-        /// </summary>
-        /// <param name="nomCaserne">Le nom de la caserne qui prend en charge l'intervention.</param>
-        /// <param name="fiche">DTO de l'intervention</param>
-        [Route("Caserne/OuvrirFicheIntervention")]
-        [HttpPost]
-        public void OuvrirFicheIntervention(string nomCaserne, FicheInterventionDTO fiche)
-        {
-            InterventionControleur.Instance.OuvrirFicheIntervention(nomCaserne, fiche);
-        }
     }
 }
