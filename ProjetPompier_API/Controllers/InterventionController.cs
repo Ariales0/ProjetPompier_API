@@ -15,12 +15,14 @@ namespace ProjetPompier_API.Controllers
     
     public class InterventionController : Controller
     {
-        
+
 
         /// <summary>
-		/// Méthode de service GET ObtenirListeFicheIntervention
-		/// </summary>
-		/// <returns>List<PompierDTO> La liste des fiches d'intervention d'une caserne</returns>
+        /// Méthode de service GET ObtenirListeFicheIntervention
+        /// </summary>
+        /// <param name="nomCaserne">Le nom de la caserne qui prend en charge l'intervention.</param>
+        /// <param name="matriculeCapitaine">Le matricule du capitaine</param>
+        /// <returns>List<PompierDTO> La liste des fiches d'intervention d'une caserne</returns>
         [Route("Intervention/ObtenirListeFicheIntervention")]
         [HttpGet]
         public List<FicheInterventionDTO> ObtenirListeFicheIntervention(string nomCaserne, int matriculeCapitaine)
