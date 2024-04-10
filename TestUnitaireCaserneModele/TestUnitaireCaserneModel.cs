@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc;
+using ProjetPompier_API.Logics.Controleurs;
 using ProjetPompier_API.Logics.DTOs;
 using ProjetPompier_API.Logics.Models;
 /// <summary>
@@ -38,6 +40,26 @@ namespace TestUnitaireCaserneModele
             {
                 Assert.Equal(true, true);
             }
+
+            /// <summary>
+            /// Classe représentant un test fonctionnel de la méthode de la classe  .
+            /// </summary>
+            CaserneDTO laCaserneTest = CaserneControleur.Instance.ObtenirCaserne("Caserne Test");
+
+            //On recupere les intervention deja existante
+            List<FicheInterventionDTO> listeFicheIntervention = InterventionControleur.Instance.ObtenirListeFicheIntervention("Caserne Test", 1);
+            int nombreDeFiche = listeFicheIntervention.Count;
+
+            DateTime date = DateTime.Now;
+            FicheInterventionDTO ficheInterventionDTO = new FicheInterventionDTO(date.ToString(), "1 rue de la place", "Incendie", "Poubelle en feu", 1);
+
+            InterventionControleur.Instance.OuvrirFicheIntervention("Caserne Test", ficheInterventionDTO);
+
+            //On verifie qu'il y a une intervention en plus dans la base de données
+            //On recupere les intervention deja existante
+            List<FicheInterventionDTO> nouvelleListeFicheIntervention = InterventionControleur.Instance.ObtenirListeFicheIntervention("Caserne Test", 1);
+            int nouveauNombreDeFiche = nouvelleListeFicheIntervention.Count;
+            Assert.Equal(nombreDeFiche+1, nouveauNombreDeFiche);
         }
     }
 }
