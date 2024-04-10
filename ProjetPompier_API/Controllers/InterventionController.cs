@@ -31,7 +31,7 @@ namespace ProjetPompier_API.Controllers
         }
 
         /// <summary>
-        /// Méthode de service permettant d'ouvrir une fiche d'intervention'.
+        /// Méthode de service permettant d'ouvrir une fiche d'intervention.
         /// </summary>
         /// <param name="nomCaserne">Le nom de la caserne qui prend en charge l'intervention.</param>
         /// <param name="fiche">DTO de l'intervention</param>

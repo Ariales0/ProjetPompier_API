@@ -13,12 +13,14 @@ namespace ProjetPompier_API.Controllers
     /// </summary>
     public class PompierController : Controller
     {
-        
+
 
         /// <summary>
-		/// Méthode de service GET ObtenirListePompier
-		/// </summary>
-		/// <returns>List<PompierDTO> La liste des pompiers d'une caserne</returns>
+        /// Méthode de service GET ObtenirListePompier
+        /// </summary>
+        /// <param name="nomCaserne">Le nom de la caserne qui prend en charge l'intervention.</param>
+        /// <param name="seulementCapitaine">Argument booleen qui indique si on souhaite uniquement les capitaines</param>
+        /// <returns>List<PompierDTO> La liste des pompiers d'une caserne</returns>
         [Route("Pompier/ObtenirListePompier")]
         [HttpGet]
         public List<PompierDTO> ObtenirListePompier(string nomCaserne, bool seulementCapitaine)

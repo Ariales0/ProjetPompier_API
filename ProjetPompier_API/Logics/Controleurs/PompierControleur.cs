@@ -53,6 +53,8 @@ namespace ProjetPompier_API.Logics.Controleurs
         /// <summary>
         /// Méthode de service permettant d'obtenir la liste des pompiers.
         /// </summary>
+        /// <param name="nomCaserne">Le nom de la caserne qui prend en charge l'intervention.</param>
+        /// <param name="seulementCapitaine">Argument booleen qui indique si on souhaite uniquement les capitaines</param>
         /// <returns>Liste contenant les pompiers d'une caserne.</returns>
         public List<PompierDTO> ObtenirListePompier(string nomCaserne, bool seulementCapitaine)
         {

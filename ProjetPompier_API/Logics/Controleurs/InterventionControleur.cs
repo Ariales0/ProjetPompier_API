@@ -74,11 +74,7 @@ namespace ProjetPompier_API.Logics.Controleurs
         /// Méthode de service permettant d'ouvrir une fiche d'intervention dans une caserne.
         /// </summary>
         /// <param name="nomCaserne">Le nom de la caserne qui prend en charge l'intervention.</param>
-        /// <param name="dateTemps">Date et heure le l'intervention</param>
-        /// <param name="typeIntervention">Type d'intervention</param>
-        /// <param name="adresse">Adresse de l'intervention</param>
-        /// <param name="resume">Resumé de l'intervention</param>
-        /// <param name="matriculeCapitaine">Matricule du Capitaine de l'intervention</param>
+        /// <param name="fiche">DTO de l'intervention</param>
         public void OuvrirFicheIntervention(string nomCaserne, FicheInterventionDTO fiche)
         {
             try
