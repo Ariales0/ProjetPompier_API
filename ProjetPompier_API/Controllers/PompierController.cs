@@ -13,32 +13,7 @@ namespace ProjetPompier_API.Controllers
     /// </summary>
     public class PompierController : Controller
     {
-        #region AttributsProprietes
-
-        /// <summary>
-        /// Attribut représentant l'instance unique de la classe PompierController.
-        /// </summary>
-        private static PompierController instance;
-
-        /// <summary>
-        /// Propriété permettant d'accèder à l'instance unique de la classe.
-        /// </summary>
-        public static PompierController Instance
-        {
-            get
-            {
-                //Si l'instance est null...
-                if (instance == null)
-                {
-                    //... on crée l'instance unique...
-                    instance = new PompierController();
-                }
-                //...on retourne l'instance unique.
-                return instance;
-            }
-        }
-
-        #endregion AttributsProprietes
+        
 
         /// <summary>
 		/// Méthode de service GET ObtenirListePompier

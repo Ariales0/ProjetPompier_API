@@ -15,32 +15,7 @@ namespace ProjetPompier_API.Controllers
     
     public class InterventionController : Controller
     {
-        #region AttributsProprietes
-
-        /// <summary>
-        /// Attribut représentant l'instance unique de la classe PompierController.
-        /// </summary>
-        private static InterventionController instance;
-
-        /// <summary>
-        /// Propriété permettant d'accèder à l'instance unique de la classe.
-        /// </summary>
-        public static InterventionController Instance
-        {
-            get
-            {
-                //Si l'instance est null...
-                if (instance == null)
-                {
-                    //... on crée l'instance unique...
-                    instance = new InterventionController();
-                }
-                //...on retourne l'instance unique.
-                return instance;
-            }
-        }
-
-        #endregion AttributsProprietes
+        
 
         /// <summary>
 		/// Méthode de service GET ObtenirListeFicheIntervention

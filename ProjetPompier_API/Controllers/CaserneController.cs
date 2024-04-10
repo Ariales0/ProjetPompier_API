@@ -85,7 +85,7 @@ namespace ProjetPompier_API.Controllers
 		/// Méthode de service GET ObtenirListeFicheIntervention
 		/// </summary>
 		/// <returns>List<PompierDTO> La liste des fiches d'intervention d'une caserne</returns>
-        [Route("Intervention/ObtenirListeFicheIntervention")]
+        [Route("Caserne/ObtenirListeFicheIntervention")]
         [HttpGet]
         public List<FicheInterventionDTO> ObtenirListeFicheIntervention(string nomCaserne, int matriceCapitaine)
         {
@@ -97,7 +97,7 @@ namespace ProjetPompier_API.Controllers
         /// </summary>
         /// <param name="nomCaserne">Le nom de la caserne qui prend en charge l'intervention.</param>
         /// <param name="fiche">DTO de l'intervention</param>
-        [Route("Intervention/OuvrirFicheIntervention")]
+        [Route("Caserne/OuvrirFicheIntervention")]
         [HttpPost]
         public void OuvrirFicheIntervention(string nomCaserne, FicheInterventionDTO fiche)
         {
