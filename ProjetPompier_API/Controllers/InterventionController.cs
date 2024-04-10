@@ -23,9 +23,9 @@ namespace ProjetPompier_API.Controllers
 		/// <returns>List<PompierDTO> La liste des fiches d'intervention d'une caserne</returns>
         [Route("Intervention/ObtenirListeFicheIntervention")]
         [HttpGet]
-        public List<FicheInterventionDTO> ObtenirListeFicheIntervention(string nomCaserne, int matriceCapitaine)
+        public List<FicheInterventionDTO> ObtenirListeFicheIntervention(string nomCaserne, int matriculeCapitaine)
         {
-            return InterventionControleur.Instance.ObtenirListeFicheIntervention(nomCaserne, matriceCapitaine);
+            return InterventionControleur.Instance.ObtenirListeFicheIntervention(nomCaserne, matriculeCapitaine);
         }
 
         /// <summary>
