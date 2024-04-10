@@ -143,47 +143,6 @@ namespace ProjetPompier_API.Logics.Controleurs
             CaserneRepository.Instance.ViderListeCaserne();
         }
 
-        /// <summary>
-        /// Méthode de service permettant d'obtenir la liste des pompiers.
-        /// </summary>
-        /// <returns>Liste contenant les pompiers d'une caserne.</returns>
-        public List<FicheInterventionDTO> ObtenirListeFicheIntervention(string nomCaserne, int matriculeCapitaine)
-        {
-            List<FicheInterventionDTO> listeFicheInterventionDTO = InterventionRepository.Instance.ObtenirListeFicheIntervention(nomCaserne, matriculeCapitaine);
-            List<FicheInterventionModel> listeFicheIntervention = new List<FicheInterventionModel>();
-
-            foreach (FicheInterventionDTO ficheIntervention in listeFicheInterventionDTO)
-            {
-                listeFicheIntervention.Add(new FicheInterventionModel(ficheIntervention.DateTemps, ficheIntervention.Adresse, ficheIntervention.TypeIntervention, ficheIntervention.Resume, ficheIntervention.MatriculeCapitaine));
-            }
-
-            if (listeFicheIntervention.Count == listeFicheInterventionDTO.Count)
-                return listeFicheInterventionDTO;
-            else
-                throw new Exception("Erreur lors du chargement des fiches d'intevention de la caserne et du capitaine, problème avec l'intégrité des données de la base de données.");
-        }
-
-        /// <summary>
-        /// Méthode de service permettant d'ouvrir une fiche d'intervention dans une caserne.
-        /// </summary>
-        /// <param name="nomCaserne">Le nom de la caserne qui prend en charge l'intervention.</param>
-        /// <param name="dateTemps">Date et heure le l'intervention</param>
-        /// <param name="typeIntervention">Type d'intervention</param>
-        /// <param name="adresse">Adresse de l'intervention</param>
-        /// <param name="resume">Resumé de l'intervention</param>
-        /// <param name="matriculeCapitaine">Matricule du Capitaine de l'intervention</param>
-        public void OuvrirFicheIntervention(string nomCaserne, FicheInterventionDTO fiche)
-        {
-            try
-            {
-                FicheInterventionModel uneFicheIntervention = new FicheInterventionModel(fiche.DateTemps, fiche.Adresse, fiche.TypeIntervention, fiche.Resume, fiche.MatriculeCapitaine);
-                InterventionRepository.Instance.OuvrirFicheIntervention(nomCaserne, fiche);
-            }
-            catch (Exception)
-            {
-                throw new Exception("Erreur - Une fiche d'intervention existe deja a cette date.");
-            }
-        }
         #endregion MethodesCaserne
     }
 }
