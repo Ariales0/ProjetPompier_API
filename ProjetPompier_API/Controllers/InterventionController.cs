@@ -23,7 +23,7 @@ namespace ProjetPompier_API.Controllers
 		/// <returns>List<PompierDTO> La liste des fiches d'intervention d'une caserne</returns>
         [Route("Intervention/ObtenirListeFicheIntervention")]
         [HttpGet]
-        public List<FicheInterventionDTO> ObtenirListeFicheIntervention(string nomCaserne, int matriceCapitaine)
+        public List<FicheInterventionDTO> ObtenirListeFicheIntervention([FromQuery] string nomCaserne, [FromQuery] int matriceCapitaine)
         {
             return InterventionControleur.Instance.ObtenirListeFicheIntervention(nomCaserne, matriceCapitaine);
         }
@@ -35,7 +35,7 @@ namespace ProjetPompier_API.Controllers
         /// <param name="fiche">DTO de l'intervention</param>
         [Route("Intervention/OuvrirFicheIntervention")]
         [HttpPost]
-        public void OuvrirFicheIntervention(string nomCaserne, FicheInterventionDTO fiche)
+        public void OuvrirFicheIntervention([FromQuery] string nomCaserne, [FromBody]  FicheInterventionDTO fiche)
         {
             InterventionControleur.Instance.OuvrirFicheIntervention(nomCaserne, fiche);
         }

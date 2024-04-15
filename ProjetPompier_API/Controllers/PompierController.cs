@@ -21,7 +21,7 @@ namespace ProjetPompier_API.Controllers
 		/// <returns>List<PompierDTO> La liste des pompiers d'une caserne</returns>
         [Route("Pompier/ObtenirListePompier")]
         [HttpGet]
-        public List<PompierDTO> ObtenirListePompier(string nomCaserne, bool seulementCapitaine)
+        public List<PompierDTO> ObtenirListePompier([FromQuery] string nomCaserne, [FromQuery] bool seulementCapitaine)
         {
             return PompierControleur.Instance.ObtenirListePompier(nomCaserne, seulementCapitaine);
         }
