@@ -15,29 +15,27 @@ namespace ProjetPompier_API.Controllers
     
     public class InterventionController : Controller
     {
-
+        
 
         /// <summary>
-        /// Méthode de service GET ObtenirListeFicheIntervention
-        /// </summary>
-        /// <param name="nomCaserne">Le nom de la caserne qui prend en charge l'intervention.</param>
-        /// <param name="matriculeCapitaine">Le matricule du capitaine</param>
-        /// <returns>List<PompierDTO> La liste des fiches d'intervention d'une caserne</returns>
+		/// Méthode de service GET ObtenirListeFicheIntervention
+		/// </summary>
+		/// <returns>List<PompierDTO> La liste des fiches d'intervention d'une caserne</returns>
         [Route("Intervention/ObtenirListeFicheIntervention")]
         [HttpGet]
-        public List<FicheInterventionDTO> ObtenirListeFicheIntervention(string nomCaserne, int matriculeCapitaine)
+        public List<FicheInterventionDTO> ObtenirListeFicheIntervention([FromQuery] string nomCaserne, [FromQuery] int matriceCapitaine)
         {
-            return InterventionControleur.Instance.ObtenirListeFicheIntervention(nomCaserne, matriculeCapitaine);
+            return InterventionControleur.Instance.ObtenirListeFicheIntervention(nomCaserne, matriceCapitaine);
         }
 
         /// <summary>
-        /// Méthode de service permettant d'ouvrir une fiche d'intervention.
+        /// Méthode de service permettant d'ouvrir une fiche d'intervention'.
         /// </summary>
         /// <param name="nomCaserne">Le nom de la caserne qui prend en charge l'intervention.</param>
         /// <param name="fiche">DTO de l'intervention</param>
         [Route("Intervention/OuvrirFicheIntervention")]
         [HttpPost]
-        public void OuvrirFicheIntervention(string nomCaserne, FicheInterventionDTO fiche)
+        public void OuvrirFicheIntervention([FromQuery] string nomCaserne, [FromBody]  FicheInterventionDTO fiche)
         {
             InterventionControleur.Instance.OuvrirFicheIntervention(nomCaserne, fiche);
         }
