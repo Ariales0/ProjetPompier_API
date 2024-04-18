@@ -28,5 +28,48 @@ namespace ProjetPompier_API.Controllers
             return PompierControleur.Instance.ObtenirListePompier(nomCaserne, seulementCapitaine);
         }
 
-    }
+
+		[Route("Pompier/ObtenirPompier")]
+		[HttpGet]
+		public PompierDTO ObtenirPompier([FromQuery] int matricule)
+		{
+			return PompierControleur.Instance.ObtenirPompier(matricule);
+		}
+
+		
+		[Route("Pompier/AjouterPompier")]
+		[HttpPost]
+		public void AjouterPompier([FromQuery] string nomCaserne, [FromBody] PompierDTO pompierDTO)
+		{
+			PompierControleur.Instance.AjouterPompier(nomCaserne, pompierDTO);
+		}
+
+
+		[Route("Pompier/ModifierPompier")]
+		[HttpPost]
+		public void ModifierPompier([FromBody] PompierDTO pompierDTO)
+		{
+			PompierControleur.Instance.ModifierPompier(pompierDTO);
+		}
+
+
+
+		[Route("Pompier/SupprimerPompier")]
+		[HttpPost]
+		public void SupprimerPompier([FromQuery] int matricule)
+		{
+			PompierControleur.Instance.SupprimerPompier(matricule);
+		}
+
+		/// <summary>
+		/// Méthode de service POST ViderListePompier
+		/// </summary>
+		[Route("Pompier/ViderListePompier")]
+		[HttpPost]
+		public void ViderListePompier(string nomCaserne)
+		{
+			PompierControleur.Instance.ViderListePompier(nomCaserne);
+		}
+
+	}
 }

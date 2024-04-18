@@ -25,8 +25,8 @@ namespace ProjetPompier_API.Logics.DAOs
         /// </summary>
         protected Repository()
         {
-			connexion = new SqlConnection("Server=127.0.0.1; Database=ProjetPompier; User Id=quentin; Password=password;");//Quentin
-			//connexion = new SqlConnection("Server=127.0.0.1; Database=Caserne; User Id=vincent; Password=Patate123;");//Vincent
+			//connexion = new SqlConnection("Server=127.0.0.1; Database=ProjetPompier; User Id=quentin; Password=password;");//Quentin
+			connexion = new SqlConnection("Server=127.0.0.1; Database=Caserne; User Id=vincent; Password=Patate123;");//Vincent
             //connexion = new SqlConnection("Server = 127.0.0.1; Database = Caserne; User Id=lyes2;Password=Patate123;");//Lyes
 
         }

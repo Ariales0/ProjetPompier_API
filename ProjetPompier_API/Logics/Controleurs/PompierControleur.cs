@@ -66,7 +66,7 @@ namespace ProjetPompier_API.Logics.Controleurs
 
                 foreach (PompierDTO pompier in listePompierDTO)
                 {
-                    if(pompier.Grade=="Capitaine")
+                    if(pompier.Grade==1)
                     {
                         listePompierCapitaine.Add(new PompierModel(pompier.Matricule, pompier.Grade, pompier.Nom, pompier.Prenom));
                         listePompierCapitaineDTO.Add(new PompierDTO(pompier.Matricule, pompier.Grade, pompier.Nom, pompier.Prenom));
@@ -93,8 +93,73 @@ namespace ProjetPompier_API.Logics.Controleurs
 
             
         }
+		
+
+		public PompierDTO ObtenirPompier(int matricule)
+		{
+			PompierDTO pompierDTO = PompierRepository.Instance.ObtenirPompier(matricule);
+			PompierModel pompier = new PompierModel(pompierDTO.Matricule, pompierDTO.Grade, pompierDTO.Nom, pompierDTO.Prenom);
+			return new PompierDTO(pompier);
+		}
 
 
-        #endregion MethodesCaserne
-    }
+        public int ObtenirIdPompier(int matricule)
+        {
+			return PompierRepository.Instance.ObtenirIdPompier(matricule);
+		}
+		
+		public void AjouterPompier(string nomCaserne, PompierDTO pompierDTO)
+		{
+			bool OK = false;
+            int idCaserne = CaserneRepository.Instance.ObtenirIdCaserne(nomCaserne);
+			try
+			{
+				PompierRepository.Instance.ObtenirIdPompier(pompierDTO.Matricule);
+			}
+			catch (Exception)
+			{
+				OK = true;
+			}
+
+			if (OK)
+			{
+				PompierModel unPompier = new PompierModel(pompierDTO.Matricule, pompierDTO.Grade, pompierDTO.Nom, pompierDTO.Prenom);
+				PompierRepository.Instance.AjouterPompier(idCaserne, pompierDTO);
+			}
+			else
+				throw new Exception("Erreur - Le pompier est déjà existant.");
+
+		}
+
+
+		public void ModifierPompier(PompierDTO pompierDTO)
+		{
+			PompierDTO pompierDTOBD = ObtenirPompier(pompierDTO.Matricule);
+			PompierModel pompierBD = new PompierModel(pompierDTOBD.Matricule, pompierDTOBD.Grade, pompierDTOBD.Nom, pompierDTOBD.Prenom);
+
+			if (pompierDTO.Grade != pompierBD.Grade || pompierDTO.Nom!= pompierBD.Nom|| pompierDTO.Prenom != pompierBD.Prenom)
+				PompierRepository.Instance.ModifierPompier(pompierDTO);
+			else
+				throw new Exception("Erreur - Veuillez modifier au moins une valeur.");
+		}
+
+
+		public void SupprimerPompier(int matricule)
+		{
+			PompierDTO pompierDTOBD = ObtenirPompier(matricule);
+			PompierRepository.Instance.SupprimerPompier(pompierDTOBD.Matricule);
+		}
+
+		/// <summary>
+		/// Méthode de service permettant de vider la liste des casernes.
+		/// </summary>
+		public void ViderListePompier(string nomCaserne)
+		{
+			if (ObtenirListePompier(nomCaserne, false).Count == 0)
+				throw new Exception("Erreur - La liste des Casernes est déjà vide.");
+			PompierRepository.Instance.ViderListePompier(nomCaserne);
+		}
+
+		#endregion MethodesCaserne
+	}
 }
