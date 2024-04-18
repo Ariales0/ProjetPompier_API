@@ -18,7 +18,7 @@ namespace ProjetPompier_API.Logics.DTOs
 		/// <summary>
 		/// Propriété représentant le grade du pompier.
 		/// </summary>
-		public int Grade { get; set; }
+		public string Grade { get; set; }
 
 		/// <summary>
 		/// Propriété représentant le nom du pompier.
@@ -45,7 +45,7 @@ namespace ProjetPompier_API.Logics.DTOs
 		/// <param name="grade">Grade du pompier</param>
 		/// <param name="nom">Nom du pompier</param>
 		/// <param name="prenom">Prenom du pompier</param>
-		public PompierDTO(int matricule = 000000, int grade = 1, string nom = "", string prenom = "")
+		public PompierDTO(int matricule = 000000, string grade = "", string nom = "", string prenom = "")
 		{
 			Matricule = matricule;
 			Grade = grade;

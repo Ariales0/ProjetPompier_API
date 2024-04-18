@@ -32,19 +32,19 @@ namespace ProjetPompier_API.Logics.Models
 		/// <summary>
 		/// Attribut représentant le grade du pompier.
 		/// </summary>
-		private int grade;
+		private string grade;
 		/// <summary>
 		/// Propriété représentant le grade du pompier.
 		/// </summary>
-		public int Grade
+		public string Grade
 		{
 			get { return grade; }
 			set
 			{
-				if (value > 0)
+				if (grade.Length < 200)
 					grade = value;
 				else
-					throw new Exception("L'id du grade d'un pompier doit être plus grand que 0.");
+					throw new Exception("La description du grade ne doit pas avoir plus de 200 caractères.");
 			}
 		}
 
@@ -98,7 +98,7 @@ namespace ProjetPompier_API.Logics.Models
 		/// <param name="grade">Grade du pompier</param>
 		/// <param name="nom">Nom du pompier</param>
 		/// <param name="prenom">Prenom du pompier</param>
-		public PompierModel(int unMatricule = 000000, int unGrade = 0, string unNom = "", string unPrenom = "")
+		public PompierModel(int unMatricule = 000000, string unGrade = "", string unNom = "", string unPrenom = "")
 		{
 			Matricule = unMatricule;
 			Grade = unGrade;
