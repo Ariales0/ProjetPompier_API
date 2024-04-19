@@ -132,7 +132,7 @@ namespace ProjetPompier_API.Logics.DAOs
 		{
 			SqlCommand command = new SqlCommand(" SELECT * " +
 												" FROM T_Pompiers " +
-												" WHERE Matricule = @matricule && WHERE IdCaserne = @idCaserne ", connexion);
+												" WHERE Matricule = @matricule & WHERE IdCaserne = @idCaserne ", connexion);
 
 			SqlParameter matriculeParam = new SqlParameter("@matricule", SqlDbType.Int);
 			SqlParameter idCaserneParam = new SqlParameter("@idCaserne", SqlDbType.Int);
@@ -180,7 +180,7 @@ namespace ProjetPompier_API.Logics.DAOs
 
 			nomParam.Value = pompierDTO.Nom;
 			prenomParam.Value = pompierDTO.Prenom;
-			gradeParam.Value = pompierDTO.Grade;
+			gradeParam.Value = GradeRepository.Instance.ObtenirIdGrade(pompierDTO.Grade);
 			matriculeParam.Value = pompierDTO.Matricule;
 			idCaserneParam.Value = idCaserne;
 
@@ -217,7 +217,7 @@ namespace ProjetPompier_API.Logics.DAOs
 									 " SET Grade = @grade, " +
 									 "     Nom = @nom, " +
 									 "     Prenom = @prenom " +
-								   " WHERE Matricule = @matricule && WHERE IdCaserne = @idCaserne";
+								   " WHERE Matricule = @matricule & WHERE IdCaserne = @idCaserne";
 
 			SqlParameter gradeParam = new SqlParameter("@grade", SqlDbType.Int);
 			SqlParameter matriculeParam = new SqlParameter("@matricule", SqlDbType.Int);
@@ -262,7 +262,7 @@ namespace ProjetPompier_API.Logics.DAOs
 
 			command.CommandText = " DELETE " +
 									" FROM T_Pompiers " +
-								   " WHERE Matricule = @matricule && WHERE IdCaserne =@idCaserne";
+								   " WHERE Matricule = @matricule & WHERE IdCaserne =@idCaserne";
 
 			SqlParameter matriculeParam = new SqlParameter("@matricule", SqlDbType.Int);
 			SqlParameter idCaserneParam = new SqlParameter("@idCaserne", SqlDbType.Int);
