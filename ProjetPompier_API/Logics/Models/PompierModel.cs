@@ -41,7 +41,7 @@ namespace ProjetPompier_API.Logics.Models
 			get { return grade; }
 			set
 			{
-				if (grade.Length < 200)
+				if (value.Length < 200)
 					grade = value;
 				else
 					throw new Exception("La description du grade ne doit pas avoir plus de 200 caractères.");

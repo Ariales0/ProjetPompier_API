@@ -91,17 +91,20 @@ namespace ProjetPompier_API.Logics.DAOs
             }
         }
 
-		public int ObtenirIdPompier(int matricule)
+		public int ObtenirIdPompier(int matricule, string nomCaserne)
 		{
 			SqlCommand command = new SqlCommand(" SELECT IdPompier " +
 												"   FROM T_Pompiers " +
-												"  WHERE Matricule= @matricule ", connexion);
+												"  WHERE Matricule= @matricule && WHERE IdCaserne= @idCaserne ", connexion);
 
 			SqlParameter matriculeParam = new SqlParameter("@matricule", SqlDbType.Int);
+			SqlParameter idCaserneParam = new SqlParameter("@idCaserne", SqlDbType.Int);
 
 			matriculeParam.Value = matricule;
+			idCaserneParam.Value = CaserneRepository.Instance.ObtenirIdCaserne(nomCaserne);
 
 			command.Parameters.Add(matriculeParam);
+			command.Parameters.Add(idCaserneParam);
 
 			int id;
 
@@ -125,17 +128,20 @@ namespace ProjetPompier_API.Logics.DAOs
 		}
 
 
-		public PompierDTO ObtenirPompier(int matricule)
+		public PompierDTO ObtenirPompier(int matricule, string nomCaserne)
 		{
 			SqlCommand command = new SqlCommand(" SELECT * " +
 												" FROM T_Pompiers " +
-												" WHERE Matricule = @matricule ", connexion);
+												" WHERE Matricule = @matricule && WHERE IdCaserne = @idCaserne ", connexion);
 
 			SqlParameter matriculeParam = new SqlParameter("@matricule", SqlDbType.Int);
+			SqlParameter idCaserneParam = new SqlParameter("@idCaserne", SqlDbType.Int);
 
 			matriculeParam.Value = matricule;
+			idCaserneParam.Value = CaserneRepository.Instance.ObtenirIdCaserne(nomCaserne);
 
 			command.Parameters.Add(matriculeParam);
+			command.Parameters.Add(idCaserneParam);
 
 			CaserneDTO uneCaserne;
 
@@ -203,7 +209,7 @@ namespace ProjetPompier_API.Logics.DAOs
 		}
 
 
-		public bool ModifierPompier(PompierDTO pompierDTO)
+		public bool ModifierPompier(PompierDTO pompierDTO, string nomCaserne)
 		{
 			SqlCommand command = new SqlCommand(null, connexion);
 
@@ -211,22 +217,25 @@ namespace ProjetPompier_API.Logics.DAOs
 									 " SET Grade = @grade, " +
 									 "     Nom = @nom, " +
 									 "     Prenom = @prenom " +
-								   " WHERE Matricule = @matricule ";
+								   " WHERE Matricule = @matricule && WHERE IdCaserne = @idCaserne";
 
 			SqlParameter gradeParam = new SqlParameter("@grade", SqlDbType.Int);
 			SqlParameter matriculeParam = new SqlParameter("@matricule", SqlDbType.Int);
 			SqlParameter nomParam = new SqlParameter("@nom", SqlDbType.VarChar, 100);
 			SqlParameter prenomParam = new SqlParameter("@prenom", SqlDbType.VarChar, 100);
+			SqlParameter idCaserneParam = new SqlParameter("@idCaserne", SqlDbType.Int);
 
 			nomParam.Value = pompierDTO.Nom;
 			prenomParam.Value = pompierDTO.Prenom;
 			gradeParam.Value = pompierDTO.Grade;
 			matriculeParam.Value = pompierDTO.Matricule;
+			idCaserneParam.Value = CaserneRepository.Instance.ObtenirIdCaserne(nomCaserne);
 
 			command.Parameters.Add(nomParam);
 			command.Parameters.Add(prenomParam);
 			command.Parameters.Add(gradeParam);
 			command.Parameters.Add(matriculeParam);
+			command.Parameters.Add(idCaserneParam);
 
 			try
 			{
@@ -247,19 +256,22 @@ namespace ProjetPompier_API.Logics.DAOs
 		}
 
 
-		public bool SupprimerPompier(int matricule)
+		public bool SupprimerPompier(int matricule, string nomCaserne)
 		{
 			SqlCommand command = new SqlCommand(null, connexion);
 
 			command.CommandText = " DELETE " +
 									" FROM T_Pompiers " +
-								   " WHERE Matricule = @matricule ";
+								   " WHERE Matricule = @matricule && WHERE IdCaserne =@idCaserne";
 
 			SqlParameter matriculeParam = new SqlParameter("@matricule", SqlDbType.Int);
+			SqlParameter idCaserneParam = new SqlParameter("@idCaserne", SqlDbType.Int);
 
 			matriculeParam.Value = matricule;
+			idCaserneParam.Value = CaserneRepository.Instance.ObtenirIdCaserne(nomCaserne);
 
 			command.Parameters.Add(matriculeParam);
+			command.Parameters.Add(idCaserneParam);
 
 			try
 			{

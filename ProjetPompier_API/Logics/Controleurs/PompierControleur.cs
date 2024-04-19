@@ -66,7 +66,7 @@ namespace ProjetPompier_API.Logics.Controleurs
 
                 foreach (PompierDTO pompier in listePompierDTO)
                 {
-                    if(pompier.Grade==1)
+                    if(pompier.Grade== "Capitaine")
                     {
                         listePompierCapitaine.Add(new PompierModel(pompier.Matricule, pompier.Grade, pompier.Nom, pompier.Prenom));
                         listePompierCapitaineDTO.Add(new PompierDTO(pompier.Matricule, pompier.Grade, pompier.Nom, pompier.Prenom));
@@ -95,17 +95,17 @@ namespace ProjetPompier_API.Logics.Controleurs
         }
 		
 
-		public PompierDTO ObtenirPompier(int matricule)
+		public PompierDTO ObtenirPompier(int matricule, string nomCaserne)
 		{
-			PompierDTO pompierDTO = PompierRepository.Instance.ObtenirPompier(matricule);
+			PompierDTO pompierDTO = PompierRepository.Instance.ObtenirPompier(matricule,nomCaserne);
 			PompierModel pompier = new PompierModel(pompierDTO.Matricule, pompierDTO.Grade, pompierDTO.Nom, pompierDTO.Prenom);
 			return new PompierDTO(pompier);
 		}
 
 
-        public int ObtenirIdPompier(int matricule)
+        public int ObtenirIdPompier(int matricule, string nomCaserne)
         {
-			return PompierRepository.Instance.ObtenirIdPompier(matricule);
+			return PompierRepository.Instance.ObtenirIdPompier(matricule, nomCaserne);
 		}
 		
 		public void AjouterPompier(string nomCaserne, PompierDTO pompierDTO)
@@ -114,7 +114,7 @@ namespace ProjetPompier_API.Logics.Controleurs
             int idCaserne = CaserneRepository.Instance.ObtenirIdCaserne(nomCaserne);
 			try
 			{
-				PompierRepository.Instance.ObtenirIdPompier(pompierDTO.Matricule);
+				PompierRepository.Instance.ObtenirIdPompier(pompierDTO.Matricule, nomCaserne);
 			}
 			catch (Exception)
 			{
@@ -124,6 +124,8 @@ namespace ProjetPompier_API.Logics.Controleurs
 			if (OK)
 			{
 				PompierModel unPompier = new PompierModel(pompierDTO.Matricule, pompierDTO.Grade, pompierDTO.Nom, pompierDTO.Prenom);
+               
+
 				PompierRepository.Instance.AjouterPompier(idCaserne, pompierDTO);
 			}
 			else
@@ -132,22 +134,22 @@ namespace ProjetPompier_API.Logics.Controleurs
 		}
 
 
-		public void ModifierPompier(PompierDTO pompierDTO)
+		public void ModifierPompier(PompierDTO pompierDTO, string nomCaserne)
 		{
-			PompierDTO pompierDTOBD = ObtenirPompier(pompierDTO.Matricule);
+			PompierDTO pompierDTOBD = ObtenirPompier(pompierDTO.Matricule, nomCaserne);
 			PompierModel pompierBD = new PompierModel(pompierDTOBD.Matricule, pompierDTOBD.Grade, pompierDTOBD.Nom, pompierDTOBD.Prenom);
 
 			if (pompierDTO.Grade != pompierBD.Grade || pompierDTO.Nom!= pompierBD.Nom|| pompierDTO.Prenom != pompierBD.Prenom)
-				PompierRepository.Instance.ModifierPompier(pompierDTO);
+				PompierRepository.Instance.ModifierPompier(pompierDTO, nomCaserne);
 			else
 				throw new Exception("Erreur - Veuillez modifier au moins une valeur.");
 		}
 
 
-		public void SupprimerPompier(int matricule)
+		public void SupprimerPompier(int matricule, string nomCaserne)
 		{
-			PompierDTO pompierDTOBD = ObtenirPompier(matricule);
-			PompierRepository.Instance.SupprimerPompier(pompierDTOBD.Matricule);
+			PompierDTO pompierDTOBD = ObtenirPompier(matricule, nomCaserne);
+			PompierRepository.Instance.SupprimerPompier(pompierDTOBD.Matricule, nomCaserne);
 		}
 
 		/// <summary>
