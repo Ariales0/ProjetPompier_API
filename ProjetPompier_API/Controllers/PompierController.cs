@@ -31,7 +31,7 @@ namespace ProjetPompier_API.Controllers
 
 		[Route("Pompier/ObtenirPompier")]
 		[HttpGet]
-		public PompierDTO ObtenirPompier([FromQuery] int matriculePompier, [FromQuery] string nomCaserne)
+		public PompierDTO ObtenirPompier([FromQuery] string nomCaserne, [FromQuery] int matriculePompier)
 		{
 			return PompierControleur.Instance.ObtenirPompier(matriculePompier, nomCaserne);
 		}
@@ -47,7 +47,7 @@ namespace ProjetPompier_API.Controllers
 
 		[Route("Pompier/ModifierPompier")]
 		[HttpPost]
-		public void ModifierPompier([FromBody] PompierDTO pompierDTO, [FromQuery] string nomCaserne)
+		public void ModifierPompier([FromQuery] string nomCaserne, [FromBody] PompierDTO pompierDTO)
 		{
 			PompierControleur.Instance.ModifierPompier(pompierDTO, nomCaserne);
 		}
@@ -56,7 +56,7 @@ namespace ProjetPompier_API.Controllers
 
 		[Route("Pompier/SupprimerPompier")]
 		[HttpPost]
-		public void SupprimerPompier([FromQuery] int matriculePompier, [FromQuery] string nomCaserne)
+		public void SupprimerPompier([FromQuery] string nomCaserne, [FromQuery] int matriculePompier)
 		{
 			PompierControleur.Instance.SupprimerPompier(matriculePompier, nomCaserne);
 		}

@@ -227,7 +227,7 @@ namespace ProjetPompier_API.Logics.DAOs
 
 			nomParam.Value = pompierDTO.Nom;
 			prenomParam.Value = pompierDTO.Prenom;
-			gradeParam.Value = pompierDTO.Grade;
+			gradeParam.Value = GradeRepository.Instance.ObtenirIdGrade(pompierDTO.Grade);
 			matriculeParam.Value = pompierDTO.Matricule;
 			idCaserneParam.Value = CaserneRepository.Instance.ObtenirIdCaserne(nomCaserne);
 
