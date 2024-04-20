@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using ProjetPompier_API.Logics.Controleurs;
 using ProjetPompier_API.Logics.DTOs;
 using ProjetPompier_API.Logics.Models;
+using ProjetPompier_API.Controllers;
+using ProjetPompier_API.DTOs;
+
 /// <summary>
 /// Namespace pour la classe de test unitaire
 /// </summary>
@@ -60,6 +63,28 @@ namespace TestUnitaireCaserneModele
             List<FicheInterventionDTO> nouvelleListeFicheIntervention = InterventionControleur.Instance.ObtenirListeFicheIntervention("Caserne Test", 1);
             int nouveauNombreDeFiche = nouvelleListeFicheIntervention.Count;
             Assert.Equal(nombreDeFiche+1, nouveauNombreDeFiche);
+        }
+        /// <summary>
+        /// Test pour la méthode AjouterGrade
+        /// </summary>
+        [Fact]
+        public void TestAjouterGrade() 
+        {
+            //On recupere les grade deja existante
+			List<GradeDTO> listeGrade = GradeControleur.Instance.ObtenirListeGrade();
+			int nombreDeGrade = listeGrade.Count;
+
+			GradeDTO gradeDTO = new GradeDTO("Test");
+
+			GradeControleur.Instance.AjouterGrade(gradeDTO);
+
+			//On verifie qu'il y a un grade en plus dans la base de données
+			//On recupere les grade deja existante
+			List<GradeDTO> nouvelleListeGrade = GradeControleur.Instance.ObtenirListeGrade();
+			int nouveauNombreDeGrade = nouvelleListeGrade.Count;
+
+            GradeControleur.Instance.SupprimerGrade(GradeControleur.Instance.ObtenirIdGrade("Test"));
+			Assert.Equal(nombreDeGrade+1, nouveauNombreDeGrade);
         }
     }
 }

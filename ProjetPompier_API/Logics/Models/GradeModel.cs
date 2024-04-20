@@ -10,11 +10,11 @@ namespace ProjetPompier_API.Logics.Models
     {
         #region AttributsProprietes
         /// <summary>
-        /// Attribut représentant le matricule du pompier.
+        /// Attribut représentant le matricule du grade.
         /// </summary>
         private string description;
         /// <summary>
-        /// Propriété représentant le matricule du pompier.
+        /// Propriété représentant le matricule du grade.
         /// </summary>
         public string Description
         {

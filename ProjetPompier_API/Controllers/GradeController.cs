@@ -27,7 +27,11 @@ namespace ProjetPompier_API.Controllers
             return GradeControleur.Instance.ObtenirListeGrade();
         }
 
-		
+		/// <summary>
+        /// Méthode de service GET ObtenirGrade
+        /// </summary>
+        /// <param name="idGrade"></param>
+        /// <returns></returns>
 		[Route("Grade/ObtenirGrade")]
         [HttpGet]
         public GradeDTO ObtenirGrade([FromQuery]int idGrade)
@@ -35,7 +39,10 @@ namespace ProjetPompier_API.Controllers
             return GradeControleur.Instance.ObtenirGrade(idGrade);
         }
 
-
+        /// <summary>
+        /// Méthode de service POST AjouterGrade
+        /// </summary>
+        /// <param name="gradeDTO"></param>
         [Route("Grade/AjouterGrade")]
         [HttpPost]
         public void AjouterGrade([FromBody] GradeDTO gradeDTO)
@@ -45,7 +52,11 @@ namespace ProjetPompier_API.Controllers
 
 
 
-
+        /// <summary>
+        /// Méthode de service POST ModifierGrade
+        /// </summary>
+        /// <param name="descriptionAvantChangement"></param>
+        /// <param name="descriptionApresChangement"></param>
         [Route("Grade/ModifierGrade")]
         [HttpPost]
         public void ModifierGrade([FromQuery] string descriptionAvantChangement, [FromQuery] string descriptionApresChangement)
@@ -53,7 +64,10 @@ namespace ProjetPompier_API.Controllers
 			GradeControleur.Instance.ModifierGrade(descriptionAvantChangement, descriptionApresChangement);
         }
 
-
+        /// <summary>
+        /// Méthode de service POST SupprimerGrade
+        /// </summary>
+        /// <param name="idGrade"></param>
 
         [Route("Grade/SupprimerGrade")]
         [HttpPost]

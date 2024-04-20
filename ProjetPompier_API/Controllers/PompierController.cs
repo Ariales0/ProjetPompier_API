@@ -28,7 +28,12 @@ namespace ProjetPompier_API.Controllers
             return PompierControleur.Instance.ObtenirListePompier(nomCaserne, seulementCapitaine);
         }
 
-
+		/// <summary>
+		/// Méthode de service GET ObtenirPompier
+		/// </summary>
+		/// <param name="nomCaserne"></param>
+		/// <param name="matriculePompier"></param>
+		/// <returns></returns>
 		[Route("Pompier/ObtenirPompier")]
 		[HttpGet]
 		public PompierDTO ObtenirPompier([FromQuery] string nomCaserne, [FromQuery] int matriculePompier)
@@ -36,7 +41,11 @@ namespace ProjetPompier_API.Controllers
 			return PompierControleur.Instance.ObtenirPompier(matriculePompier, nomCaserne);
 		}
 
-		
+		/// <summary>
+		/// Méthode de service POST AjouterPompier
+		/// </summary>
+		/// <param name="nomCaserne"></param>
+		/// <param name="pompierDTO"></param>
 		[Route("Pompier/AjouterPompier")]
 		[HttpPost]
 		public void AjouterPompier([FromQuery] string nomCaserne, [FromBody] PompierDTO pompierDTO)
@@ -44,7 +53,11 @@ namespace ProjetPompier_API.Controllers
 			PompierControleur.Instance.AjouterPompier(nomCaserne, pompierDTO);
 		}
 
-
+		/// <summary>
+		/// Méthode de service POST ModifierPompier
+		/// </summary>
+		/// <param name="nomCaserne"></param>
+		/// <param name="pompierDTO"></param>
 		[Route("Pompier/ModifierPompier")]
 		[HttpPost]
 		public void ModifierPompier([FromQuery] string nomCaserne, [FromBody] PompierDTO pompierDTO)
@@ -53,7 +66,11 @@ namespace ProjetPompier_API.Controllers
 		}
 
 
-
+		/// <summary>
+		/// Méthode de service POST SupprimerPompier
+		/// </summary>
+		/// <param name="nomCaserne"></param>
+		/// <param name="matriculePompier"></param>
 		[Route("Pompier/SupprimerPompier")]
 		[HttpPost]
 		public void SupprimerPompier([FromQuery] string nomCaserne, [FromQuery] int matriculePompier)

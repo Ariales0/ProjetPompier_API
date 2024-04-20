@@ -50,8 +50,12 @@ namespace ProjetPompier_API.Logics.Controleurs
 
         #endregion Controleurs
 
-        #region MethodesCaserne
-
+        #region MethodesGrade
+		/// <summary>
+		/// Méthode de service permettant d'obtenir la liste des grades.
+		/// </summary>
+		/// <returns></returns>
+		/// <exception cref="Exception"></exception>
         public List<GradeDTO> ObtenirListeGrade()
         {
             List<GradeDTO> listeGradeDTO = GradeRepository.Instance.ObtenirListeGrade();
@@ -70,20 +74,31 @@ namespace ProjetPompier_API.Logics.Controleurs
 
 		}
 		
-
-		public GradeDTO ObtenirGrade(int idGrade)
+		/// <summary>
+		/// Méthode de service permettant d'obtenir un grade.
+		/// </summary>
+		/// <param name="idGrade"></param>
+		/// <returns></returns>
+		public GradeDTO ObtenirGrade(string description)
 		{
-			GradeDTO gradeDTO = GradeRepository.Instance.ObtenirGrade(idGrade);
-			GradeModel grade = new GradeModel(gradeDTO.Description);
-			return new GradeDTO(grade);
+			GradeDTO gradeDTO = GradeRepository.Instance.ObtenirGrade(description);
+			return gradeDTO;
 		}
 
-
+		/// <summary>
+		/// Méthode de service permettant d'obtenir un grade.
+		/// </summary>
+		/// <param name="description"></param>
+		/// <returns></returns>
         public int ObtenirIdGrade(string description)
         {
 			return GradeRepository.Instance.ObtenirIdGrade(description);
 		}
-		
+		/// <summary>
+		/// Méthode de service permettant d'ajouter un grade.
+		/// </summary>
+		/// <param name="gradeDTO"></param>
+		/// <exception cref="Exception"></exception>
 		public void AjouterGrade(GradeDTO gradeDTO)
 		{
 			bool OK = false;
@@ -106,7 +121,12 @@ namespace ProjetPompier_API.Logics.Controleurs
 
 		}
 
-
+		/// <summary>
+		/// Méthode de service permettant de modifier un grade.
+		/// </summary>
+		/// <param name="descriptionAvantChangement"></param>
+		/// <param name="descriptionApresChangement"></param>
+		/// <exception cref="Exception"></exception>
 		public void ModifierGrade(string descriptionAvantChangement, string descriptionApresChangement)
 		{
 			GradeDTO gradeDTOBD = ObtenirGrade(ObtenirIdGrade(descriptionAvantChangement));
@@ -121,7 +141,11 @@ namespace ProjetPompier_API.Logics.Controleurs
 				throw new Exception("Erreur - Veuillez modifier au moins une valeur.");
 		}
 
-
+		/// <summary>
+		/// Méthode de service permettant de supprimer un grade.
+		/// </summary>
+		/// <param name="idGrade"></param>
+		/// <exception cref="Exception"></exception>
 		public void SupprimerGrade(int idGrade)
 		{
 			try

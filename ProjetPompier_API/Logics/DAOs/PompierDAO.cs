@@ -90,7 +90,13 @@ namespace ProjetPompier_API.Logics.DAOs
                 FermerConnexion();
             }
         }
-
+		/// <summary>
+		/// Méthode de service permettant d'obtenir le id d'un pompier par son matricule et sa caserne. 
+		/// </summary>
+		/// <param name="matricule"></param>
+		/// <param name="nomCaserne"></param>
+		/// <returns></returns>
+		/// <exception cref="Exception"></exception>
 		public int ObtenirIdPompier(int matricule, string nomCaserne)
 		{
 			SqlCommand command = new SqlCommand(" SELECT IdPompier " +
@@ -127,7 +133,13 @@ namespace ProjetPompier_API.Logics.DAOs
 			}
 		}
 
-
+		/// <summary>
+		/// Méthode de service permettant d'obtenir un pompier par son matricule et sa caserne.
+		/// </summary>
+		/// <param name="matricule"></param>
+		/// <param name="nomCaserne"></param>
+		/// <returns></returns>
+		/// <exception cref="Exception"></exception>
 		public PompierDTO ObtenirPompier(int matricule, string nomCaserne)
 		{
 			SqlCommand command = new SqlCommand(" SELECT * " +
@@ -165,6 +177,13 @@ namespace ProjetPompier_API.Logics.DAOs
 			}
 		}
 
+		/// <summary>
+		/// Méthode de service permettant d'ajouter un pompier.
+		/// </summary>
+		/// <param name="idCaserne"></param>
+		/// <param name="pompierDTO"></param>
+		/// <returns></returns>
+		/// <exception cref="DBUniqueException"></exception>
 		public bool AjouterPompier(int idCaserne, PompierDTO pompierDTO)
 		{
 			SqlCommand command = new SqlCommand(null, connexion);
@@ -208,7 +227,13 @@ namespace ProjetPompier_API.Logics.DAOs
 			}
 		}
 
-
+		/// <summary>
+		/// Méthode de service permettant de modifier un pompier.
+		/// </summary>
+		/// <param name="pompierDTO"></param>
+		/// <param name="nomCaserne"></param>
+		/// <returns></returns>
+		/// <exception cref="Exception"></exception>
 		public bool ModifierPompier(PompierDTO pompierDTO, string nomCaserne)
 		{
 			SqlCommand command = new SqlCommand(null, connexion);
@@ -255,7 +280,14 @@ namespace ProjetPompier_API.Logics.DAOs
 			return true;
 		}
 
-
+		/// <summary>
+		/// Méthode de service permettant de supprimer un pompier
+		/// </summary>
+		/// <param name="matricule"></param>
+		/// <param name="nomCaserne"></param>
+		/// <returns></returns>
+		/// <exception cref="DBRelationException"></exception>
+		/// <exception cref="Exception"></exception>
 		public bool SupprimerPompier(int matricule, string nomCaserne)
 		{
 			SqlCommand command = new SqlCommand(null, connexion);

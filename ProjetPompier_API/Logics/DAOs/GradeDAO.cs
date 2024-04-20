@@ -56,7 +56,7 @@ namespace ProjetPompier_API.Logics.DAOs
         /// <summary>
         /// Méthode de service permettant d'obtenir la liste des grades.
         /// </summary>
-        /// <returns>Liste des pompiers.</returns>
+        /// <returns>Liste des grades.</returns>
         public List<GradeDTO> ObtenirListeGrade()
         {
             SqlCommand command = new SqlCommand(" SELECT * " +
@@ -85,7 +85,12 @@ namespace ProjetPompier_API.Logics.DAOs
                 FermerConnexion();
             }
         }
-
+		/// <summary>
+		/// Méthode de service permettant d'obtenir l'id d'un grade par sa description.
+		/// </summary>
+		/// <param name="description"></param>
+		/// <returns></returns>
+		/// <exception cref="Exception"></exception>
 		public int ObtenirIdGrade(string description)
 		{
 			SqlCommand command = new SqlCommand(" SELECT Id " +
@@ -119,18 +124,23 @@ namespace ProjetPompier_API.Logics.DAOs
 			}
 		}
 
-
-		public GradeDTO ObtenirGrade(int id)
+		/// <summary>
+		/// Méthode de service permettant d'obtenir un grade par son Id.
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		/// <exception cref="Exception"></exception>
+		public GradeDTO ObtenirGrade(string description)
 		{
 			SqlCommand command = new SqlCommand(" SELECT * " +
 												" FROM T_Grades " +
-												" WHERE Id = @Id", connexion);
+												" WHERE Description = @description", connexion);
 
-			SqlParameter idParam = new SqlParameter("@id", SqlDbType.Int);
+			SqlParameter descriptionParam = new SqlParameter("@description", SqlDbType.VarChar, 200);
 
-			idParam.Value = id;
+			descriptionParam.Value = description;
 
-			command.Parameters.Add(idParam);
+			command.Parameters.Add(descriptionParam);
 
 			GradeDTO unGradeDTO;
 
@@ -152,7 +162,12 @@ namespace ProjetPompier_API.Logics.DAOs
 				FermerConnexion();
 			}
 		}
-
+		/// <summary>
+		/// Méthode de service permettant d'ajouter un grade.
+		/// </summary>
+		/// <param name="gradeDTO"></param>
+		/// <returns></returns>
+		/// <exception cref="DBUniqueException"></exception>
 		public bool AjouterGrade(GradeDTO gradeDTO)
 		{
 			SqlCommand command = new SqlCommand(null, connexion);
@@ -186,7 +201,13 @@ namespace ProjetPompier_API.Logics.DAOs
 			}
 		}
 
-
+		/// <summary>
+		/// Méthode de service permettant de modifier un grade.
+		/// </summary>
+		/// <param name="gradeDTO"></param>
+		/// <param name="nouvelleDescription"></param>
+		/// <returns></returns>
+		/// <exception cref="Exception"></exception>
 		public bool ModifierGrade(GradeDTO gradeDTO, string nouvelleDescription)
 		{
 			SqlCommand command = new SqlCommand(null, connexion);
@@ -224,7 +245,13 @@ namespace ProjetPompier_API.Logics.DAOs
 			return true;
 		}
 
-
+		/// <summary>
+		/// Méthode de service permettant de supprimer un grade.
+		/// </summary>
+		/// <param name="idGrade"></param>
+		/// <returns></returns>
+		/// <exception cref="DBRelationException"></exception>
+		/// <exception cref="Exception"></exception>
 		public bool SupprimerGrade(int idGrade)
 		{
 			SqlCommand command = new SqlCommand(null, connexion);

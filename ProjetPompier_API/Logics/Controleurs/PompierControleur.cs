@@ -93,8 +93,13 @@ namespace ProjetPompier_API.Logics.Controleurs
 
             
         }
-		
 
+		/// <summary>
+		/// Méthode de service permettant d'obtenir un pompier.
+		/// </summary>
+		/// <param name="matricule"></param>
+		/// <param name="nomCaserne"></param>
+		/// <returns></returns>
 		public PompierDTO ObtenirPompier(int matricule, string nomCaserne)
 		{
 			PompierDTO pompierDTO = PompierRepository.Instance.ObtenirPompier(matricule,nomCaserne);
@@ -102,8 +107,13 @@ namespace ProjetPompier_API.Logics.Controleurs
 			return new PompierDTO(pompier);
 		}
 
-
-        public int ObtenirIdPompier(int matricule, string nomCaserne)
+		/// <summary>
+		/// Méthode de service permettant d'obtenir l'id d'un pompier.
+		/// </summary>
+		/// <param name="matricule"></param>
+		/// <param name="nomCaserne"></param>
+		/// <returns></returns>
+		public int ObtenirIdPompier(int matricule, string nomCaserne)
         {
 			return PompierRepository.Instance.ObtenirIdPompier(matricule, nomCaserne);
 		}
@@ -133,7 +143,12 @@ namespace ProjetPompier_API.Logics.Controleurs
 
 		}
 
-
+		/// <summary>
+		/// Méthode de service permettant de modifier un pompier.
+		/// </summary>
+		/// <param name="pompierDTO"></param>
+		/// <param name="nomCaserne"></param>
+		/// <exception cref="Exception"></exception>
 		public void ModifierPompier(PompierDTO pompierDTO, string nomCaserne)
 		{
 			PompierDTO pompierDTOBD = ObtenirPompier(pompierDTO.Matricule, nomCaserne);
@@ -145,7 +160,11 @@ namespace ProjetPompier_API.Logics.Controleurs
 				throw new Exception("Erreur - Veuillez modifier au moins une valeur.");
 		}
 
-
+		/// <summary>
+		/// Méthode de service permettant de supprimer un pompier.
+		/// </summary>
+		/// <param name="matricule"></param>
+		/// <param name="nomCaserne"></param>
 		public void SupprimerPompier(int matricule, string nomCaserne)
 		{
 			PompierDTO pompierDTOBD = ObtenirPompier(matricule, nomCaserne);
