@@ -75,7 +75,7 @@ namespace ProjetPompier_API.Logics.DAOs
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    PompierDTO pompierDTO = new PompierDTO(reader.GetInt32(1), GradeRepository.Instance.ObtenirGrade(reader.GetInt32(2)).Description, reader.GetString(3), reader.GetString(4));
+                    PompierDTO pompierDTO = new PompierDTO(reader.GetInt32(1), GradeRepository.Instance.ObtenirGradeParId(reader.GetInt32(2)).Description, reader.GetString(3), reader.GetString(4));
                     liste.Add(pompierDTO);
                 }
                 reader.Close();
@@ -162,7 +162,7 @@ namespace ProjetPompier_API.Logics.DAOs
 				OuvrirConnexion();
 				SqlDataReader reader = command.ExecuteReader();
 				reader.Read();
-				PompierDTO unPompier = new PompierDTO(reader.GetInt32(1), GradeRepository.Instance.ObtenirGrade(reader.GetInt32(2)).Description, reader.GetString(3), reader.GetString(4));
+				PompierDTO unPompier = new PompierDTO(reader.GetInt32(1), GradeRepository.Instance.ObtenirGradeParId(reader.GetInt32(2)).Description, reader.GetString(3), reader.GetString(4));
 				reader.Close();
 
 				return unPompier;

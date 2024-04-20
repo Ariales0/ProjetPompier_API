@@ -34,9 +34,9 @@ namespace ProjetPompier_API.Controllers
         /// <returns></returns>
 		[Route("Grade/ObtenirGrade")]
         [HttpGet]
-        public GradeDTO ObtenirGrade([FromQuery]int idGrade)
+        public GradeDTO ObtenirGrade([FromQuery]string description)
         {
-            return GradeControleur.Instance.ObtenirGrade(idGrade);
+            return GradeControleur.Instance.ObtenirGrade(description);
         }
 
         /// <summary>
@@ -71,9 +71,9 @@ namespace ProjetPompier_API.Controllers
 
         [Route("Grade/SupprimerGrade")]
         [HttpPost]
-        public void SupprimerGrade([FromQuery] int idGrade)
+        public void SupprimerGrade([FromQuery] string description)
         {
-			GradeControleur.Instance.SupprimerGrade(idGrade);
+			GradeControleur.Instance.SupprimerGrade(description);
         }
 
         /// <summary>

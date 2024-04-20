@@ -155,6 +155,39 @@ namespace ProjetPompier_API.Logics.DAOs
 			}
 			catch (Exception ex)
 			{
+				throw new Exception("Erreur lors de l'obtention d'un grade par sa description...", ex);
+			}
+			finally
+			{
+				FermerConnexion();
+			}
+		}
+
+		public GradeDTO ObtenirGradeParId(int id)
+		{
+			SqlCommand command = new SqlCommand(" SELECT * " +
+												" FROM T_Grades " +
+												" WHERE Id = @id", connexion);
+
+			SqlParameter idParam = new SqlParameter("@id", SqlDbType.Int);
+
+			idParam.Value = id;
+
+			command.Parameters.Add(idParam);
+
+			GradeDTO unGradeDTO;
+
+			try
+			{
+				OuvrirConnexion();
+				SqlDataReader reader = command.ExecuteReader();
+				reader.Read();
+				GradeDTO unGrade = new GradeDTO(reader.GetString(1));
+				reader.Close();
+				return unGrade;
+			}
+			catch (Exception ex)
+			{
 				throw new Exception("Erreur lors de l'obtention d'un grade par son Id...", ex);
 			}
 			finally
@@ -162,6 +195,7 @@ namespace ProjetPompier_API.Logics.DAOs
 				FermerConnexion();
 			}
 		}
+
 		/// <summary>
 		/// Méthode de service permettant d'ajouter un grade.
 		/// </summary>
@@ -252,19 +286,19 @@ namespace ProjetPompier_API.Logics.DAOs
 		/// <returns></returns>
 		/// <exception cref="DBRelationException"></exception>
 		/// <exception cref="Exception"></exception>
-		public bool SupprimerGrade(int idGrade)
+		public bool SupprimerGrade(string description)
 		{
 			SqlCommand command = new SqlCommand(null, connexion);
 
 			command.CommandText = " DELETE " +
 									" FROM T_Grades " +
-								   " WHERE Id = @idGrade";
+								   " WHERE Description = @descriptionGrade";
 
-			SqlParameter idGradeParam = new SqlParameter("@idGrade", SqlDbType.Int);
+			SqlParameter descriptionGradeParam = new SqlParameter("@descriptionGrade", SqlDbType.VarChar, 200);
 
-			idGradeParam.Value = idGrade;
+			descriptionGradeParam.Value = description;
 
-			command.Parameters.Add(idGradeParam);
+			command.Parameters.Add(descriptionGradeParam);
 
 			try
 			{

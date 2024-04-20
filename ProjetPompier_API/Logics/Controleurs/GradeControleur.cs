@@ -129,7 +129,7 @@ namespace ProjetPompier_API.Logics.Controleurs
 		/// <exception cref="Exception"></exception>
 		public void ModifierGrade(string descriptionAvantChangement, string descriptionApresChangement)
 		{
-			GradeDTO gradeDTOBD = ObtenirGrade(ObtenirIdGrade(descriptionAvantChangement));
+			GradeDTO gradeDTOBD = ObtenirGrade(descriptionAvantChangement);
 			GradeModel gradeBD = new GradeModel(descriptionApresChangement);
 
 			if (descriptionApresChangement != descriptionAvantChangement)
@@ -146,12 +146,12 @@ namespace ProjetPompier_API.Logics.Controleurs
 		/// </summary>
 		/// <param name="idGrade"></param>
 		/// <exception cref="Exception"></exception>
-		public void SupprimerGrade(int idGrade)
+		public void SupprimerGrade(string description)
 		{
 			try
 			{
-				GradeRepository.Instance.ObtenirGrade(idGrade);
-				GradeRepository.Instance.SupprimerGrade(idGrade);
+				GradeRepository.Instance.ObtenirGrade(description);
+				GradeRepository.Instance.SupprimerGrade(description);
 			}
 			catch (Exception)
 			{

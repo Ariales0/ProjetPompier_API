@@ -82,8 +82,8 @@ namespace TestUnitaireCaserneModele
 			//On recupere les grade deja existante
 			List<GradeDTO> nouvelleListeGrade = GradeControleur.Instance.ObtenirListeGrade();
 			int nouveauNombreDeGrade = nouvelleListeGrade.Count;
-
-            GradeControleur.Instance.SupprimerGrade(GradeControleur.Instance.ObtenirIdGrade("Test"));
+            
+            GradeControleur.Instance.SupprimerGrade("Test");
 			Assert.Equal(nombreDeGrade+1, nouveauNombreDeGrade);
         }
     }
