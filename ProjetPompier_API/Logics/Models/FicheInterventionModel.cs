@@ -12,15 +12,30 @@ namespace ProjetPompier_API.Logics.Models
         /// <summary>
         /// Attribut représentant la date et l'heure de l'intervention.
         /// </summary>
-        private string dateTemps;
+        private string dateDebut;
         /// <summary>
         /// Propriété représentant la date et l'heure de l'intervention.
         /// </summary>
         public string DateTemps
         {
-            get { return dateTemps; }
-            set { dateTemps = value; }
+            get { return dateDebut; }
+            set { dateDebut = value; }
         }
+
+        /// <summary>
+        /// Attribut représentant la date et l'heure de la fin de l'intervention.
+        /// </summary>
+        private string dateFin;
+
+        /// <summary>
+        /// Propriété représentant la date et l'heure de la fin de l'intervention.
+        /// </summary>
+        public string DateFin
+        {
+            get { return dateFin; }
+            set { dateFin = value; }
+        }
+
 
         /// <summary>
         /// Attribut représentant l'adresse de l'intervention.
@@ -105,13 +120,15 @@ namespace ProjetPompier_API.Logics.Models
         /// Constructeur paramétré
         /// </summary>
         /// <param name="dateTemps">Date et heure de l'intervention</param>
+        /// <param name="dateFin">Date et heure de fin de l'intervention/param>
         /// <param name="adresse">Adresse de l'intervention</param>
         /// <param name="typeIntervention">Type d'intervention</param>
         /// <param name="resume">Resumé de l'intervention</param>
         /// <param name="matriculeCapitaine">Matricule du pompier capitaine</param>
-        public FicheInterventionModel(string dateTemps = "1999-01-01 00:00:00", string adresse = "", string typeIntervention = "", string resume = "", int matriculeCapitaine = 000000)
+        public FicheInterventionModel(string dateDebut = "1999-01-01 00:00:00", string dateFin = "1999-01-01 00:00:00", string adresse = "", string typeIntervention = "", string resume = "", int matriculeCapitaine = 000000)
         {
-            DateTemps = dateTemps;
+            DateTemps = dateDebut;
+            DateFin = dateFin;
             Adresse = adresse;
             TypeIntervention = typeIntervention;
             Resume = resume;

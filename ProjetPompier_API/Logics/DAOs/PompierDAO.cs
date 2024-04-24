@@ -155,14 +155,14 @@ namespace ProjetPompier_API.Logics.DAOs
 			command.Parameters.Add(matriculeParam);
 			command.Parameters.Add(idCaserneParam);
 
-			CaserneDTO uneCaserne;
+			PompierDTO unPompier;
 
 			try
 			{
 				OuvrirConnexion();
 				SqlDataReader reader = command.ExecuteReader();
 				reader.Read();
-				PompierDTO unPompier = new PompierDTO(reader.GetInt32(1), GradeRepository.Instance.ObtenirGradeParId(reader.GetInt32(2)).Description, reader.GetString(3), reader.GetString(4));
+				unPompier = new PompierDTO(reader.GetInt32(1), GradeRepository.Instance.ObtenirGradeParId(reader.GetInt32(2)).Description, reader.GetString(3), reader.GetString(4));
 				reader.Close();
 
 				return unPompier;

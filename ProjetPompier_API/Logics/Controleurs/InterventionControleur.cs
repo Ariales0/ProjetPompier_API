@@ -61,13 +61,20 @@ namespace ProjetPompier_API.Logics.Controleurs
 
             foreach (FicheInterventionDTO ficheIntervention in listeFicheInterventionDTO)
             {
-                listeFicheIntervention.Add(new FicheInterventionModel(ficheIntervention.DateTemps, ficheIntervention.Adresse, ficheIntervention.TypeIntervention, ficheIntervention.Resume, ficheIntervention.MatriculeCapitaine));
+                listeFicheIntervention.Add(new FicheInterventionModel(ficheIntervention.DateDebut, ficheIntervention.DateFin, ficheIntervention.Adresse, ficheIntervention.TypeIntervention, ficheIntervention.Resume, ficheIntervention.MatriculeCapitaine));
             }
 
             if (listeFicheIntervention.Count == listeFicheInterventionDTO.Count)
                 return listeFicheInterventionDTO;
             else
                 throw new Exception("Erreur lors du chargement des fiches d'intevention de la caserne et du capitaine, problème avec l'intégrité des données de la base de données.");
+        }
+
+        public FicheInterventionDTO ObtenirFicheIntevention(string nomCaserne, int matriculeCapitaine)
+        {
+            FicheInterventionDTO ficheInterventionDTO = InterventionRepository.Instance.ObtenirFicheIntervention(nomCaserne, matriculeCapitaine);
+            FicheInterventionModel ficheIntervention = new FicheInterventionModel(ficheInterventionDTO.DateDebut, ficheInterventionDTO.DateFin, ficheInterventionDTO.Adresse, ficheInterventionDTO.TypeIntervention, ficheInterventionDTO.Resume, ficheInterventionDTO.MatriculeCapitaine);
+            return new FicheInterventionDTO(ficheIntervention);
         }
 
         /// <summary>
@@ -79,8 +86,21 @@ namespace ProjetPompier_API.Logics.Controleurs
         {
             try
             {
-                FicheInterventionModel uneFicheIntervention = new FicheInterventionModel(fiche.DateTemps, fiche.Adresse, fiche.TypeIntervention, fiche.Resume, fiche.MatriculeCapitaine);
+                FicheInterventionModel uneFicheIntervention = new FicheInterventionModel(fiche.DateDebut, fiche.DateFin, fiche.Adresse, fiche.TypeIntervention, fiche.Resume, fiche.MatriculeCapitaine);
                 InterventionRepository.Instance.OuvrirFicheIntervention(nomCaserne, fiche);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Erreur - Une fiche d'intervention existe deja a cette date.");
+            }
+        }
+
+        public void ModifierFicheIntervention(string nomCaserne, FicheInterventionDTO fiche)
+        {
+            try
+            {
+                FicheInterventionModel uneFicheIntervention = new FicheInterventionModel(fiche.DateDebut, fiche.DateFin, fiche.Adresse, fiche.TypeIntervention, fiche.Resume, fiche.MatriculeCapitaine);
+                InterventionRepository.Instance.ModifierIntervention(nomCaserne, fiche);
             }
             catch (Exception)
             {

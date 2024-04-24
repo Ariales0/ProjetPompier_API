@@ -58,7 +58,8 @@ namespace ProjetPompier_API.Logics.DAOs
         /// <returns>Liste des interventions.</returns>
         public List<FicheInterventionDTO> ObtenirListeFicheIntervention(string nomCaserne, int matriculeCapitaine)
         {
-            SqlCommand command = new SqlCommand(" SELECT T_FichesIntervention.DateTemps," +
+            SqlCommand command = new SqlCommand(" SELECT T_FichesIntervention.DateDebut," +
+                                                        "T_FichesIntervention.DateFin," +
                                                         "T_FichesIntervention.Adresse," +
                                                         "T_FichesIntervention.TypeIntervention," +
                                                         "T_FichesIntervention.Resume," +
@@ -90,9 +91,7 @@ namespace ProjetPompier_API.Logics.DAOs
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    DateTime dateTempsIntervention = reader.GetDateTime(0);
-                    string dateTempsInterventionSTR = dateTempsIntervention.ToString();
-                    FicheInterventionDTO ficheInterventionDTO = new FicheInterventionDTO(dateTempsInterventionSTR, reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4));
+                    FicheInterventionDTO ficheInterventionDTO = new FicheInterventionDTO(reader.GetDateTime(0).ToString(), reader.GetDateTime(1).ToString() ,reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5));
                     liste.Add(ficheInterventionDTO);
                 }
                 reader.Close();
@@ -101,6 +100,61 @@ namespace ProjetPompier_API.Logics.DAOs
             catch (Exception ex)
             {
                 throw new Exception("Erreur lors de l'obtention de la liste des interventions...", ex);
+            }
+            finally
+            {
+                FermerConnexion();
+            }
+        }
+
+        /// <summary>
+        /// Méthode de service permettant d'obtenir une fiche d'intervention.
+        /// </summary>
+        /// <param name="nomCaserne">Le nom de la caserne</param>
+        /// <param name="matriculeCapitaine">Le matricule du capitaine</param>
+        /// <returns>Retourne une FicheDTO</returns>
+        /// <exception cref="Exception"></exception>
+        public FicheInterventionDTO ObtenirFicheIntervention(string nomCaserne, int matriculeCapitaine)
+        {
+            SqlCommand command = new SqlCommand(" SELECT T_FichesIntervention.DateDebut," +
+                                            "T_FichesIntervention.DateFin, " +
+                                            "T_FichesIntervention.Adresse," +
+                                            "T_FichesIntervention.TypeIntervention," +
+                                            "T_FichesIntervention.Resume," +
+                                            "T_Pompiers.Matricule " +
+
+                                            "FROM T_Casernes " +
+                                            "INNER JOIN T_FichesIntervention " +
+                                            "ON T_Casernes.IdCaserne=T_FichesIntervention.IdCaserne " +
+                                            "INNER JOIN T_Pompiers " +
+                                            "ON T_FichesIntervention.IdPompier=T_Pompiers.IdPompier" +
+
+                                            " WHERE T_Casernes.Nom=@nomCaserne " +
+                                            "AND T_Pompiers.Matricule=@matriculeCapitaine; ", connexion);
+
+            SqlParameter matriculeParam = new SqlParameter("@matriculeCapitaine", SqlDbType.Int, 6);
+            SqlParameter nomCaserneParam = new SqlParameter("@nomCaserne", SqlDbType.VarChar, 100);
+
+            matriculeParam.Value = matriculeCapitaine;
+            nomCaserneParam.Value = nomCaserne;
+
+            command.Parameters.Add(matriculeParam);
+            command.Parameters.Add(nomCaserneParam);
+
+            FicheInterventionDTO uneFicheIntervention;
+
+            try
+            {
+                OuvrirConnexion();
+                SqlDataReader reader = command.ExecuteReader();
+                reader.Read();
+                uneFicheIntervention = new FicheInterventionDTO(reader.GetDateTime(0).ToString(), reader.GetDateTime(1).ToString(), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5));
+                reader.Close();
+                return uneFicheIntervention;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de l'obtention d'une fiche d'intervention...", ex);
             }
             finally
             {
@@ -122,26 +176,29 @@ namespace ProjetPompier_API.Logics.DAOs
             SqlCommand command = new SqlCommand(null, connexion);
 
             command.CommandText = " INSERT INTO T_FichesIntervention " +
-                                  "(DateTemps, Adresse, TypeIntervention, Resume, IdPompier, IdCaserne) " +
-                                  "SELECT @dateTemps, @adresse, @typeIntervention, @resume, T_Pompiers.IdPompier, T_Casernes.IdCaserne " +
+                                  "(DateDebut, DateFin ,Adresse, TypeIntervention, Resume, IdPompier, IdCaserne) " +
+                                  "SELECT @dateDebut, @dateFin, @adresse, @typeIntervention, @resume, T_Pompiers.IdPompier, T_Casernes.IdCaserne " +
                                   "FROM T_Pompiers, T_Casernes " +
                                   "WHERE T_Pompiers.Matricule = @matricule AND T_Casernes.Nom = @nomCaserne;";
 
-            SqlParameter dateTempsParam = new SqlParameter("@dateTemps", SqlDbType.DateTime);
+            SqlParameter dateDebutParam = new SqlParameter("@dateDebut", SqlDbType.DateTime);
+            SqlParameter dateFinParam = new SqlParameter("@dateFin", SqlDbType.DateTime);
             SqlParameter adresseParam = new SqlParameter("@adresse", SqlDbType.VarChar, 200);
             SqlParameter typeInterventionParam = new SqlParameter("@typeIntervention", SqlDbType.VarChar, 50);
             SqlParameter resumeParam = new SqlParameter("@resume", SqlDbType.VarChar, 500);
             SqlParameter matriculeParam = new SqlParameter("@matricule", SqlDbType.Int, 6);
             SqlParameter nomCaserneParam = new SqlParameter("@nomCaserne", SqlDbType.VarChar, 100);
 
-            dateTempsParam.Value = fiche.DateTemps;
+            dateDebutParam.Value = fiche.DateDebut;
+            dateFinParam.Value = fiche.DateFin;
             adresseParam.Value = fiche.Adresse;
             typeInterventionParam.Value = fiche.TypeIntervention;
             resumeParam.Value = fiche.Resume;
             matriculeParam.Value = fiche.MatriculeCapitaine;
             nomCaserneParam.Value = nomCaserne;
 
-            command.Parameters.Add(dateTempsParam);
+            command.Parameters.Add(dateDebutParam);
+            command.Parameters.Add(dateFinParam);
             command.Parameters.Add(adresseParam);
             command.Parameters.Add(typeInterventionParam);
             command.Parameters.Add(resumeParam);
@@ -164,6 +221,58 @@ namespace ProjetPompier_API.Logics.DAOs
             }
         }
 
+        public void ModifierIntervention(string nomCaserne, FicheInterventionDTO fiche)
+        {
+            SqlCommand command = new SqlCommand(null, connexion);
+
+            command.CommandText = " UPDATE T_FichesIntervention " +
+                                  "SET DateDebut = @dateDebut, " +
+                                  "DateFin = @dateFin, " +
+                                  "Adresse = @adresse, " +
+                                  "TypeIntervention = @typeIntervention, " +
+                                  "Resume = @resume " +
+                                  "WHERE IdPompier = (SELECT IdPompier FROM T_Pompiers WHERE Matricule = @matricule) " +
+                                  "AND IdCaserne = (SELECT IdCaserne FROM T_Casernes WHERE Nom = @nomCaserne);";
+
+            SqlParameter dateDebutParam = new SqlParameter("@dateDebut", SqlDbType.DateTime);
+            SqlParameter dateFinParam = new SqlParameter("@dateFin", SqlDbType.DateTime);
+            SqlParameter adresseParam = new SqlParameter("@adresse", SqlDbType.VarChar, 200);
+            SqlParameter typeInterventionParam = new SqlParameter("@typeIntervention", SqlDbType.VarChar, 50);
+            SqlParameter resumeParam = new SqlParameter("@resume", SqlDbType.VarChar, 500);
+            SqlParameter matriculeParam = new SqlParameter("@matricule", SqlDbType.Int, 6);
+            SqlParameter nomCaserneParam = new SqlParameter("@nomCaserne", SqlDbType.VarChar, 100);
+
+            dateDebutParam.Value = fiche.DateDebut;
+            dateFinParam.Value = fiche.DateFin;
+            adresseParam.Value = fiche.Adresse;
+            typeInterventionParam.Value = fiche.TypeIntervention;
+            resumeParam.Value = fiche.Resume;
+            matriculeParam.Value = fiche.MatriculeCapitaine;
+            nomCaserneParam.Value = nomCaserne;
+
+            command.Parameters.Add(dateDebutParam);
+            command.Parameters.Add(dateFinParam);
+            command.Parameters.Add(adresseParam);
+            command.Parameters.Add(typeInterventionParam);
+            command.Parameters.Add(resumeParam);
+            command.Parameters.Add(matriculeParam);
+            command.Parameters.Add(nomCaserneParam);
+
+            try
+            {
+                OuvrirConnexion();
+                command.Prepare();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw new DBUniqueException("Erreur lors de la modification d'une intervention...", ex);
+            }
+            finally
+            {
+                FermerConnexion();
+            }
+        }
 
         #endregion
 

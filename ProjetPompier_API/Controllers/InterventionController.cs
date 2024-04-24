@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProjetPompier_API.Logics.Controleurs;
-using ProjetPompier_API.Logics.DAOs;
 using ProjetPompier_API.Logics.DTOs;
-using ProjetPompier_API.Logics.Models;
 
 /// <summary>
 /// Namespace pour les classes de type Controller.
@@ -28,6 +26,13 @@ namespace ProjetPompier_API.Controllers
             return InterventionControleur.Instance.ObtenirListeFicheIntervention(nomCaserne, matriculeCapitaine);
         }
 
+        [Route("Intervention/ObtenirFicheIntervention")]
+        [HttpGet]
+        public FicheInterventionDTO ObtenirFicheIntervention([FromQuery] string nomCaserne, [FromQuery] int matriculeCapitaine)
+        {
+            return InterventionControleur.Instance.ObtenirFicheIntevention(nomCaserne, matriculeCapitaine);
+        }
+
         /// <summary>
         /// Méthode de service permettant d'ouvrir une fiche d'intervention'.
         /// </summary>
@@ -37,8 +42,14 @@ namespace ProjetPompier_API.Controllers
         [HttpPost]
         public void OuvrirFicheIntervention([FromQuery] string nomCaserne, [FromBody]  FicheInterventionDTO fiche)
         {
-            InterventionControleur.Instance.OuvrirFicheIntervention(nomCaserne, fiche);
+             InterventionControleur.Instance.OuvrirFicheIntervention(nomCaserne, fiche);
         }
 
+        [Route("Intervention/ModifierFicheIntervention")]
+        [HttpPost]
+        public void ModifierFicheIntervention([FromQuery] string nomCaserne, [FromBody]  FicheInterventionDTO fiche)
+        {
+            InterventionControleur.Instance.ModifierFicheIntervention(nomCaserne, fiche);
+        }
     }
 }
