@@ -70,9 +70,9 @@ namespace ProjetPompier_API.Logics.Controleurs
                 throw new Exception("Erreur lors du chargement des fiches d'intevention de la caserne et du capitaine, problème avec l'intégrité des données de la base de données.");
         }
 
-        public FicheInterventionDTO ObtenirFicheIntevention(string nomCaserne, int matriculeCapitaine)
+        public FicheInterventionDTO ObtenirFicheIntevention(string nomCaserne, int matriculeCapitaine, string dateIntervention)
         {
-            FicheInterventionDTO ficheInterventionDTO = InterventionRepository.Instance.ObtenirFicheIntervention(nomCaserne, matriculeCapitaine);
+            FicheInterventionDTO ficheInterventionDTO = InterventionRepository.Instance.ObtenirFicheIntervention(nomCaserne, matriculeCapitaine, dateIntervention);
             FicheInterventionModel ficheIntervention = new FicheInterventionModel(ficheInterventionDTO.DateDebut, ficheInterventionDTO.DateFin, ficheInterventionDTO.Adresse, ficheInterventionDTO.TypeIntervention, ficheInterventionDTO.Resume, ficheInterventionDTO.MatriculeCapitaine);
             return new FicheInterventionDTO(ficheIntervention);
         }
@@ -89,7 +89,7 @@ namespace ProjetPompier_API.Logics.Controleurs
                 FicheInterventionModel uneFicheIntervention = new FicheInterventionModel(fiche.DateDebut, fiche.DateFin, fiche.Adresse, fiche.TypeIntervention, fiche.Resume, fiche.MatriculeCapitaine);
                 InterventionRepository.Instance.OuvrirFicheIntervention(nomCaserne, fiche);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 throw new Exception("Erreur - Une fiche d'intervention existe deja a cette date.");
             }
@@ -102,7 +102,7 @@ namespace ProjetPompier_API.Logics.Controleurs
                 FicheInterventionModel uneFicheIntervention = new FicheInterventionModel(fiche.DateDebut, fiche.DateFin, fiche.Adresse, fiche.TypeIntervention, fiche.Resume, fiche.MatriculeCapitaine);
                 InterventionRepository.Instance.ModifierIntervention(nomCaserne, fiche);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 throw new Exception("Erreur - Une fiche d'intervention existe deja a cette date.");
             }

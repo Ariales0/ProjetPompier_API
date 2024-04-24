@@ -16,7 +16,7 @@ namespace ProjetPompier_API.Logics.Models
         /// <summary>
         /// Propriété représentant la date et l'heure de l'intervention.
         /// </summary>
-        public string DateTemps
+        public string DateDebut
         {
             get { return dateDebut; }
             set { dateDebut = value; }
@@ -119,15 +119,15 @@ namespace ProjetPompier_API.Logics.Models
         /// <summary>
         /// Constructeur paramétré
         /// </summary>
-        /// <param name="dateTemps">Date et heure de l'intervention</param>
+        /// <param name="DateDebut">Date et heure de l'intervention</param>
         /// <param name="dateFin">Date et heure de fin de l'intervention/param>
         /// <param name="adresse">Adresse de l'intervention</param>
         /// <param name="typeIntervention">Type d'intervention</param>
         /// <param name="resume">Resumé de l'intervention</param>
         /// <param name="matriculeCapitaine">Matricule du pompier capitaine</param>
-        public FicheInterventionModel(string dateDebut = "1999-01-01 00:00:00", string dateFin = "1999-01-01 00:00:00", string adresse = "", string typeIntervention = "", string resume = "", int matriculeCapitaine = 000000)
+        public FicheInterventionModel(string dateDebut = "1999-01-01 00:00:00", string dateFin = null, string adresse = "", string typeIntervention = "", string resume = "", int matriculeCapitaine = 000000)
         {
-            DateTemps = dateDebut;
+            DateDebut = dateDebut;
             DateFin = dateFin;
             Adresse = adresse;
             TypeIntervention = typeIntervention;

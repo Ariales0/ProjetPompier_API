@@ -91,7 +91,12 @@ namespace ProjetPompier_API.Logics.DAOs
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    FicheInterventionDTO ficheInterventionDTO = new FicheInterventionDTO(reader.GetDateTime(0).ToString(), reader.GetDateTime(1).ToString() ,reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5));
+                    string dateFin = "";
+                    if (!reader.IsDBNull(1))
+                    {
+                        dateFin = reader.GetDateTime(1).ToString();
+                    }
+                    FicheInterventionDTO ficheInterventionDTO = new FicheInterventionDTO(reader.GetDateTime(0).ToString(), dateFin ,reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5));
                     liste.Add(ficheInterventionDTO);
                 }
                 reader.Close();
@@ -114,7 +119,7 @@ namespace ProjetPompier_API.Logics.DAOs
         /// <param name="matriculeCapitaine">Le matricule du capitaine</param>
         /// <returns>Retourne une FicheDTO</returns>
         /// <exception cref="Exception"></exception>
-        public FicheInterventionDTO ObtenirFicheIntervention(string nomCaserne, int matriculeCapitaine)
+        public FicheInterventionDTO ObtenirFicheIntervention(string nomCaserne, int matriculeCapitaine, string dateIntervention)
         {
             SqlCommand command = new SqlCommand(" SELECT T_FichesIntervention.DateDebut," +
                                             "T_FichesIntervention.DateFin, " +
@@ -130,11 +135,15 @@ namespace ProjetPompier_API.Logics.DAOs
                                             "ON T_FichesIntervention.IdPompier=T_Pompiers.IdPompier" +
 
                                             " WHERE T_Casernes.Nom=@nomCaserne " +
-                                            "AND T_Pompiers.Matricule=@matriculeCapitaine; ", connexion);
+                                            "AND T_Pompiers.Matricule=@matriculeCapitaine; " +
+                                            "AND T_FichesIntervention.DateDebut=@dateIntervention)", connexion);
 
+
+            SqlParameter dateInterventionParam = new SqlParameter("@dateIntervention", SqlDbType.DateTime);
             SqlParameter matriculeParam = new SqlParameter("@matriculeCapitaine", SqlDbType.Int, 6);
             SqlParameter nomCaserneParam = new SqlParameter("@nomCaserne", SqlDbType.VarChar, 100);
 
+            dateInterventionParam.Value = dateIntervention;
             matriculeParam.Value = matriculeCapitaine;
             nomCaserneParam.Value = nomCaserne;
 
@@ -148,7 +157,12 @@ namespace ProjetPompier_API.Logics.DAOs
                 OuvrirConnexion();
                 SqlDataReader reader = command.ExecuteReader();
                 reader.Read();
-                uneFicheIntervention = new FicheInterventionDTO(reader.GetDateTime(0).ToString(), reader.GetDateTime(1).ToString(), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5));
+                string dateFin = "";
+                if (!reader.IsDBNull(1))
+                {
+                    dateFin = reader.GetDateTime(1).ToString();
+                }
+                uneFicheIntervention = new FicheInterventionDTO(reader.GetDateTime(0).ToString(), dateFin, reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5));
                 reader.Close();
                 return uneFicheIntervention;
             }

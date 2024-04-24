@@ -1,9 +1,11 @@
-﻿/// <summary>
+﻿
 
+
+using ProjetPompier_API.Logics.Models;
+
+/// <summary>
 /// Namespace pour les classe de type DTOs.
-
 /// </summary>
-
 namespace ProjetPompier_API.Logics.DTOs
 
 {
@@ -99,7 +101,7 @@ namespace ProjetPompier_API.Logics.DTOs
 
         /// <param name="matriculeCapitaine">Matricule du pompier capitaine</param>
 
-        public FicheInterventionDTO(string dateDebut = "1999-01-01 00:00:00", string dateFin = "1999-01-01 00:00:00", string adresse = "", string typeIntervention = "", string resume = "", int matriculeCapitaine = 000000)
+        public FicheInterventionDTO(string dateDebut = "1999-01-01 00:00:00", string dateFin = null, string adresse = "", string typeIntervention = "", string resume = "", int matriculeCapitaine = 000000)
 
         {
 
@@ -114,6 +116,28 @@ namespace ProjetPompier_API.Logics.DTOs
             Resume = resume;
 
             MatriculeCapitaine = matriculeCapitaine;
+
+        }
+
+        /// <summary>
+        /// Constructeur avec le modèle FicheInterventionModel en paramètre.
+        /// </summary>
+        /// <param name="laFiche">Le model fiche</param>
+        public FicheInterventionDTO(FicheInterventionModel laFiche)
+
+        {
+
+            DateDebut = laFiche.DateDebut;
+
+            DateFin = laFiche.DateFin;
+
+            Adresse = laFiche.Adresse;
+
+            TypeIntervention = laFiche.TypeIntervention;
+
+            Resume = laFiche.Resume;
+
+            MatriculeCapitaine = laFiche.MatriculeCapitaine;
 
         }
 
