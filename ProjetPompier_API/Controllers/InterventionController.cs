@@ -30,7 +30,7 @@ namespace ProjetPompier_API.Controllers
         [HttpGet]
         public FicheInterventionDTO ObtenirFicheIntervention([FromQuery] string nomCaserne, [FromQuery] int matriculeCapitaine, [FromQuery] string dateIntervention)
         {
-            return InterventionControleur.Instance.ObtenirFicheIntevention(nomCaserne, matriculeCapitaine);
+            return InterventionControleur.Instance.ObtenirFicheIntevention(nomCaserne, matriculeCapitaine, dateIntervention);
         }
 
         /// <summary>
