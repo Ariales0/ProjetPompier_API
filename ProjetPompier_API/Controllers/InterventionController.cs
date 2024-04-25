@@ -51,5 +51,12 @@ namespace ProjetPompier_API.Controllers
         {
             InterventionControleur.Instance.ModifierFicheIntervention(nomCaserne, fiche);
         }
+
+        [Route("Intervention/FermerFicheIntervention")]
+        [HttpPost]
+        public void FermerFicheIntervention([FromQuery] string nomCaserne, [FromBody] FicheInterventionDTO fiche)
+        {
+            
+        }
     }
 }

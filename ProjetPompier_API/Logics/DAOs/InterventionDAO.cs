@@ -243,7 +243,6 @@ namespace ProjetPompier_API.Logics.DAOs
 
             command.CommandText = " UPDATE T_FichesIntervention " +
                                   "SET DateDebut = @dateDebut, " +
-                                  "DateFin = @dateFin, " +
                                   "Adresse = @adresse, " +
                                   "TypeIntervention = @typeIntervention, " +
                                   "Resume = @resume " +
@@ -251,15 +250,14 @@ namespace ProjetPompier_API.Logics.DAOs
                                   "AND IdCaserne = (SELECT IdCaserne FROM T_Casernes WHERE Nom = @nomCaserne);";
 
             SqlParameter dateDebutParam = new SqlParameter("@dateDebut", SqlDbType.DateTime);
-            SqlParameter dateFinParam = new SqlParameter("@dateFin", SqlDbType.DateTime);
             SqlParameter adresseParam = new SqlParameter("@adresse", SqlDbType.VarChar, 200);
             SqlParameter typeInterventionParam = new SqlParameter("@typeIntervention", SqlDbType.VarChar, 50);
             SqlParameter resumeParam = new SqlParameter("@resume", SqlDbType.VarChar, 500);
             SqlParameter matriculeParam = new SqlParameter("@matricule", SqlDbType.Int, 6);
             SqlParameter nomCaserneParam = new SqlParameter("@nomCaserne", SqlDbType.VarChar, 100);
 
+            
             dateDebutParam.Value = fiche.DateDebut;
-            dateFinParam.Value = fiche.DateFin;
             adresseParam.Value = fiche.Adresse;
             typeInterventionParam.Value = fiche.TypeIntervention;
             resumeParam.Value = fiche.Resume;
@@ -267,7 +265,6 @@ namespace ProjetPompier_API.Logics.DAOs
             nomCaserneParam.Value = nomCaserne;
 
             command.Parameters.Add(dateDebutParam);
-            command.Parameters.Add(dateFinParam);
             command.Parameters.Add(adresseParam);
             command.Parameters.Add(typeInterventionParam);
             command.Parameters.Add(resumeParam);
@@ -283,6 +280,48 @@ namespace ProjetPompier_API.Logics.DAOs
             catch (Exception ex)
             {
                 throw new DBUniqueException("Erreur lors de la modification d'une intervention...", ex);
+            }
+            finally
+            {
+                FermerConnexion();
+            }
+        }
+
+        public void FermerFicheIntervention(string nomCaserne, FicheInterventionDTO fiche)
+        {
+            SqlCommand command = new SqlCommand(null, connexion);
+
+            command.CommandText = " UPDATE T_FichesIntervention " +
+                                  "SET DateFin = @dateFin " +
+                                  "WHERE IdPompier = (SELECT IdPompier FROM T_Pompiers WHERE Matricule = @matricule) " +
+                                  "AND IdCaserne = (SELECT IdCaserne FROM T_Casernes WHERE Nom = @nomCaserne);";
+
+            SqlParameter dateFinParam = new SqlParameter("@dateFin", SqlDbType.DateTime);
+            SqlParameter matriculeParam = new SqlParameter("@matricule", SqlDbType.Int, 6);
+            SqlParameter nomCaserneParam = new SqlParameter("@nomCaserne", SqlDbType.VarChar, 100);
+
+            if (fiche.DateFin == null)
+            {
+                throw new Exception("Erreur - La date de fin de l'intervention est null.");
+            }
+
+            dateFinParam.Value = fiche.DateFin;
+            matriculeParam.Value = fiche.MatriculeCapitaine;
+            nomCaserneParam.Value = nomCaserne;
+
+            command.Parameters.Add(dateFinParam);
+            command.Parameters.Add(matriculeParam);
+            command.Parameters.Add(nomCaserneParam);
+
+            try
+            {
+                OuvrirConnexion();
+                command.Prepare();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw new DBUniqueException("Erreur lors de la fermeture d'une intervention...", ex);
             }
             finally
             {
