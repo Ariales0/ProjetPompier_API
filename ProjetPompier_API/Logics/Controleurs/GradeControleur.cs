@@ -1,8 +1,6 @@
-﻿using ProjetPompier_API.DTOs;
-using ProjetPompier_API.Logics.DAOs;
+﻿using ProjetPompier_API.Logics.DAOs;
 using ProjetPompier_API.Logics.DTOs;
 using ProjetPompier_API.Logics.Models;
-using System.Diagnostics;
 
 /// <summary>
 /// Namespace pour les classes de type Controleur.
@@ -85,15 +83,6 @@ namespace ProjetPompier_API.Logics.Controleurs
 			return gradeDTO;
 		}
 
-		/// <summary>
-		/// Méthode de service permettant d'obtenir un grade.
-		/// </summary>
-		/// <param name="description"></param>
-		/// <returns></returns>
-        public int ObtenirIdGrade(string description)
-        {
-			return GradeRepository.Instance.ObtenirIdGrade(description);
-		}
 		/// <summary>
 		/// Méthode de service permettant d'ajouter un grade.
 		/// </summary>

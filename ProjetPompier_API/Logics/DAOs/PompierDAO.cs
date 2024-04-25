@@ -1,7 +1,7 @@
 ﻿using System.Data.SqlClient;
 using System.Data;
+
 using ProjetPompier_API.Logics.DTOs;
-using ProjetPompier_API.Logics.DAOs;
 using ProjetPompier_API.Logics.Exceptions;
 
 /// <summary>

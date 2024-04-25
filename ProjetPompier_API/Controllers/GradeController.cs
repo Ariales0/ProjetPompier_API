@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ProjetPompier_API.DTOs;
 using ProjetPompier_API.Logics.Controleurs;
-using ProjetPompier_API.Logics.DAOs;
 using ProjetPompier_API.Logics.DTOs;
 
 /// <summary>

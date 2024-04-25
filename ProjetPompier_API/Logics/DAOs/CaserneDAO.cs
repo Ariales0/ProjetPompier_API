@@ -1,5 +1,6 @@
 ﻿using System.Data.SqlClient;
 using System.Data;
+
 using ProjetPompier_API.Logics.DTOs;
 using ProjetPompier_API.Logics.Exceptions;
 
@@ -131,7 +132,7 @@ namespace ProjetPompier_API.Logics.DAOs
         {
             SqlCommand command = new SqlCommand(" SELECT * " +
                                                 " FROM T_Casernes " +
-                                                " WHERE nom = @nom ", connexion);
+                                                " WHERE Nom = @nom ", connexion);
 
             SqlParameter nomCaserneParam = new SqlParameter("@nom", SqlDbType.VarChar, 100);
 
@@ -261,7 +262,7 @@ namespace ProjetPompier_API.Logics.DAOs
         /// <summary>
         /// Méthode de service permettant de supprimer une caserne.
         /// </summary>
-        /// <param name="caserneDTO">Le DTO d'une caserne.</param>
+        /// <param name="nomCaserne">Le nom de la caserne.</param>
         public bool SupprimerCaserne(string nomCaserne)
         {
             SqlCommand command = new SqlCommand(null, connexion);

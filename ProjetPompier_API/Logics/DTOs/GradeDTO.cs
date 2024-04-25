@@ -2,7 +2,7 @@
 /// <summary>
 /// Namespace pour les classe de type DTOs.
 /// </summary>
-namespace ProjetPompier_API.DTOs
+namespace ProjetPompier_API.Logics.DTOs
 {
 	/// <summary>
 	/// Classe représentant le DTO d'un grade.
