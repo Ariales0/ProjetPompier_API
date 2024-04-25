@@ -45,6 +45,11 @@ namespace ProjetPompier_API.Logics.Controleurs
 
         #region Methodes
 
+        /// <summary>
+        /// Methode permettant d'obtenir la liste des types de véhicule.
+        /// </summary>
+        /// <returns>Retourne la liste des types</returns>
+        /// <exception cref="Exception"></exception>
         public List<TypesVehiculeDTO> ObtenirListeTypesVehicule()
         {
             List<TypesVehiculeDTO> listeTypesVehiculeDTO = TypesVehiculeRepository.Instance.ObtenirListeTypesVehicule();
@@ -63,6 +68,12 @@ namespace ProjetPompier_API.Logics.Controleurs
             return listeTypesVehiculeDTO;
         }
 
+        /// <summary>
+        /// Methode permettant d'obtenir un type de véhicule.   
+        /// </summary>
+        /// <param name="code">Le code du type</param>
+        /// <returns>Retourne Le typeVehicule</returns>
+        /// <exception cref="Exception"></exception>
         public TypesVehiculeDTO ObtenirTypeVehicule(int code)
         {
             TypesVehiculeDTO typeVehiculeDTO = TypesVehiculeRepository.Instance.ObtenirTypeVehicule(code);
@@ -75,6 +86,11 @@ namespace ProjetPompier_API.Logics.Controleurs
             return typeVehiculeDTO;
         }   
 
+        /// <summary>
+        /// Methodes permettant d'ajouter un type de véhicule.
+        /// </summary>
+        /// <param name="typeVehiculeDTO">Le type vehiculeDTO</param>
+        /// <exception cref="Exception"></exception>
         public void AjouterTypeVehicule(TypesVehiculeDTO typeVehiculeDTO)
         {
             bool OK = false;
@@ -96,6 +112,11 @@ namespace ProjetPompier_API.Logics.Controleurs
             }
         }
 
+        /// <summary>
+        /// Methode permettant de modifier un type de véhicule.
+        /// </summary>
+        /// <param name="typeVehiculeDTO">Le type vehiculeDTO</param>
+        /// <exception cref="Exception"></exception>
         public void ModifierTypeVehicule(TypesVehiculeDTO typeVehiculeDTO)
         {
             TypesVehiculeDTO typesVehiculeBD = TypesVehiculeRepository.Instance.ObtenirTypeVehicule(typeVehiculeDTO.Code);
@@ -109,11 +130,19 @@ namespace ProjetPompier_API.Logics.Controleurs
             }
         }
 
+        /// <summary>
+        /// Methode permettant de supprimer un type de véhicule.
+        /// </summary>
+        /// <param name="code">Le code du type</param>
         public void SupprimerTypeVehicule(int code)
         {
             TypesVehiculeRepository.Instance.SupprimerTypeVehicule(code);
         }
 
+        /// <summary>
+        /// Methode permettant de vider la liste des types de véhicule.
+        /// </summary>
+        /// <exception cref="Exception"></exception>
         public void ViderListeTypesVehicule()
         {
             if (TypesVehiculeRepository.Instance.ObtenirListeTypesVehicule().Count == 0)

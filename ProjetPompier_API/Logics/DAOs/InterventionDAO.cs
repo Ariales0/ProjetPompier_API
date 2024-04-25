@@ -237,6 +237,12 @@ namespace ProjetPompier_API.Logics.DAOs
             }
         }
 
+        /// <summary>
+        /// Méthode de service permettant de modifier une intervention.
+        /// </summary>
+        /// <param name="nomCaserne">Le nom de la caserne</param>
+        /// <param name="fiche">La ficheDTO</param>
+        /// <exception cref="DBUniqueException"></exception>
         public void ModifierIntervention(string nomCaserne, FicheInterventionDTO fiche)
         {
             SqlCommand command = new SqlCommand(null, connexion);
@@ -289,6 +295,13 @@ namespace ProjetPompier_API.Logics.DAOs
             }
         }
 
+        /// <summary>
+        /// Méthode de service permettant de fermer une fiche d'intervention dans une caserne.
+        /// </summary>
+        /// <param name="nomCaserne">Le nom de la caserne</param>
+        /// <param name="fiche">La ficheDTO</param>
+        /// <exception cref="Exception"></exception>
+        /// <exception cref="DBUniqueException"></exception>
         public void FermerFicheIntervention(string nomCaserne, FicheInterventionDTO fiche)
         {
             SqlCommand command = new SqlCommand(null, connexion);

@@ -71,7 +71,13 @@
             }
         }
 
+        /// <summary>
+        /// Attribute de l'année du véhicule.
+        /// </summary>
         private int annee;
+        /// <summary>
+        /// Propriete de l'année du véhicule.
+        /// </summary>
         public int Annee
         {
             get { return annee; }
@@ -88,6 +94,14 @@
 
         #region Constructeurs
 
+        /// <summary>
+        /// Constructeur par defaut.
+        /// </summary>
+        /// <param name="vin">Le vin</param>
+        /// <param name="typeVehicule">Le type de vehicule</param>
+        /// <param name="marque">La marque</param>
+        /// <param name="modele">Le modele</param>
+        /// <param name="annee">L'annee</param>
         public VehiculeModel(string vin = "", string typeVehicule = "", string marque = "", string modele = "", int annee = 0000)
         {
             Vin = vin;

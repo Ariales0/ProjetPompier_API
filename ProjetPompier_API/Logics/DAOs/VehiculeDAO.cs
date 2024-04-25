@@ -45,6 +45,12 @@ namespace ProjetPompier_API.Logics.DAOs
 
         #region MethodesService
 
+        /// <summary>
+        /// Methode permettant d'obtenir la liste des vehicules.
+        /// </summary>
+        /// <param name="nomCaserne">Le nom de la caserne</param>
+        /// <returns>Retourne la liste des vehicules</returns>
+        /// <exception cref="Exception"></exception>
         public List<VehiculeDTO> ObtenirListeVehicules(string nomCaserne)
         {
             SqlCommand command = new SqlCommand(" SELECT * " +
@@ -80,6 +86,13 @@ namespace ProjetPompier_API.Logics.DAOs
             }
         }
 
+        /// <summary>
+        /// Methodes permettant d'obtenir l'id d'un vehicule par son vin.
+        /// </summary>
+        /// <param name="nomCaserne">Le nom de la caserne</param>
+        /// <param name="vinVehicule">Le vin du vehicule</param>
+        /// <returns>Retourne le id</returns>
+        /// <exception cref="Exception"></exception>
         public int ObtenirIdVehicule(string nomCaserne ,string vinVehicule)
         {
             SqlCommand command = new SqlCommand(" SELECT IdVehicule " +
@@ -111,6 +124,13 @@ namespace ProjetPompier_API.Logics.DAOs
             }
         }
 
+        /// <summary>
+        /// Methode permettant d'obtenir un vehicule.
+        /// </summary>
+        /// <param name="nomCaserne">Le nom de la caserne</param>
+        /// <param name="vinVehicule">Le vin du vehicule</param>
+        /// <returns>Retourne le vehicule</returns>
+        /// <exception cref="Exception"></exception>
         public VehiculeDTO ObtenirVehicule(string nomCaserne, string vinVehicule)
         {
             SqlCommand command = new SqlCommand(" SELECT * " +
@@ -143,6 +163,13 @@ namespace ProjetPompier_API.Logics.DAOs
             }
         }
 
+        /// <summary>
+        /// Methodes permettant d'ajouter un vehicule.
+        /// </summary>
+        /// <param name="nomCaserne">Le nom de la caserne</param>
+        /// <param name="codeVehicule">Le code de type de vehicule</param>
+        /// <param name="vehiculeDTO">Le DTO du vehicule</param>
+        /// <exception cref="Exception"></exception>
         public void AjouterVehicule(string nomCaserne, int codeVehicule, VehiculeDTO vehiculeDTO)
         {
             SqlCommand command = new SqlCommand(" INSERT INTO T_Vehicules (Vin, IdTypeVehicule, Marque, Modele, Annee, IdCaserne) " +
@@ -184,6 +211,13 @@ namespace ProjetPompier_API.Logics.DAOs
             }
         }
 
+        /// <summary>
+        /// Methodes permettant de modifier un vehicule.
+        /// </summary>
+        /// <param name="nomCaserne">Le nom de la caserne</param>
+        /// <param name="codeVehicule">Le xode de type de vehicule</param>
+        /// <param name="vehiculeDTO">Le DTO du vehicule</param>
+        /// <exception cref="Exception"></exception>
         public void ModifierVehicule(string nomCaserne, int codeVehicule,VehiculeDTO vehiculeDTO)
         {
             SqlCommand command = new SqlCommand(" UPDATE T_Vehicules " +
@@ -227,6 +261,12 @@ namespace ProjetPompier_API.Logics.DAOs
             }
         }
 
+        /// <summary>
+        /// methodes permettant de supprimer un vehicule.
+        /// </summary>
+        /// <param name="nomCaserne">Le nom de la caserne</param>
+        /// <param name="vinVehicule">Le vin du vehicule</param>
+        /// <exception cref="Exception"></exception>
         public void SupprimerVehicule(string nomCaserne, string vinVehicule)
         {
             SqlCommand command = new SqlCommand(" DELETE FROM T_Vehicules " +
@@ -257,6 +297,11 @@ namespace ProjetPompier_API.Logics.DAOs
             }
         }
 
+        /// <summary>
+        /// Methode permettant de vider la liste des vehicules.
+        /// </summary>
+        /// <param name="nomCaserne">Le nom de la caserne</param>
+        /// <exception cref="Exception"></exception>
         public void ViderListeVehicules(string nomCaserne)
         {
             SqlCommand command = new SqlCommand(" DELETE FROM T_Vehicules " +

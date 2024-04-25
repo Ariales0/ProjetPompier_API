@@ -95,6 +95,12 @@ namespace ProjetPompier_API.Logics.Controleurs
             }
         }
 
+        /// <summary>
+        /// Méthode de service permettant de modifier une fiche d'intervention dans une caserne.
+        /// </summary>
+        /// <param name="nomCaserne">Le nom de la caserne</param>
+        /// <param name="fiche">La ficheDTO</param>
+        /// <exception cref="Exception"></exception>
         public void ModifierFicheIntervention(string nomCaserne, FicheInterventionDTO fiche)
         {
             try
@@ -108,6 +114,12 @@ namespace ProjetPompier_API.Logics.Controleurs
             }
         }
 
+        /// <summary>
+        /// Méthode de service permettant de fermer une fiche d'intervention dans une caserne.
+        /// </summary>
+        /// <param name="nomCaserne">Le nom de la caserne</param>
+        /// <param name="fiche">La ficheDTO</param>
+        /// <exception cref="Exception"></exception>
         public void FermerFicheIntervention(string nomCaserne, FicheInterventionDTO fiche)
         {
             if (fiche.DateFin == null)

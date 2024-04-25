@@ -4,8 +4,14 @@
     {
 
         #region AttributsProprietes
-        private int code;
 
+        /// <summary>
+        /// Attribute du code du type de véhicule.
+        /// </summary>
+        private int code;
+        /// <summary>
+        /// Propriete du code du type de véhicule.
+        /// </summary>
 		public int Code
 		{
 			get { return code; }
@@ -18,8 +24,13 @@
 			}
 		}
 
+        /// <summary>
+        /// Attribute du type de véhicule.
+        /// </summary>
 		private string type;
-
+        /// <summary>
+        /// Propriete du type de véhicule.
+        /// </summary>
 		public string Type
 		{
 			get { return type; }
@@ -32,8 +43,13 @@
 			}
 		}
 
+        /// <summary>
+        /// attribute du nombre de personne du type de véhicule.
+        /// </summary>
 		private int nombrePersonne;
-
+        /// <summary>
+        /// Propriete du nombre de personne du type de véhicule.
+        /// </summary>
 		public int NombrePersonne
 		{
             get { return nombrePersonne; }
@@ -49,6 +65,12 @@
 
         #region Constructeurs
 
+        /// <summary>
+        /// Constructeur par defaut.
+        /// </summary>
+        /// <param name="code">Le code</param>
+        /// <param name="type">Le type</param>
+        /// <param name="personnes">Le nombre de personnes</param>
         public TypesVehiculeModel(int code = 0000, string type = "", int personnes = 0)
         {
             Code = code;
