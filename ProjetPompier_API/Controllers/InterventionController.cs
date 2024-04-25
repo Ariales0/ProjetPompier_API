@@ -56,7 +56,7 @@ namespace ProjetPompier_API.Controllers
         [HttpPost]
         public void FermerFicheIntervention([FromQuery] string nomCaserne, [FromBody] FicheInterventionDTO fiche)
         {
-            
+            InterventionControleur.Instance.FermerFicheIntervention(nomCaserne, fiche);
         }
     }
 }

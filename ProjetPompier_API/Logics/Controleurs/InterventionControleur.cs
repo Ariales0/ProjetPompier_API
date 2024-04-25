@@ -110,15 +110,23 @@ namespace ProjetPompier_API.Logics.Controleurs
 
         public void FermerFicheIntervention(string nomCaserne, FicheInterventionDTO fiche)
         {
-            try
+            if (fiche.DateFin == null)
             {
-                FicheInterventionModel uneFicheIntervention = new FicheInterventionModel(fiche.DateDebut, fiche.DateFin, fiche.Adresse, fiche.TypeIntervention, fiche.Resume, fiche.MatriculeCapitaine);
-                InterventionRepository.Instance.FermerFicheIntervention(nomCaserne, fiche);
+                throw new Exception("Erreur - La date de fin de l'intervention est obligatoire.");
             }
-            catch (Exception e)
+            else
             {
-                throw new Exception("Erreur - La fiche est déja fermer.");
+                try
+                {
+                    FicheInterventionModel uneFicheIntervention = new FicheInterventionModel(fiche.DateDebut, fiche.DateFin, fiche.Adresse, fiche.TypeIntervention, fiche.Resume, fiche.MatriculeCapitaine);
+                    InterventionRepository.Instance.FermerFicheIntervention(nomCaserne, fiche);
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("Erreur - La fiche est déja fermer.");
+                }
             }
+
         }
 
         #endregion MethodesCaserne

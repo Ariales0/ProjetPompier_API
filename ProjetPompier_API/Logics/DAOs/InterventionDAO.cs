@@ -242,14 +242,14 @@ namespace ProjetPompier_API.Logics.DAOs
             SqlCommand command = new SqlCommand(null, connexion);
 
             command.CommandText = " UPDATE T_FichesIntervention " +
-                                  "SET DateDebut = @dateDebut, " +
-                                  "Adresse = @adresse, " +
+                                  "SET Adresse = @adresse, " +
                                   "TypeIntervention = @typeIntervention, " +
                                   "Resume = @resume " +
                                   "WHERE IdPompier = (SELECT IdPompier FROM T_Pompiers WHERE Matricule = @matricule) " +
                                   "AND IdCaserne = (SELECT IdCaserne FROM T_Casernes WHERE Nom = @nomCaserne);";
 
             SqlParameter dateDebutParam = new SqlParameter("@dateDebut", SqlDbType.DateTime);
+            SqlParameter dateFinParam = new SqlParameter("@dateFin", SqlDbType.DateTime);
             SqlParameter adresseParam = new SqlParameter("@adresse", SqlDbType.VarChar, 200);
             SqlParameter typeInterventionParam = new SqlParameter("@typeIntervention", SqlDbType.VarChar, 50);
             SqlParameter resumeParam = new SqlParameter("@resume", SqlDbType.VarChar, 500);
@@ -258,6 +258,7 @@ namespace ProjetPompier_API.Logics.DAOs
 
             
             dateDebutParam.Value = fiche.DateDebut;
+            dateFinParam.Value = DBNull.Value;
             adresseParam.Value = fiche.Adresse;
             typeInterventionParam.Value = fiche.TypeIntervention;
             resumeParam.Value = fiche.Resume;
@@ -265,6 +266,7 @@ namespace ProjetPompier_API.Logics.DAOs
             nomCaserneParam.Value = nomCaserne;
 
             command.Parameters.Add(dateDebutParam);
+            command.Parameters.Add(dateFinParam);
             command.Parameters.Add(adresseParam);
             command.Parameters.Add(typeInterventionParam);
             command.Parameters.Add(resumeParam);
@@ -297,7 +299,7 @@ namespace ProjetPompier_API.Logics.DAOs
                                   "AND IdCaserne = (SELECT IdCaserne FROM T_Casernes WHERE Nom = @nomCaserne);";
 
             SqlParameter dateFinParam = new SqlParameter("@dateFin", SqlDbType.DateTime);
-            SqlParameter matriculeParam = new SqlParameter("@matricule", SqlDbType.Int, 6);
+            SqlParameter matriculeParam = new SqlParameter("@matricule", SqlDbType.Int);
             SqlParameter nomCaserneParam = new SqlParameter("@nomCaserne", SqlDbType.VarChar, 100);
 
             if (fiche.DateFin == null)
