@@ -35,7 +35,7 @@
             get { return marque; }
             set
             {
-                if (value.Length <= 15)
+                if (value.Length <= 30)
                     marque = value;
                 else
                     throw new Exception("La marque du véhicule doit avoir un maximum de 100 caractères.");
@@ -67,10 +67,10 @@
             get { return annee; }
             set
             {
-                if (value >= 1900 && value <= 2100)
+                if (value >= 1900 && value <= DateTime.Now.Year)
                     annee = value;
                 else
-                    throw new Exception("L'année du véhicule doit être entre 1900 et 2100.");
+                    throw new Exception("L'année du véhicule doit être entre 1900 et la date auctuelle.");
             }
         }
 
