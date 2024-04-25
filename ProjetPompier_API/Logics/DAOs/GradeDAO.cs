@@ -321,8 +321,41 @@ namespace ProjetPompier_API.Logics.DAOs
 			}
 		}
 
-		#endregion
+        public GradeDTO ObtenirGradeParId(int id)
+        {
+            SqlCommand command = new SqlCommand(" SELECT * " +
+                                                " FROM T_Grades " +
+                                                " WHERE IdGrade = @id", connexion);
+
+            SqlParameter idParam = new SqlParameter("@id", SqlDbType.Int);
+
+            idParam.Value = id;
+
+            command.Parameters.Add(idParam);
+
+            GradeDTO unGradeDTO;
+
+            try
+            {
+                OuvrirConnexion();
+                SqlDataReader reader = command.ExecuteReader();
+                reader.Read();
+                GradeDTO unGrade = new GradeDTO(reader.GetString(1));
+                reader.Close();
+                return unGrade;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de l'obtention d'un grade par son Id...", ex);
+            }
+            finally
+            {
+                FermerConnexion();
+            }
+        }
+
+        #endregion
 
 
-	}
+    }
 }
