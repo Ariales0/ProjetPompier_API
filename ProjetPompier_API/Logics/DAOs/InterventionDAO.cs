@@ -132,10 +132,10 @@ namespace ProjetPompier_API.Logics.DAOs
                                             "INNER JOIN T_FichesIntervention " +
                                             "ON T_Casernes.IdCaserne=T_FichesIntervention.IdCaserne " +
                                             "INNER JOIN T_Pompiers " +
-                                            "ON T_FichesIntervention.IdPompier=T_Pompiers.IdPompier" +
+                                            "ON T_FichesIntervention.IdPompier=T_Pompiers.IdPompier " +
 
-                                            " WHERE T_Casernes.Nom=@nomCaserne " +
-                                            "AND T_Pompiers.Matricule=@matriculeCapitaine; " +
+                                            "WHERE T_Casernes.Nom=@nomCaserne " +
+                                            "AND T_Pompiers.Matricule=@matriculeCapitaine " +
                                             "AND T_FichesIntervention.DateDebut=@dateIntervention)", connexion);
 
 

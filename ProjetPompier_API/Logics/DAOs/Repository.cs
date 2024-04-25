@@ -25,17 +25,17 @@ namespace ProjetPompier_API.Logics.DAOs
         /// </summary>
         protected Repository()
         {
-            ////Lyes
-            string utilisateur = "User Id=lyes2; ";
-            string motDePasse = "Password=Patate123;";
+            //////Lyes
+            //string utilisateur = "User Id=lyes2; ";
+            //string motDePasse = "Password=Patate123;";
 
             ////Vincent
             //string utilisateur = "User Id=vincent; ";
             //string motDePasse = "Password=Patate123;";
 
             //Quentin
-            // string utilisateur = "User Id=quentin; ";
-            //string motDePasse = "Password=password;";
+            string utilisateur = "User Id=quentin; ";
+            string motDePasse = "Password=password;";
 
             string ipServeur = "Server=127.0.0.1; ";
             string baseDeDonnees = "Database=ProjetPompier; ";
