@@ -136,7 +136,7 @@ namespace ProjetPompier_API.Logics.DAOs
 
                                             "WHERE T_Casernes.Nom=@nomCaserne " +
                                             "AND T_Pompiers.Matricule=@matriculeCapitaine " +
-                                            "AND T_FichesIntervention.DateDebut=@dateIntervention)", connexion);
+                                            "AND T_FichesIntervention.DateDebut=@dateIntervention", connexion);
 
 
             SqlParameter dateInterventionParam = new SqlParameter("@dateIntervention", SqlDbType.DateTime);
