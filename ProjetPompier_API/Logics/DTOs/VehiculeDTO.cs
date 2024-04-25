@@ -15,7 +15,7 @@ public class VehiculeDTO
     /// <summary>
     /// Propriété représentant le VIN du véhicule.
     /// </summary>
-    public string VinVehicule { get; set; }
+    public string Vin { get; set; }
 
     /// <summary>
     /// Propriété représentant le type du véhicule.
@@ -47,9 +47,9 @@ public class VehiculeDTO
     }
 
 
-    public VehiculeDTO(string vinVehicule = "", string typeVehicule = "", string marque = "", string modele = "", int annee = 0000)
+    public VehiculeDTO(string vin = "", string typeVehicule = "", string marque = "", string modele = "", int annee = 0000)
     {
-	    VinVehicule = vinVehicule;
+	    Vin = vin;
         TypeVehicule = typeVehicule;
         Marque = marque;
         Modele = modele;
@@ -58,7 +58,7 @@ public class VehiculeDTO
 
     public VehiculeDTO(VehiculeModel leVehicule)
     {
-        VinVehicule = leVehicule.Vin;
+        Vin = leVehicule.Vin;
         TypeVehicule = leVehicule.TypeVehicule;
         Marque = leVehicule.Marque;
         Modele = leVehicule.Modele;

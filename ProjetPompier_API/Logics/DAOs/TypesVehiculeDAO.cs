@@ -80,6 +80,7 @@ namespace ProjetPompier_API.Logics.DAOs
                 FermerConnexion();
             }
         }
+        
 
         public int ObtenirIdTypeVehicule(int code)
         {
@@ -140,6 +141,39 @@ namespace ProjetPompier_API.Logics.DAOs
             catch (Exception ex)
             {
                 throw new Exception("Erreur lors de l'obtention d'un type de vehicule par son code...", ex);
+            }
+            finally
+            {
+                FermerConnexion();
+            }
+        }
+
+        public TypesVehiculeDTO ObtenirTypeVehiculeParId(int id)
+        {
+            SqlCommand command = new SqlCommand(" SELECT * " +
+                                                "  FROM T_TypesVehicule " +
+                                                " WHERE IdTypeVehicule = @id", connexion);
+
+            SqlParameter idParam = new SqlParameter("@id", SqlDbType.Int);
+
+            idParam.Value = id;
+
+            command.Parameters.Add(idParam);
+
+            TypesVehiculeDTO typeVehicule;
+
+            try
+            {
+                OuvrirConnexion();
+                SqlDataReader reader = command.ExecuteReader();
+                reader.Read();
+                typeVehicule = new TypesVehiculeDTO(reader.GetInt32(1), reader.GetString(2), reader.GetInt32(3));
+                reader.Close();
+                return typeVehicule;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de l'obtention d'un type de vehicule par son id...", ex);
             }
             finally
             {

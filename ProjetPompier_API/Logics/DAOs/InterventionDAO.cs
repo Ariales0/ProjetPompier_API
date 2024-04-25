@@ -204,12 +204,13 @@ namespace ProjetPompier_API.Logics.DAOs
             SqlParameter nomCaserneParam = new SqlParameter("@nomCaserne", SqlDbType.VarChar, 100);
 
             dateDebutParam.Value = fiche.DateDebut;
-            dateFinParam.Value = fiche.DateFin;
+            dateFinParam.Value =  DBNull.Value; 
             adresseParam.Value = fiche.Adresse;
             typeInterventionParam.Value = fiche.TypeIntervention;
             resumeParam.Value = fiche.Resume;
             matriculeParam.Value = fiche.MatriculeCapitaine;
             nomCaserneParam.Value = nomCaserne;
+
 
             command.Parameters.Add(dateDebutParam);
             command.Parameters.Add(dateFinParam);
