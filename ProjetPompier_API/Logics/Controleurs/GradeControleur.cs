@@ -1,5 +1,4 @@
-﻿using ProjetPompier_API.DTOs;
-using ProjetPompier_API.Logics.DAOs;
+﻿using ProjetPompier_API.Logics.DAOs;
 using ProjetPompier_API.Logics.DTOs;
 using ProjetPompier_API.Logics.Models;
 

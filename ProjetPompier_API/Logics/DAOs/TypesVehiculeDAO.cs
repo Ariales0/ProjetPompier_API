@@ -2,7 +2,6 @@
 using ProjetPompier_API.Logics.Exceptions;
 using System.Data.SqlClient;
 using System.Data;
-using ProjetPompier_API.DTOs;
 
 namespace ProjetPompier_API.Logics.DAOs
 {
@@ -55,7 +54,7 @@ namespace ProjetPompier_API.Logics.DAOs
         public List<TypesVehiculeDTO> ObtenirListeTypesVehicule()
         {
             SqlCommand command = new SqlCommand("SELECT * " +
-                                                "  FROM TypesVehicule", connexion);
+                                                "  FROM T_TypesVehicule", connexion);
 
             List<TypesVehiculeDTO> listeTypesVehicule = new List<TypesVehiculeDTO>();
 
@@ -85,7 +84,7 @@ namespace ProjetPompier_API.Logics.DAOs
         public int ObtenirIdTypeVehicule(int code)
         {
             SqlCommand command = new SqlCommand(" SELECT * " +
-                                                 "  FROM TypesVehicule " +
+                                                 "  FROM T_TypesVehicule " +
                                                  " WHERE Code = @code", connexion);
 
             SqlParameter paramCode = new SqlParameter("@code", SqlDbType.Int);
@@ -118,14 +117,14 @@ namespace ProjetPompier_API.Logics.DAOs
         public TypesVehiculeDTO ObtenirTypeVehicule(int code)
         {
             SqlCommand command = new SqlCommand(" SELECT * " +
-                                                 "  FROM TypesVehicule " +
+                                                 "  FROM T_TypesVehicule " +
                                                  " WHERE Code = @code", connexion);
 
-            SqlParameter idParam = new SqlParameter("@id", SqlDbType.Int);
+            SqlParameter codeParam = new SqlParameter("@code", SqlDbType.Int);
 
-            idParam.Value = code;
+            codeParam.Value = code;
 
-            command.Parameters.Add(idParam);
+            command.Parameters.Add(codeParam);
 
             TypesVehiculeDTO typeVehicule;
 
@@ -140,7 +139,7 @@ namespace ProjetPompier_API.Logics.DAOs
             }
             catch (Exception ex)
             {
-                throw new Exception("Erreur lors de l'obtention d'un type de vehicule par son Id...", ex);
+                throw new Exception("Erreur lors de l'obtention d'un type de vehicule par son code...", ex);
             }
             finally
             {
@@ -184,7 +183,7 @@ namespace ProjetPompier_API.Logics.DAOs
         {
             SqlCommand command = new SqlCommand(" UPDATE T_TypesVehicule " +
                                                 "    SET Type = @type, " +
-                                                "    NombrePersonne = @personnes " +
+                                                "    Personnes = @personnes " +
                                                 "  WHERE Code = @code", connexion);
 
             SqlParameter codeParam = new SqlParameter("@code", SqlDbType.Int);
@@ -229,6 +228,7 @@ namespace ProjetPompier_API.Logics.DAOs
             try
             {
                 OuvrirConnexion();
+                command.Prepare();
                 command.ExecuteNonQuery();
             }
             catch (Exception ex)

@@ -77,7 +77,16 @@ namespace ProjetPompier_API.Logics.Controleurs
 
         public void AjouterTypeVehicule(TypesVehiculeDTO typeVehiculeDTO)
         {
-            if ( TypesVehiculeRepository.Instance.ObtenirTypeVehicule(typeVehiculeDTO.Code) == null)
+            bool OK = false;
+            try
+            {
+                TypesVehiculeRepository.Instance.ObtenirTypeVehicule(typeVehiculeDTO.Code);
+            }
+            catch (Exception)
+            {
+                OK = true;
+            }
+            if (OK)
             {
                 TypesVehiculeRepository.Instance.AjouterTypeVehicule(typeVehiculeDTO);
             }
