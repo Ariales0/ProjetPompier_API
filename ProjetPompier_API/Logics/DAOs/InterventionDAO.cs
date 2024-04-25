@@ -132,11 +132,11 @@ namespace ProjetPompier_API.Logics.DAOs
                                             "INNER JOIN T_FichesIntervention " +
                                             "ON T_Casernes.IdCaserne=T_FichesIntervention.IdCaserne " +
                                             "INNER JOIN T_Pompiers " +
-                                            "ON T_FichesIntervention.IdPompier=T_Pompiers.IdPompier" +
+                                            "ON T_FichesIntervention.IdPompier=T_Pompiers.IdPompier " +
 
-                                            " WHERE T_Casernes.Nom=@nomCaserne " +
-                                            "AND T_Pompiers.Matricule=@matriculeCapitaine; " +
-                                            "AND T_FichesIntervention.DateDebut=@dateIntervention)", connexion);
+                                            "WHERE T_Casernes.Nom=@nomCaserne " +
+                                            "AND T_Pompiers.Matricule=@matriculeCapitaine " +
+                                            "AND T_FichesIntervention.DateDebut=@dateIntervention", connexion);
 
 
             SqlParameter dateInterventionParam = new SqlParameter("@dateIntervention", SqlDbType.DateTime);
@@ -147,6 +147,7 @@ namespace ProjetPompier_API.Logics.DAOs
             matriculeParam.Value = matriculeCapitaine;
             nomCaserneParam.Value = nomCaserne;
 
+            command.Parameters.Add(dateInterventionParam);
             command.Parameters.Add(matriculeParam);
             command.Parameters.Add(nomCaserneParam);
 
