@@ -147,6 +147,7 @@ namespace ProjetPompier_API.Logics.DAOs
             matriculeParam.Value = matriculeCapitaine;
             nomCaserneParam.Value = nomCaserne;
 
+            command.Parameters.Add(dateInterventionParam);
             command.Parameters.Add(matriculeParam);
             command.Parameters.Add(nomCaserneParam);
 
