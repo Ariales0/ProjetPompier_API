@@ -23,6 +23,16 @@
                     throw new Exception("Le VIN doit avoir un maximum de 17 caractères.");
             }
         }
+
+        private string typeVehicule;
+
+        public string TypeVehicule
+        {
+            get { return typeVehicule; }
+            set { typeVehicule = value; }
+        }
+
+
         /// <summary>
         /// Attribut de la marque du véhicule.
         /// </summary>
@@ -74,12 +84,18 @@
             }
         }
 
-
-
-
         #endregion 
 
         #region Constructeurs
+
+        public VehiculeModel(string vin = "", string typeVehicule = "", string marque = "", string modele = "", int annee = 0000)
+        {
+            Vin = vin;
+            TypeVehicule = typeVehicule;
+            Marque = marque;
+            Modele = modele;
+            Annee = annee;
+        }
 
         #endregion 
     }

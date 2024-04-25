@@ -3,6 +3,7 @@ using System.Data;
 
 using ProjetPompier_API.Logics.DTOs;
 using ProjetPompier_API.Logics.Exceptions;
+using ProjetPompier_API.DTOs;
 
 /// <summary>
 /// Namespace pour les classe de type DAO.
@@ -355,7 +356,5 @@ namespace ProjetPompier_API.Logics.DAOs
         }
 
         #endregion
-
-
     }
 }
