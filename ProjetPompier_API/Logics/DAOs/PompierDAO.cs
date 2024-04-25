@@ -188,7 +188,7 @@ namespace ProjetPompier_API.Logics.DAOs
 		{
 			SqlCommand command = new SqlCommand(null, connexion);
 
-			command.CommandText = " INSERT INTO T_Pompiers (Matricule, Grade, Nom, Prenom, IdCaserne) " +
+			command.CommandText = " INSERT INTO T_Pompiers (Matricule, IdGrade, Nom, Prenom, IdCaserne) " +
 								  " VALUES (@matricule, @grade, @nom, @prenom, @idCaserne) ";
 
 			SqlParameter matriculeParam = new SqlParameter("@matricule", SqlDbType.Int);
@@ -239,7 +239,7 @@ namespace ProjetPompier_API.Logics.DAOs
 			SqlCommand command = new SqlCommand(null, connexion);
 
 			command.CommandText = " UPDATE T_Pompiers " +
-									 " SET Grade = @grade, " +
+									 " SET IdGrade = @grade, " +
 									 "     Nom = @nom, " +
 									 "     Prenom = @prenom " +
 								   " WHERE Matricule = @matricule AND IdCaserne = @idCaserne";
