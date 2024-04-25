@@ -187,7 +187,7 @@ namespace ProjetPompier_API.Logics.DAOs
                                                 " VALUES (@code, @type, @personnes)", connexion);
 
             SqlParameter codeParam = new SqlParameter("@code", SqlDbType.Int);
-            SqlParameter typeParam = new SqlParameter("@type", SqlDbType.VarChar);
+            SqlParameter typeParam = new SqlParameter("@type", SqlDbType.VarChar, 100);
             SqlParameter personnesParam = new SqlParameter("@personnes", SqlDbType.Int);
 
             codeParam.Value = typeVehicule.Code;
@@ -221,7 +221,7 @@ namespace ProjetPompier_API.Logics.DAOs
                                                 "  WHERE Code = @code", connexion);
 
             SqlParameter codeParam = new SqlParameter("@code", SqlDbType.Int);
-            SqlParameter typeParam = new SqlParameter("@type", SqlDbType.VarChar);
+            SqlParameter typeParam = new SqlParameter("@type", SqlDbType.VarChar, 100);
             SqlParameter personnesParam = new SqlParameter("@personnes", SqlDbType.Int);
 
             codeParam.Value = typeVehicule.Code;

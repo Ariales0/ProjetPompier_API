@@ -85,7 +85,7 @@ namespace ProjetPompier_API.Logics.DAOs
             SqlCommand command = new SqlCommand(" SELECT IdVehicule " +
                                                     "   FROM T_Vehicules WHERE Vin=@vin AND IdCaserne= @idCaserne  ", connexion);
 
-            SqlParameter vinParam = new SqlParameter("@vin", SqlDbType.VarChar);
+            SqlParameter vinParam = new SqlParameter("@vin", SqlDbType.VarChar, 17);
             SqlParameter idCaserneParam = new SqlParameter("@idCaserne", SqlDbType.Int);
 
             vinParam.Value = vinVehicule;
@@ -148,10 +148,10 @@ namespace ProjetPompier_API.Logics.DAOs
             SqlCommand command = new SqlCommand(" INSERT INTO T_Vehicules (Vin, IdTypeVehicule, Marque, Modele, Annee, IdCaserne) " +
                                                                " VALUES (@vin, @idTypeVehicule, @marque, @modele, @annee, @idCaserne) ", connexion);
 
-            SqlParameter vinParam = new SqlParameter("@vin", SqlDbType.VarChar);
+            SqlParameter vinParam = new SqlParameter("@vin", SqlDbType.VarChar, 17);
             SqlParameter idTypeVehiculeParam = new SqlParameter("@idTypeVehicule", SqlDbType.Int);
-            SqlParameter marqueParam = new SqlParameter("@marque", SqlDbType.VarChar);
-            SqlParameter modeleParam = new SqlParameter("@modele", SqlDbType.VarChar);
+            SqlParameter marqueParam = new SqlParameter("@marque", SqlDbType.VarChar, 30);
+            SqlParameter modeleParam = new SqlParameter("@modele", SqlDbType.VarChar, 50);
             SqlParameter anneeParam = new SqlParameter("@annee", SqlDbType.Int);
             SqlParameter idCaserneParam = new SqlParameter("@idCaserne", SqlDbType.Int);
 
@@ -191,9 +191,9 @@ namespace ProjetPompier_API.Logics.DAOs
                                                 "  WHERE Vin = @vin AND IdCaserne = @idCaserne ", connexion);
 
             SqlParameter idTypeVehiculeParam = new SqlParameter("@idTypeVehicule", SqlDbType.Int);
-            SqlParameter vinParam = new SqlParameter("@vin", SqlDbType.VarChar);
-            SqlParameter marqueParam = new SqlParameter("@marque", SqlDbType.VarChar);
-            SqlParameter modeleParam = new SqlParameter("@modele", SqlDbType.VarChar);
+            SqlParameter vinParam = new SqlParameter("@vin", SqlDbType.VarChar, 17);
+            SqlParameter marqueParam = new SqlParameter("@marque", SqlDbType.VarChar, 30);
+            SqlParameter modeleParam = new SqlParameter("@modele", SqlDbType.VarChar, 50);
             SqlParameter anneeParam = new SqlParameter("@annee", SqlDbType.Int);
             SqlParameter idCaserneParam = new SqlParameter("@idCaserne", SqlDbType.Int);
 
