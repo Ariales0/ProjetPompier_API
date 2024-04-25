@@ -41,7 +41,7 @@ namespace ProjetPompier_API.DTOs
        /// <param name="type"></param>
        /// <param name="code"></param>
        /// <param name="nombrePersonne"></param>
-        public TypeVehiculeDTO( string type = "", string code, int nombrePersonne)
+        public TypeVehiculeDTO( string type = "", string code = "", int nombrePersonne = 0)
         {
             Type = type;
             Code = code;
