@@ -51,12 +51,12 @@ namespace ProjetPompier_API.Logics.DAOs
         /// </summary>
         /// <returns>Retourne la liste de vehicules</returns>
         /// <exception cref="Exception"></exception>
-        public List<TypesVehiculeDTO> ObtenirListeTypesVehicule()
+        public List<TypeVehiculeDTO> ObtenirListeTypesVehicule()
         {
             SqlCommand command = new SqlCommand("SELECT * " +
                                                 "  FROM T_TypesVehicule", connexion);
 
-            List<TypesVehiculeDTO> listeTypesVehicule = new List<TypesVehiculeDTO>();
+            List<TypeVehiculeDTO> listeTypesVehicule = new List<TypeVehiculeDTO>();
 
             try
             {
@@ -65,7 +65,7 @@ namespace ProjetPompier_API.Logics.DAOs
 
                 while (reader.Read())
                 {
-                    TypesVehiculeDTO typeVehicule = new TypesVehiculeDTO(reader.GetInt32(1), reader.GetString(2), reader.GetInt32(3));
+                    TypeVehiculeDTO typeVehicule = new TypeVehiculeDTO(reader.GetInt32(1), reader.GetString(2), reader.GetInt32(3));
                     listeTypesVehicule.Add(typeVehicule);
                 }
                 reader.Close();
@@ -126,7 +126,7 @@ namespace ProjetPompier_API.Logics.DAOs
         /// <param name="code">Le code du vehicule</param>
         /// <returns>Le type de vehicule</returns>
         /// <exception cref="Exception"></exception>
-        public TypesVehiculeDTO ObtenirTypeVehicule(int code)
+        public TypeVehiculeDTO ObtenirTypeVehicule(int code)
         {
             SqlCommand command = new SqlCommand(" SELECT * " +
                                                  "  FROM T_TypesVehicule " +
@@ -138,14 +138,14 @@ namespace ProjetPompier_API.Logics.DAOs
 
             command.Parameters.Add(codeParam);
 
-            TypesVehiculeDTO typeVehicule;
+            TypeVehiculeDTO typeVehicule;
 
             try
             {
                 OuvrirConnexion();
                 SqlDataReader reader = command.ExecuteReader();
                 reader.Read();
-                typeVehicule = new TypesVehiculeDTO(reader.GetInt32(1), reader.GetString(2), reader.GetInt32(3));
+                typeVehicule = new TypeVehiculeDTO(reader.GetInt32(1), reader.GetString(2), reader.GetInt32(3));
                 reader.Close();
                 return typeVehicule;
             }
@@ -165,11 +165,11 @@ namespace ProjetPompier_API.Logics.DAOs
         /// <param name="id">Le id</param>
         /// <returns>Retourne le type de vehicule</returns>
         /// <exception cref="Exception"></exception>
-        public TypesVehiculeDTO ObtenirTypeVehiculeParId(int id)
+        public TypeVehiculeDTO ObtenirTypeVehiculeParId(int id)
         {
             SqlCommand command = new SqlCommand(" SELECT * " +
                                                 "  FROM T_TypesVehicule " +
-                                                " WHERE Id = @id", connexion);
+                                                " WHERE IdTypeVehicule = @id", connexion);
 
             SqlParameter idParam = new SqlParameter("@id", SqlDbType.Int);
 
@@ -177,14 +177,14 @@ namespace ProjetPompier_API.Logics.DAOs
 
             command.Parameters.Add(idParam);
 
-            TypesVehiculeDTO typeVehicule;
+            TypeVehiculeDTO typeVehicule;
 
             try
             {
                 OuvrirConnexion();
                 SqlDataReader reader = command.ExecuteReader();
                 reader.Read();
-                typeVehicule = new TypesVehiculeDTO(reader.GetInt32(1), reader.GetString(2), reader.GetInt32(3));
+                typeVehicule = new TypeVehiculeDTO(reader.GetInt32(1), reader.GetString(2), reader.GetInt32(3));
                 reader.Close();
                 return typeVehicule;
             }
@@ -203,7 +203,7 @@ namespace ProjetPompier_API.Logics.DAOs
         /// </summary>
         /// <param name="typeVehicule">Le DTO du typeVehicule</param>
         /// <exception cref="Exception"></exception>
-        public void AjouterTypeVehicule(TypesVehiculeDTO typeVehicule)
+        public void AjouterTypeVehicule(TypeVehiculeDTO typeVehicule)
         {
             SqlCommand command = new SqlCommand(" INSERT INTO T_TypesVehicule " +
                                                 " VALUES (@code, @type, @personnes)", connexion);
@@ -240,7 +240,7 @@ namespace ProjetPompier_API.Logics.DAOs
         /// </summary>
         /// <param name="typeVehicule">Le DTO du typeVehicule</param>
         /// <exception cref="Exception"></exception>
-        public void ModifierTypeVehicule(TypesVehiculeDTO typeVehicule)
+        public void ModifierTypeVehicule(TypeVehiculeDTO typeVehicule)
         {
             SqlCommand command = new SqlCommand(" UPDATE T_TypesVehicule " +
                                                 "    SET Type = @type, " +

@@ -50,14 +50,14 @@ namespace ProjetPompier_API.Logics.Controleurs
         /// </summary>
         /// <returns>Retourne la liste des types</returns>
         /// <exception cref="Exception"></exception>
-        public List<TypesVehiculeDTO> ObtenirListeTypesVehicule()
+        public List<TypeVehiculeDTO> ObtenirListeTypesVehicule()
         {
-            List<TypesVehiculeDTO> listeTypesVehiculeDTO = TypesVehiculeRepository.Instance.ObtenirListeTypesVehicule();
-            List<TypesVehiculeModel> listeTypesVehiculeModels = new List<TypesVehiculeModel>();
+            List<TypeVehiculeDTO> listeTypesVehiculeDTO = TypesVehiculeRepository.Instance.ObtenirListeTypesVehicule();
+            List<TypeVehiculeModel> listeTypesVehiculeModels = new List<TypeVehiculeModel>();
 
-            foreach (TypesVehiculeDTO type in listeTypesVehiculeDTO)
+            foreach (TypeVehiculeDTO type in listeTypesVehiculeDTO)
             {
-                listeTypesVehiculeModels.Add(new TypesVehiculeModel(type.Code, type.Type, type.Personnes));
+                listeTypesVehiculeModels.Add(new TypeVehiculeModel(type.Code, type.Type, type.Personnes));
             }
 
             if (listeTypesVehiculeModels.Count == 0)
@@ -74,9 +74,9 @@ namespace ProjetPompier_API.Logics.Controleurs
         /// <param name="code">Le code du type</param>
         /// <returns>Retourne Le typeVehicule</returns>
         /// <exception cref="Exception"></exception>
-        public TypesVehiculeDTO ObtenirTypeVehicule(int code)
+        public TypeVehiculeDTO ObtenirTypeVehicule(int code)
         {
-            TypesVehiculeDTO typeVehiculeDTO = TypesVehiculeRepository.Instance.ObtenirTypeVehicule(code);
+            TypeVehiculeDTO typeVehiculeDTO = TypesVehiculeRepository.Instance.ObtenirTypeVehicule(code);
 
             if (typeVehiculeDTO == null)
             {
@@ -91,7 +91,7 @@ namespace ProjetPompier_API.Logics.Controleurs
         /// </summary>
         /// <param name="typeVehiculeDTO">Le type vehiculeDTO</param>
         /// <exception cref="Exception"></exception>
-        public void AjouterTypeVehicule(TypesVehiculeDTO typeVehiculeDTO)
+        public void AjouterTypeVehicule(TypeVehiculeDTO typeVehiculeDTO)
         {
             bool OK = false;
             try
@@ -117,9 +117,9 @@ namespace ProjetPompier_API.Logics.Controleurs
         /// </summary>
         /// <param name="typeVehiculeDTO">Le type vehiculeDTO</param>
         /// <exception cref="Exception"></exception>
-        public void ModifierTypeVehicule(TypesVehiculeDTO typeVehiculeDTO)
+        public void ModifierTypeVehicule(TypeVehiculeDTO typeVehiculeDTO)
         {
-            TypesVehiculeDTO typesVehiculeBD = TypesVehiculeRepository.Instance.ObtenirTypeVehicule(typeVehiculeDTO.Code);
+            TypeVehiculeDTO typesVehiculeBD = TypesVehiculeRepository.Instance.ObtenirTypeVehicule(typeVehiculeDTO.Code);
             if (typeVehiculeDTO.Type != typesVehiculeBD.Type || typeVehiculeDTO.Personnes != typesVehiculeBD.Personnes)
             {
                 TypesVehiculeRepository.Instance.ModifierTypeVehicule(typeVehiculeDTO);

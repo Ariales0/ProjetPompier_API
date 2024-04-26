@@ -59,7 +59,7 @@ namespace ProjetPompier_API.Logics.Controleurs
 
             foreach (VehiculeDTO vehiculeDTO in listeVehiculeDTO)
             {
-                listeVehicule.Add(new VehiculeModel(vehiculeDTO.Vin, vehiculeDTO.TypeVehicule, vehiculeDTO.Marque, vehiculeDTO.Modele, vehiculeDTO.Annee));
+                listeVehicule.Add(new VehiculeModel(vehiculeDTO.Vin, vehiculeDTO.Code , vehiculeDTO.Marque, vehiculeDTO.Modele, vehiculeDTO.Annee));
             }
             
             if (listeVehiculeDTO.Count == listeVehicule.Count)
@@ -81,7 +81,7 @@ namespace ProjetPompier_API.Logics.Controleurs
         public VehiculeDTO ObtenirVehicule(string nomCaserne, string vinVehicule)
         {
             VehiculeDTO vehiculeDTO = VehiculeRepository.Instance.ObtenirVehicule(nomCaserne, vinVehicule);
-            VehiculeModel vehicule = new VehiculeModel(vehiculeDTO.Vin, vehiculeDTO.TypeVehicule, vehiculeDTO.Marque, vehiculeDTO.Modele, vehiculeDTO.Annee);
+            VehiculeModel vehicule = new VehiculeModel(vehiculeDTO.Vin, vehiculeDTO.Code, vehiculeDTO.Marque, vehiculeDTO.Modele, vehiculeDTO.Annee);
             return new VehiculeDTO(vehicule);
         }
 
@@ -89,10 +89,9 @@ namespace ProjetPompier_API.Logics.Controleurs
         /// Methode permettant d'ajouter un vehicule à une caserne.
         /// </summary>
         /// <param name="nomCaserne">Le nom de la caserne</param>
-        /// <param name="codeVehicule">Le code du type de vehicule</param>
         /// <param name="vehicule">Le DTO du vehicule</param>
         /// <exception cref="Exception"></exception>
-        public void AjouterVehicule(string nomCaserne, int codeVehicule ,VehiculeDTO vehicule)
+        public void AjouterVehicule(string nomCaserne, VehiculeDTO vehicule)
         {
             
             bool OK = false;
@@ -107,7 +106,7 @@ namespace ProjetPompier_API.Logics.Controleurs
 
             if (OK)
             {
-                VehiculeRepository.Instance.AjouterVehicule(nomCaserne, codeVehicule, vehicule);
+                VehiculeRepository.Instance.AjouterVehicule(nomCaserne, vehicule);
             }
             else
             {
@@ -119,16 +118,15 @@ namespace ProjetPompier_API.Logics.Controleurs
         /// Methodes permettant de modifier un vehicule d'une caserne.
         /// </summary>
         /// <param name="nomCaserne">Le nom de la caserne</param>
-        /// <param name="codeVehicule">Le code de types de vehicule</param>
         /// <param name="vehicule">Le DTO du vehicule</param>
         /// <exception cref="Exception"></exception>
-        public void ModifierVehicule(string nomCaserne, int codeVehicule,VehiculeDTO vehicule)
+        public void ModifierVehicule(string nomCaserne, VehiculeDTO vehicule)
         {
             VehiculeDTO vehiculeDB = VehiculeRepository.Instance.ObtenirVehicule(nomCaserne, vehicule.Vin);
 
-            if (vehicule.Marque != vehiculeDB.Marque || vehicule.Modele != vehiculeDB.Modele || vehicule.Annee != vehiculeDB.Annee)
+            if (vehicule.Marque != vehiculeDB.Marque || vehicule.Code != vehiculeDB.Code || vehicule.Modele != vehiculeDB.Modele || vehicule.Annee != vehiculeDB.Annee)
             {
-                VehiculeRepository.Instance.ModifierVehicule(nomCaserne, codeVehicule, vehicule);
+                VehiculeRepository.Instance.ModifierVehicule(nomCaserne, vehicule);
             }
             else
             {

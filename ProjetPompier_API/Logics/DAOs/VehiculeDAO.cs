@@ -70,7 +70,7 @@ namespace ProjetPompier_API.Logics.DAOs
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    VehiculeDTO vehiculeDTO = new VehiculeDTO(reader.GetString(1), TypesVehiculeRepository.Instance.ObtenirTypeVehiculeParId(reader.GetInt32(2)).Type, reader.GetString(3), reader.GetString(4), reader.GetInt32(5));
+                    VehiculeDTO vehiculeDTO = new VehiculeDTO(reader.GetString(1), TypesVehiculeRepository.Instance.ObtenirTypeVehiculeParId(reader.GetInt32(2)).Code, reader.GetString(3), reader.GetString(4), reader.GetInt32(5));
                     listeVehicules.Add(vehiculeDTO);
                 }
                 reader.Close();
@@ -78,7 +78,7 @@ namespace ProjetPompier_API.Logics.DAOs
             }
             catch (Exception ex)
             {
-                throw new Exception("Erreur lors de l'obtention de la liste des pompiers...", ex);
+                throw new Exception("Erreur lors de l'obtention de la liste des vehicule...", ex);
             }
             finally
             {
@@ -150,7 +150,7 @@ namespace ProjetPompier_API.Logics.DAOs
                 OuvrirConnexion();
                 SqlDataReader reader = command.ExecuteReader();
                 reader.Read();
-                VehiculeDTO vehiculeDTO = new VehiculeDTO(reader.GetString(1), TypesVehiculeRepository.Instance.ObtenirTypeVehiculeParId(reader.GetInt32(2)).Type, reader.GetString(3), reader.GetString(4), reader.GetInt32(5));
+                VehiculeDTO vehiculeDTO = new VehiculeDTO(reader.GetString(1), TypesVehiculeRepository.Instance.ObtenirTypeVehiculeParId(reader.GetInt32(2)).Code, reader.GetString(3), reader.GetString(4), reader.GetInt32(5));
                 return vehiculeDTO;
             }
             catch (Exception ex)
@@ -167,10 +167,9 @@ namespace ProjetPompier_API.Logics.DAOs
         /// Methodes permettant d'ajouter un vehicule.
         /// </summary>
         /// <param name="nomCaserne">Le nom de la caserne</param>
-        /// <param name="codeVehicule">Le code de type de vehicule</param>
         /// <param name="vehiculeDTO">Le DTO du vehicule</param>
         /// <exception cref="Exception"></exception>
-        public void AjouterVehicule(string nomCaserne, int codeVehicule, VehiculeDTO vehiculeDTO)
+        public void AjouterVehicule(string nomCaserne, VehiculeDTO vehiculeDTO)
         {
             SqlCommand command = new SqlCommand(" INSERT INTO T_Vehicules (Vin, IdTypeVehicule, Marque, Modele, Annee, IdCaserne) " +
                                                                " VALUES (@vin, @idTypeVehicule, @marque, @modele, @annee, @idCaserne) ", connexion);
@@ -183,7 +182,7 @@ namespace ProjetPompier_API.Logics.DAOs
             SqlParameter idCaserneParam = new SqlParameter("@idCaserne", SqlDbType.Int);
 
             vinParam.Value = vehiculeDTO.Vin;
-            idTypeVehiculeParam.Value = TypesVehiculeRepository.Instance.ObtenirIdTypeVehicule(codeVehicule);
+            idTypeVehiculeParam.Value = TypesVehiculeRepository.Instance.ObtenirIdTypeVehicule(vehiculeDTO.Code);
             marqueParam.Value = vehiculeDTO.Marque;
             modeleParam.Value = vehiculeDTO.Modele;
             anneeParam.Value = vehiculeDTO.Annee;
@@ -215,10 +214,9 @@ namespace ProjetPompier_API.Logics.DAOs
         /// Methodes permettant de modifier un vehicule.
         /// </summary>
         /// <param name="nomCaserne">Le nom de la caserne</param>
-        /// <param name="codeVehicule">Le xode de type de vehicule</param>
         /// <param name="vehiculeDTO">Le DTO du vehicule</param>
         /// <exception cref="Exception"></exception>
-        public void ModifierVehicule(string nomCaserne, int codeVehicule,VehiculeDTO vehiculeDTO)
+        public void ModifierVehicule(string nomCaserne, VehiculeDTO vehiculeDTO)
         {
             SqlCommand command = new SqlCommand(" UPDATE T_Vehicules " +
                                                 "    SET IdTypeVehicule = @idTypeVehicule, Marque = @marque, Modele = @modele, Annee = @annee " +
@@ -231,7 +229,7 @@ namespace ProjetPompier_API.Logics.DAOs
             SqlParameter anneeParam = new SqlParameter("@annee", SqlDbType.Int);
             SqlParameter idCaserneParam = new SqlParameter("@idCaserne", SqlDbType.Int);
 
-            idTypeVehiculeParam.Value = TypesVehiculeRepository.Instance.ObtenirIdTypeVehicule(codeVehicule);
+            idTypeVehiculeParam.Value = TypesVehiculeRepository.Instance.ObtenirIdTypeVehicule(vehiculeDTO.Code);
             vinParam.Value = vehiculeDTO.Vin;
             marqueParam.Value = vehiculeDTO.Marque;
             modeleParam.Value = vehiculeDTO.Modele;

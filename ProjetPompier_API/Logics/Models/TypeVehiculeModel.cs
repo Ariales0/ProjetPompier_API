@@ -1,6 +1,6 @@
 ﻿namespace ProjetPompier_API.Logics.Models
 {
-    public class TypesVehiculeModel
+    public class TypeVehiculeModel
     {
 
         #region AttributsProprietes
@@ -71,7 +71,7 @@
         /// <param name="code">Le code</param>
         /// <param name="type">Le type</param>
         /// <param name="personnes">Le nombre de personnes</param>
-        public TypesVehiculeModel(int code = 0000, string type = "", int personnes = 0)
+        public TypeVehiculeModel(int code = 0000, string type = "", int personnes = 0)
         {
             Code = code;
             Type = type;
