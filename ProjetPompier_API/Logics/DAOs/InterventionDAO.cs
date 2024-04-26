@@ -190,27 +190,27 @@ namespace ProjetPompier_API.Logics.DAOs
         {
             SqlCommand command = new SqlCommand(null, connexion);
 
-            command.CommandText = " INSERT INTO T_FichesIntervention " +
-                                  "(DateDebut, DateFin ,Adresse, TypeIntervention, Resume, IdPompier, IdCaserne) " +
-                                  "SELECT @dateDebut, @dateFin, @adresse, @typeIntervention, @resume, T_Pompiers.IdPompier, T_Casernes.IdCaserne " +
-                                  "FROM T_Pompiers, T_Casernes " +
-                                  "WHERE T_Pompiers.Matricule = @matricule AND T_Casernes.Nom = @nomCaserne;";
+            command.CommandText = "INSERT INTO T_FichesIntervention (DateDebut, DateFin ,Adresse, TypeIntervention, Resume, IdPompier, IdCaserne)" +
+                                  "VALUES (@dateDebut, @dateFin, @adresse, @typeIntervention, @resume, @idPompier, @idCaserne);";
+
+            int idCaserne = CaserneRepository.Instance.ObtenirIdCaserne(nomCaserne);
+            int idPompier = PompierRepository.Instance.ObtenirIdPompier(fiche.MatriculeCapitaine, nomCaserne);
 
             SqlParameter dateDebutParam = new SqlParameter("@dateDebut", SqlDbType.DateTime);
             SqlParameter dateFinParam = new SqlParameter("@dateFin", SqlDbType.DateTime);
             SqlParameter adresseParam = new SqlParameter("@adresse", SqlDbType.VarChar, 200);
             SqlParameter typeInterventionParam = new SqlParameter("@typeIntervention", SqlDbType.VarChar, 50);
             SqlParameter resumeParam = new SqlParameter("@resume", SqlDbType.VarChar, 500);
-            SqlParameter matriculeParam = new SqlParameter("@matricule", SqlDbType.Int, 6);
-            SqlParameter nomCaserneParam = new SqlParameter("@nomCaserne", SqlDbType.VarChar, 100);
+            SqlParameter idPompierParam = new SqlParameter("@idPompier", SqlDbType.Int);
+            SqlParameter idCaserneParam = new SqlParameter("@idCaserne", SqlDbType.Int);
 
             dateDebutParam.Value = fiche.DateDebut;
             dateFinParam.Value =  DBNull.Value; 
             adresseParam.Value = fiche.Adresse;
             typeInterventionParam.Value = fiche.TypeIntervention;
             resumeParam.Value = fiche.Resume;
-            matriculeParam.Value = fiche.MatriculeCapitaine;
-            nomCaserneParam.Value = nomCaserne;
+            idPompierParam.Value = idPompier;
+            idCaserneParam.Value = idCaserne;
 
 
             command.Parameters.Add(dateDebutParam);
@@ -218,8 +218,8 @@ namespace ProjetPompier_API.Logics.DAOs
             command.Parameters.Add(adresseParam);
             command.Parameters.Add(typeInterventionParam);
             command.Parameters.Add(resumeParam);
-            command.Parameters.Add(matriculeParam);
-            command.Parameters.Add(nomCaserneParam);
+            command.Parameters.Add(idPompierParam);
+            command.Parameters.Add(idCaserneParam);
 
             try
             {
