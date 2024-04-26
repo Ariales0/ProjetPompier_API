@@ -12,7 +12,7 @@ namespace ProjetPompier_API.Controllers
         /// <returns>Retourne la liste des types de vehicule</returns>
         [Route("TypesVehicule/ObtenirListeTypesVehicule")]
         [HttpGet]
-        public List<TypesVehiculeDTO> ObtenirListeTypesVehicule()
+        public List<TypeVehiculeDTO> ObtenirListeTypesVehicule()
         {
             return TypesVehiculeControleur.Instance.ObtenirListeTypesVehicule();
         }
@@ -24,7 +24,7 @@ namespace ProjetPompier_API.Controllers
         /// <returns>Retourne le type de vehicule</returns>
         [Route("TypesVehicule/ObtenirTypesVehicule")]
         [HttpGet]
-        public TypesVehiculeDTO ObtenirTypesVehicule([FromQuery] int code)
+        public TypeVehiculeDTO ObtenirTypesVehicule([FromQuery] int code)
         {
             return TypesVehiculeControleur.Instance.ObtenirTypeVehicule(code);
         }
@@ -35,7 +35,7 @@ namespace ProjetPompier_API.Controllers
         /// <param name="typeVehicule">Le DTO du typeVehicule</param>
         [Route("TypesVehicule/AjouterTypesVehicule")]
         [HttpPost]
-        public void AjouterTypesVehicule([FromBody] TypesVehiculeDTO typeVehicule)
+        public void AjouterTypesVehicule([FromBody] TypeVehiculeDTO typeVehicule)
         {
             TypesVehiculeControleur.Instance.AjouterTypeVehicule(typeVehicule);
         }
@@ -46,7 +46,7 @@ namespace ProjetPompier_API.Controllers
         /// <param name="typeVehicule">Le DTO du typeVehicule</param>
         [Route("TypesVehicule/ModifierTypesVehicule")]
         [HttpPost]
-        public void ModifierTypesVehicule([FromBody] TypesVehiculeDTO typeVehicule)
+        public void ModifierTypesVehicule([FromBody] TypeVehiculeDTO typeVehicule)
         {
             TypesVehiculeControleur.Instance.ModifierTypeVehicule(typeVehicule);
         }

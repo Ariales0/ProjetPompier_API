@@ -36,26 +36,24 @@ namespace ProjetPompier_API.Controllers
         /// Methode de service POST AjouterVehicule
         /// </summary>
         /// <param name="nomCaserne">Le nom de la caserne</param>
-        /// <param name="codeVehicule">Le code de type de vehicule</param>
         /// <param name="vehicule">Le DTO du vehicule</param>
         [Route("Vehicule/AjouterVehicule")]
         [HttpPost]
-        public void AjouterVehicule([FromQuery] string nomCaserne, [FromQuery] int codeVehicule,[FromBody] VehiculeDTO vehicule)
+        public void AjouterVehicule([FromQuery] string nomCaserne, [FromBody] VehiculeDTO vehicule)
         {
-            VehiculeControleur.Instance.AjouterVehicule(nomCaserne, codeVehicule, vehicule);
+            VehiculeControleur.Instance.AjouterVehicule(nomCaserne,  vehicule);
         }
 
         /// <summary>
         /// Methode de service POST ModifierVehicule
         /// </summary>
         /// <param name="nomCaserne">Le nom de la caserne</param>
-        /// <param name="codeVehicule">Le code de type de vehicule</param>
         /// <param name="vehicule">Le DTO du vehicule</param>
         [Route("Vehicule/ModifierVehicule")]
         [HttpPost]
-        public void ModifierVehicule([FromQuery] string nomCaserne, [FromQuery] int codeVehicule , [FromBody] VehiculeDTO vehicule)
+        public void ModifierVehicule([FromQuery] string nomCaserne, [FromBody] VehiculeDTO vehicule)
         {
-            VehiculeControleur.Instance.ModifierVehicule(nomCaserne, codeVehicule, vehicule);
+            VehiculeControleur.Instance.ModifierVehicule(nomCaserne, vehicule);
         }
 
         /// <summary>

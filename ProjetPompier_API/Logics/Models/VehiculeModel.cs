@@ -24,12 +24,17 @@
             }
         }
 
-        private string typeVehicule;
-
-        public string TypeVehicule
+        /// <summary>
+        /// Attribut du code du véhicule.
+        /// </summary>
+        private int code;
+        /// <summary>
+        /// Propriete du code du véhicule.
+        /// </summary>
+        public int Code
         {
-            get { return typeVehicule; }
-            set { typeVehicule = value; }
+            get { return code; }
+            set { code = value; }
         }
 
 
@@ -98,14 +103,14 @@
         /// Constructeur par defaut.
         /// </summary>
         /// <param name="vin">Le vin</param>
-        /// <param name="typeVehicule">Le type de vehicule</param>
+        /// <param name="code">Le code de vehicule</param>
         /// <param name="marque">La marque</param>
         /// <param name="modele">Le modele</param>
         /// <param name="annee">L'annee</param>
-        public VehiculeModel(string vin = "", string typeVehicule = "", string marque = "", string modele = "", int annee = 0000)
+        public VehiculeModel(string vin = "", int code = 0000, string marque = "", string modele = "", int annee = 0000)
         {
             Vin = vin;
-            TypeVehicule = typeVehicule;
+            Code = code;
             Marque = marque;
             Modele = modele;
             Annee = annee;
