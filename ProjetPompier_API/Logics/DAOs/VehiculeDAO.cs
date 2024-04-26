@@ -78,7 +78,7 @@ namespace ProjetPompier_API.Logics.DAOs
             }
             catch (Exception ex)
             {
-                throw new Exception("Erreur lors de l'obtention de la liste des pompiers...", ex);
+                throw new Exception("Erreur lors de l'obtention de la liste des vehicule...", ex);
             }
             finally
             {

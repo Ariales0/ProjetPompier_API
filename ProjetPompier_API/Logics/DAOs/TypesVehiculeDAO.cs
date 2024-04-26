@@ -169,7 +169,7 @@ namespace ProjetPompier_API.Logics.DAOs
         {
             SqlCommand command = new SqlCommand(" SELECT * " +
                                                 "  FROM T_TypesVehicule " +
-                                                " WHERE Id = @id", connexion);
+                                                " WHERE IdTypeVehicule = @id", connexion);
 
             SqlParameter idParam = new SqlParameter("@id", SqlDbType.Int);
 
