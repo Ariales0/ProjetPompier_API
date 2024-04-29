@@ -54,11 +54,18 @@ namespace ProjetPompier_API.Logics.Controleurs
             {
                 listeTypesVehiculeModels.Add(new TypesVehiculeModel(type.Code, type.Type, type.Personnes));
             }
+   //         try
+   //         {
+			//	if (listeTypesVehiculeModels.Count == 0)
+			//	{
+			//		throw new Exception("La liste des types de véhicule est vide.");
+			//	}
+			//}
+   //         catch(Exception e)
+   //         {
 
-            if (listeTypesVehiculeModels.Count == 0)
-            {
-                throw new Exception("Aucun type de véhicule n'a été trouvé.");
-            }
+   //         }
+            
 
             return listeTypesVehiculeDTO;
         }

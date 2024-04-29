@@ -26,12 +26,12 @@ namespace ProjetPompier_API.Controllers
             return InterventionControleur.Instance.ObtenirListeFicheIntervention(nomCaserne, matriculeCapitaine);
         }
 
-        [Route("Intervention/ObtenirFicheIntervention")]
-        [HttpGet]
-        public FicheInterventionDTO ObtenirFicheIntervention([FromQuery] string nomCaserne, [FromQuery] int matriculeCapitaine, [FromQuery] string dateIntervention)
-        {
-            return InterventionControleur.Instance.ObtenirFicheIntevention(nomCaserne, matriculeCapitaine, dateIntervention);
-        }
+        //[Route("Intervention/ObtenirFicheIntervention")]
+        //[HttpGet]
+        //public FicheInterventionDTO ObtenirFicheIntervention([FromQuery] string nomCaserne, [FromQuery] int matriculeCapitaine, [FromQuery] string dateIntervention)
+        //{
+        //    return InterventionControleur.Instance.ObtenirFicheIntevention(nomCaserne, matriculeCapitaine, dateIntervention);
+        //}
 
         /// <summary>
         /// Méthode de service permettant d'ouvrir une fiche d'intervention'.
@@ -45,11 +45,11 @@ namespace ProjetPompier_API.Controllers
              InterventionControleur.Instance.OuvrirFicheIntervention(nomCaserne, fiche);
         }
 
-        [Route("Intervention/ModifierFicheIntervention")]
-        [HttpPost]
-        public void ModifierFicheIntervention([FromQuery] string nomCaserne, [FromBody]  FicheInterventionDTO fiche)
-        {
-            InterventionControleur.Instance.ModifierFicheIntervention(nomCaserne, fiche);
-        }
+        //[Route("Intervention/ModifierFicheIntervention")]
+        //[HttpPost]
+        //public void ModifierFicheIntervention([FromQuery] string nomCaserne, [FromBody]  FicheInterventionDTO fiche)
+        //{
+        //    InterventionControleur.Instance.ModifierFicheIntervention(nomCaserne, fiche);
+        //}
     }
 }
