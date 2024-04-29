@@ -17,7 +17,6 @@ namespace ProjetPompier_API.Logics.DTOs
     /// </summary>
 
     public class FicheInterventionDTO
-
     {
 
         #region Proprietes

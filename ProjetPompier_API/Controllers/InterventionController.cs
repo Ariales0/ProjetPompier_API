@@ -45,11 +45,28 @@ namespace ProjetPompier_API.Controllers
              InterventionControleur.Instance.OuvrirFicheIntervention(nomCaserne, fiche);
         }
 
-        //[Route("Intervention/ModifierFicheIntervention")]
-        //[HttpPost]
-        //public void ModifierFicheIntervention([FromQuery] string nomCaserne, [FromBody]  FicheInterventionDTO fiche)
-        //{
-        //    InterventionControleur.Instance.ModifierFicheIntervention(nomCaserne, fiche);
-        //}
+        /// <summary>
+        /// Méthode de service permettant de modifier une fiche d'intervention'.
+        /// </summary>
+        /// <param name="nomCaserne">Le nom de la caserne</param>
+        /// <param name="fiche">Le DTO de la fiche</param>
+        [Route("Intervention/ModifierFicheIntervention")]
+        [HttpPost]
+        public void ModifierFicheIntervention([FromQuery] string nomCaserne, [FromBody]  FicheInterventionDTO fiche)
+        {
+            InterventionControleur.Instance.ModifierFicheIntervention(nomCaserne, fiche);
+        }
+
+        /// <summary>
+        /// Méthode de service permettant de fermer une fiche d'intervention'.
+        /// </summary>
+        /// <param name="nomCaserne">Le nom de la caserne</param>
+        /// <param name="fiche">Le DTO de la fiche</param>
+        [Route("Intervention/FermerFicheIntervention")]
+        [HttpPost]
+        public void FermerFicheIntervention([FromQuery] string nomCaserne, [FromBody] FicheInterventionDTO fiche)
+        {
+            InterventionControleur.Instance.FermerFicheIntervention(nomCaserne, fiche);
+        }
     }
 }

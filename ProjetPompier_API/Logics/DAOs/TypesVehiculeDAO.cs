@@ -49,14 +49,14 @@ namespace ProjetPompier_API.Logics.DAOs
         /// <summary>
         /// Méthode de service permettant d'obtenir la liste des types de vehicule.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Retourne la liste de vehicules</returns>
         /// <exception cref="Exception"></exception>
-        public List<TypesVehiculeDTO> ObtenirListeTypesVehicule()
+        public List<TypeVehiculeDTO> ObtenirListeTypesVehicule()
         {
             SqlCommand command = new SqlCommand("SELECT * " +
                                                 "  FROM T_TypesVehicule", connexion);
 
-            List<TypesVehiculeDTO> listeTypesVehicule = new List<TypesVehiculeDTO>();
+            List<TypeVehiculeDTO> listeTypesVehicule = new List<TypeVehiculeDTO>();
 
             try
             {
@@ -65,7 +65,7 @@ namespace ProjetPompier_API.Logics.DAOs
 
                 while (reader.Read())
                 {
-                    TypesVehiculeDTO typeVehicule = new TypesVehiculeDTO(reader.GetInt32(1), reader.GetString(2), reader.GetInt32(3));
+                    TypeVehiculeDTO typeVehicule = new TypeVehiculeDTO(reader.GetInt32(1), reader.GetString(2), reader.GetInt32(3));
                     listeTypesVehicule.Add(typeVehicule);
                 }
                 reader.Close();
@@ -81,7 +81,12 @@ namespace ProjetPompier_API.Logics.DAOs
             }
         }
         
-
+        /// <summary>
+        /// Methode permettant d'obtenir l'id d'un type de vehicule par son code.
+        /// </summary>
+        /// <param name="code">Le code du vehicule</param>
+        /// <returns>Retourne l'id</returns>
+        /// <exception cref="Exception"></exception>
         public int ObtenirIdTypeVehicule(int code)
         {
             SqlCommand command = new SqlCommand(" SELECT * " +
@@ -115,7 +120,13 @@ namespace ProjetPompier_API.Logics.DAOs
             }
         }   
 
-        public TypesVehiculeDTO ObtenirTypeVehicule(int code)
+        /// <summary>
+        /// Methode permettant d'obtenir un type de vehicule par son code.
+        /// </summary>
+        /// <param name="code">Le code du vehicule</param>
+        /// <returns>Le type de vehicule</returns>
+        /// <exception cref="Exception"></exception>
+        public TypeVehiculeDTO ObtenirTypeVehicule(int code)
         {
             SqlCommand command = new SqlCommand(" SELECT * " +
                                                  "  FROM T_TypesVehicule " +
@@ -127,14 +138,14 @@ namespace ProjetPompier_API.Logics.DAOs
 
             command.Parameters.Add(codeParam);
 
-            TypesVehiculeDTO typeVehicule;
+            TypeVehiculeDTO typeVehicule;
 
             try
             {
                 OuvrirConnexion();
                 SqlDataReader reader = command.ExecuteReader();
                 reader.Read();
-                typeVehicule = new TypesVehiculeDTO(reader.GetInt32(1), reader.GetString(2), reader.GetInt32(3));
+                typeVehicule = new TypeVehiculeDTO(reader.GetInt32(1), reader.GetString(2), reader.GetInt32(3));
                 reader.Close();
                 return typeVehicule;
             }
@@ -148,7 +159,13 @@ namespace ProjetPompier_API.Logics.DAOs
             }
         }
 
-        public TypesVehiculeDTO ObtenirTypeVehiculeParId(int id)
+        /// <summary>
+        /// Methode permettant d'obtenir un type de vehicule par son id.
+        /// </summary>
+        /// <param name="id">Le id</param>
+        /// <returns>Retourne le type de vehicule</returns>
+        /// <exception cref="Exception"></exception>
+        public TypeVehiculeDTO ObtenirTypeVehiculeParId(int id)
         {
             SqlCommand command = new SqlCommand(" SELECT * " +
                                                 "  FROM T_TypesVehicule " +
@@ -160,14 +177,14 @@ namespace ProjetPompier_API.Logics.DAOs
 
             command.Parameters.Add(idParam);
 
-            TypesVehiculeDTO typeVehicule;
+            TypeVehiculeDTO typeVehicule;
 
             try
             {
                 OuvrirConnexion();
                 SqlDataReader reader = command.ExecuteReader();
                 reader.Read();
-                typeVehicule = new TypesVehiculeDTO(reader.GetInt32(1), reader.GetString(2), reader.GetInt32(3));
+                typeVehicule = new TypeVehiculeDTO(reader.GetInt32(1), reader.GetString(2), reader.GetInt32(3));
                 reader.Close();
                 return typeVehicule;
             }
@@ -181,7 +198,12 @@ namespace ProjetPompier_API.Logics.DAOs
             }
         }
 
-        public void AjouterTypeVehicule(TypesVehiculeDTO typeVehicule)
+        /// <summary>
+        /// Methode permettant d'ajouter un type de vehicule.
+        /// </summary>
+        /// <param name="typeVehicule">Le DTO du typeVehicule</param>
+        /// <exception cref="Exception"></exception>
+        public void AjouterTypeVehicule(TypeVehiculeDTO typeVehicule)
         {
             SqlCommand command = new SqlCommand(" INSERT INTO T_TypesVehicule " +
                                                 " VALUES (@code, @type, @personnes)", connexion);
@@ -213,7 +235,12 @@ namespace ProjetPompier_API.Logics.DAOs
             }
         }
 
-        public void ModifierTypeVehicule(TypesVehiculeDTO typeVehicule)
+        /// <summary>
+        /// Methode permettant de modifier un type de vehicule.
+        /// </summary>
+        /// <param name="typeVehicule">Le DTO du typeVehicule</param>
+        /// <exception cref="Exception"></exception>
+        public void ModifierTypeVehicule(TypeVehiculeDTO typeVehicule)
         {
             SqlCommand command = new SqlCommand(" UPDATE T_TypesVehicule " +
                                                 "    SET Type = @type, " +
@@ -247,7 +274,11 @@ namespace ProjetPompier_API.Logics.DAOs
             }
         }
 
-
+        /// <summary>
+        /// Methode permettant de supprimer un type de vehicule.
+        /// </summary>
+        /// <param name="code">Le code du type</param>
+        /// <exception cref="Exception"></exception>
         public void SupprimerTypeVehicule(int code)
         {
             SqlCommand command = new SqlCommand(" DELETE FROM T_TypesVehicule " +
@@ -275,6 +306,10 @@ namespace ProjetPompier_API.Logics.DAOs
             }
         }
 
+        /// <summary>
+        /// Methode permettant de vider la liste des types de vehicule.
+        /// </summary>
+        /// <exception cref="Exception"></exception>
         public void ViderListeTypesVehicule()
         {
             SqlCommand command = new SqlCommand(" DELETE FROM T_TypesVehicule", connexion);

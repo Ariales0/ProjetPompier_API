@@ -1,4 +1,6 @@
 ﻿
+using ProjetPompier_API.Logics.Models;
+
 /// <summary>
 /// Namespace pour les classe de type DTOs.
 /// </summary>
@@ -7,7 +9,7 @@ namespace ProjetPompier_API.Logics.DTOs
     /// <summary>
     /// Classe représentant le DTO d'un type de véhicule.
     /// </summary>
-    public class TypesVehiculeDTO
+    public class TypeVehiculeDTO
     {
         #region Proprietes
 
@@ -31,15 +33,32 @@ namespace ProjetPompier_API.Logics.DTOs
         /// <summary>
         /// Constructeur vide.
         /// </summary>
-        public TypesVehiculeDTO() 
+        public TypeVehiculeDTO() 
         { 
         }
 
-        public TypesVehiculeDTO(int code = 0000, string type = "", int personnes = 0)
+        /// <summary>
+        /// Constructeur avec paramètres.
+        /// </summary>
+        /// <param name="code">Le code</param>
+        /// <param name="type">Le type</param>
+        /// <param name="personnes">Le nombre de personnes</param>
+        public TypeVehiculeDTO(int code = 0000, string type = "", int personnes = 0)
         {
             Type = type;
             Code = code;
             Personnes = personnes;
+        }
+
+        /// <summary>
+        /// Constructeur avec le modèle TypesVehiculeModel en paramètre.
+        /// </summary>
+        /// <param name="leType">Le model</param>
+        public TypeVehiculeDTO(TypeVehiculeModel leType)
+        {
+            Type = leType.Type;
+            Code = leType.Code;
+            Personnes = leType.NombrePersonne;
         }
 
         #endregion Constructeurs

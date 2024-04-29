@@ -46,6 +46,12 @@ namespace ProjetPompier_API.Logics.Controleurs
 
         #region Methodes
 
+        /// <summary>
+        /// Obtenir la liste des véhicules d'une caserne.
+        /// </summary>
+        /// <param name="nomCaserne">Le nom de la caserne</param>
+        /// <returns>Retourne la liste des vehicules</returns>
+        /// <exception cref="Exception"></exception>
        public List<VehiculeDTO> ObtenirListeVehicule(string nomCaserne)
         {
             List<VehiculeDTO> listeVehiculeDTO = VehiculeRepository.Instance.ObtenirListeVehicules(nomCaserne);
@@ -53,7 +59,7 @@ namespace ProjetPompier_API.Logics.Controleurs
 
             foreach (VehiculeDTO vehiculeDTO in listeVehiculeDTO)
             {
-                listeVehicule.Add(new VehiculeModel(vehiculeDTO.Vin, vehiculeDTO.TypeVehicule, vehiculeDTO.Marque, vehiculeDTO.Modele, vehiculeDTO.Annee));
+                listeVehicule.Add(new VehiculeModel(vehiculeDTO.Vin, vehiculeDTO.Code , vehiculeDTO.Marque, vehiculeDTO.Modele, vehiculeDTO.Annee));
             }
             
             if (listeVehiculeDTO.Count == listeVehicule.Count)
@@ -66,14 +72,26 @@ namespace ProjetPompier_API.Logics.Controleurs
             }
        }
 
+        /// <summary>
+        /// Obtenir un véhicule d'une caserne.
+        /// </summary>
+        /// <param name="nomCaserne">Le nom de la caserne</param>
+        /// <param name="vinVehicule">Le vin du vehicule</param>
+        /// <returns>Retourne le vehicule</returns>
         public VehiculeDTO ObtenirVehicule(string nomCaserne, string vinVehicule)
         {
             VehiculeDTO vehiculeDTO = VehiculeRepository.Instance.ObtenirVehicule(nomCaserne, vinVehicule);
-            VehiculeModel vehicule = new VehiculeModel(vehiculeDTO.Vin, vehiculeDTO.TypeVehicule, vehiculeDTO.Marque, vehiculeDTO.Modele, vehiculeDTO.Annee);
+            VehiculeModel vehicule = new VehiculeModel(vehiculeDTO.Vin, vehiculeDTO.Code, vehiculeDTO.Marque, vehiculeDTO.Modele, vehiculeDTO.Annee);
             return new VehiculeDTO(vehicule);
         }
 
-        public void AjouterVehicule(string nomCaserne, int codeVehicule ,VehiculeDTO vehicule)
+        /// <summary>
+        /// Methode permettant d'ajouter un vehicule à une caserne.
+        /// </summary>
+        /// <param name="nomCaserne">Le nom de la caserne</param>
+        /// <param name="vehicule">Le DTO du vehicule</param>
+        /// <exception cref="Exception"></exception>
+        public void AjouterVehicule(string nomCaserne, VehiculeDTO vehicule)
         {
             
             bool OK = false;
@@ -88,7 +106,7 @@ namespace ProjetPompier_API.Logics.Controleurs
 
             if (OK)
             {
-                VehiculeRepository.Instance.AjouterVehicule(nomCaserne, codeVehicule, vehicule);
+                VehiculeRepository.Instance.AjouterVehicule(nomCaserne, vehicule);
             }
             else
             {
@@ -96,13 +114,19 @@ namespace ProjetPompier_API.Logics.Controleurs
             }
         }
 
-        public void ModifierVehicule(string nomCaserne, int codeVehicule,VehiculeDTO vehicule)
+        /// <summary>
+        /// Methodes permettant de modifier un vehicule d'une caserne.
+        /// </summary>
+        /// <param name="nomCaserne">Le nom de la caserne</param>
+        /// <param name="vehicule">Le DTO du vehicule</param>
+        /// <exception cref="Exception"></exception>
+        public void ModifierVehicule(string nomCaserne, VehiculeDTO vehicule)
         {
             VehiculeDTO vehiculeDB = VehiculeRepository.Instance.ObtenirVehicule(nomCaserne, vehicule.Vin);
 
-            if (vehicule.Marque != vehiculeDB.Marque || vehicule.Modele != vehiculeDB.Modele || vehicule.Annee != vehiculeDB.Annee)
+            if (vehicule.Marque != vehiculeDB.Marque || vehicule.Code != vehiculeDB.Code || vehicule.Modele != vehiculeDB.Modele || vehicule.Annee != vehiculeDB.Annee)
             {
-                VehiculeRepository.Instance.ModifierVehicule(nomCaserne, codeVehicule, vehicule);
+                VehiculeRepository.Instance.ModifierVehicule(nomCaserne, vehicule);
             }
             else
             {
@@ -110,6 +134,12 @@ namespace ProjetPompier_API.Logics.Controleurs
             }
         }
 
+        /// <summary>
+        /// methode permettant de supprimer un vehicule d'une caserne.
+        /// </summary>
+        /// <param name="nomCaserne">Le nom de la caserne</param>
+        /// <param name="vinVehicule">Le vin du vehicule</param>
+        /// <exception cref="Exception"></exception>
         public void SupprimerVehicule(string nomCaserne, string vinVehicule)
         {
             if (VehiculeRepository.Instance.ObtenirVehicule(nomCaserne, vinVehicule) == null)
@@ -119,6 +149,11 @@ namespace ProjetPompier_API.Logics.Controleurs
             VehiculeRepository.Instance.SupprimerVehicule(nomCaserne, vinVehicule);
         }
 
+        /// <summary>
+        /// Methode permettant de vider la liste des vehicules d'une caserne.
+        /// </summary>
+        /// <param name="nomCaserne">Le nom de la caserne</param>
+        /// <exception cref="Exception"></exception>
         public void ViderListeVehicules(string nomCaserne)
         {
             if (!VehiculeRepository.Instance.ObtenirListeVehicules(nomCaserne).Any())
