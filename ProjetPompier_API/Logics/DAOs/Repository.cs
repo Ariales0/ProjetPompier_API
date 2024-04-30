@@ -30,17 +30,17 @@ namespace ProjetPompier_API.Logics.DAOs
             //string motDePasse = "Password=Patate123;";
 
             //Vincent
-            string utilisateur = "User Id=vincent; ";
-            string motDePasse = "Password=Patate123;";
-			string ipServeur = "Server=127.0.0.1; ";
-			string baseDeDonnees = "Database=ProjetPompier; ";
-
-			////Quentin
-			//string utilisateur = "User Id=quentin; ";
-			//string motDePasse = "Password=password;";
-
+   //         string utilisateur = "User Id=vincent; ";
+   //         string motDePasse = "Password=Patate123;";
 			//string ipServeur = "Server=127.0.0.1; ";
 			//string baseDeDonnees = "Database=ProjetPompier; ";
+
+			////Quentin
+			string utilisateur = "User Id=quentin; ";
+			string motDePasse = "Password=password;";
+
+			string ipServeur = "Server=127.0.0.1; ";
+			string baseDeDonnees = "Database=ProjetPompier; ";
 
 			connexion = new SqlConnection(ipServeur + baseDeDonnees + utilisateur + motDePasse);
 
