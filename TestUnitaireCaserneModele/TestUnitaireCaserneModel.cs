@@ -86,5 +86,51 @@ namespace TestUnitaireCaserneModele
             GradeControleur.Instance.SupprimerGrade("Test");
 			Assert.Equal(nombreDeGrade+1, nouveauNombreDeGrade);
         }
+
+        /// <summary>
+        /// Test pour la méthode AjouterTypeVehicule
+        /// </summary>
+        public void TestAjouterTypeVehicule()
+        {
+            //On recupere les type de vehicule deja existante
+            List<TypeVehiculeDTO> listeTypeVehicule = TypesVehiculeControleur.Instance.ObtenirListeTypesVehicule();
+            int nombreDeTypeVehicule = listeTypeVehicule.Count;
+
+            TypeVehiculeDTO typeVehiculeDTO = new TypeVehiculeDTO(215, "Test", 5);
+
+            TypesVehiculeControleur.Instance.AjouterTypeVehicule(typeVehiculeDTO);
+
+            //On verifie qu'il y a un type de vehicule en plus dans la base de données
+
+         //On recupere les type de vehicule deja existante
+            List<TypeVehiculeDTO> nouvelleListeTypeVehicule = TypesVehiculeControleur.Instance.ObtenirListeTypesVehicule();
+            int nouveauNombreDeTypeVehicule = nouvelleListeTypeVehicule.Count;
+
+            TypesVehiculeControleur.Instance.SupprimerTypeVehicule(0);
+            Assert.Equal(nombreDeTypeVehicule+1, nouveauNombreDeTypeVehicule);
+        }
+
+        /// <summary>
+        /// Methode de test pour la methode AjouterVehicule
+        /// </summary>
+        public void TestAjouterVehicule()
+        {
+            //On recupere les vehicule deja existante
+            List<VehiculeDTO> listeVehicule = VehiculeControleur.Instance.ObtenirListeVehicule("Caserne Test");
+            int nombreDeVehicule = listeVehicule.Count;
+
+            VehiculeDTO vehiculeDTO = new VehiculeDTO("Test", 215, "Test", "Test", 2020);
+
+            VehiculeControleur.Instance.AjouterVehicule("Caserne Test", vehiculeDTO);
+
+            //On verifie qu'il y a un vehicule en plus dans la base de données
+            //On recupere les vehicule deja existante
+            List<VehiculeDTO> nouvelleListeVehicule = VehiculeControleur.Instance.ObtenirListeVehicule("Caserne Test");
+            int nouveauNombreDeVehicule = nouvelleListeVehicule.Count;
+
+            VehiculeControleur.Instance.SupprimerVehicule("Caserne Test", "Test");
+            Assert.Equal(nombreDeVehicule+1, nouveauNombreDeVehicule);
+        }
+
     }
 }
