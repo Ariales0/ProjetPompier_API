@@ -252,7 +252,8 @@ namespace ProjetPompier_API.Logics.DAOs
                                   "TypeIntervention = @typeIntervention, " +
                                   "Resume = @resume " +
                                   "WHERE IdPompier = @idPompier " +
-                                  "AND IdCaserne = IdCaserne;";
+                                  "AND IdCaserne = IdCaserne " +
+                                  "AND DateDebut = @dateDebut;";
 
             SqlParameter idCaserneParam = new SqlParameter("@idCaserne", SqlDbType.Int);
             SqlParameter idPompierParam = new SqlParameter("@idPompier", SqlDbType.Int);
@@ -261,8 +262,6 @@ namespace ProjetPompier_API.Logics.DAOs
             SqlParameter adresseParam = new SqlParameter("@adresse", SqlDbType.VarChar, 200);
             SqlParameter typeInterventionParam = new SqlParameter("@typeIntervention", SqlDbType.VarChar, 50);
             SqlParameter resumeParam = new SqlParameter("@resume", SqlDbType.VarChar, 500);
-            SqlParameter matriculeParam = new SqlParameter("@matricule", SqlDbType.Int, 6);
-            SqlParameter nomCaserneParam = new SqlParameter("@nomCaserne", SqlDbType.VarChar, 100);
 
 
             idCaserneParam.Value = CaserneRepository.Instance.ObtenirIdCaserne(nomCaserne);
@@ -272,8 +271,6 @@ namespace ProjetPompier_API.Logics.DAOs
             adresseParam.Value = fiche.Adresse;
             typeInterventionParam.Value = fiche.TypeIntervention;
             resumeParam.Value = fiche.Resume;
-            matriculeParam.Value = fiche.MatriculeCapitaine;
-            nomCaserneParam.Value = nomCaserne;
 
             command.Parameters.Add(idCaserneParam);
             command.Parameters.Add(idPompierParam);
@@ -282,8 +279,6 @@ namespace ProjetPompier_API.Logics.DAOs
             command.Parameters.Add(adresseParam);
             command.Parameters.Add(typeInterventionParam);
             command.Parameters.Add(resumeParam);
-            command.Parameters.Add(matriculeParam);
-            command.Parameters.Add(nomCaserneParam);
 
             try
             {
@@ -315,9 +310,11 @@ namespace ProjetPompier_API.Logics.DAOs
             command.CommandText = " UPDATE T_FichesIntervention " +
                                   "SET DateFin = @dateFin " +
                                   "WHERE IdPompier = @idPompier " +
-                                  "AND IdCaserne = IdCaserne;";
+                                  "AND IdCaserne = IdCaserne " +
+                                  "AND DateDebut = @dateDebut;";
 
             SqlParameter dateFinParam = new SqlParameter("@dateFin", SqlDbType.DateTime);
+            SqlParameter dateDebutParam = new SqlParameter("@dateDebut", SqlDbType.DateTime);
             SqlParameter idCaserneParam = new SqlParameter("@idCaserne", SqlDbType.Int);
             SqlParameter idPompierParam = new SqlParameter("@idPompier", SqlDbType.Int);
 
@@ -327,10 +324,12 @@ namespace ProjetPompier_API.Logics.DAOs
             }
 
             dateFinParam.Value = fiche.DateFin;
+            dateDebutParam.Value = fiche.DateDebut;
             idCaserneParam.Value = CaserneRepository.Instance.ObtenirIdCaserne(nomCaserne);
             idPompierParam.Value = PompierRepository.Instance.ObtenirIdPompier(fiche.MatriculeCapitaine, nomCaserne);
 
             command.Parameters.Add(dateFinParam);
+            command.Parameters.Add(dateDebutParam);
             command.Parameters.Add(idCaserneParam);
             command.Parameters.Add(idPompierParam);
 
