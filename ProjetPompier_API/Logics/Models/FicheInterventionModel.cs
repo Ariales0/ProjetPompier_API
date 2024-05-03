@@ -56,20 +56,21 @@ namespace ProjetPompier_API.Logics.Models
         }
 
         /// <summary>
-        /// Attribut représentant le type d'intervention.
+        /// Attribut représentant le code du type d'intervention.
         /// </summary>
-        private string typeIntervention;
+        private int codeTypeIntervention;
         /// <summary>
-        /// Propriété représentant le type d'intervention.
+        /// Propriété représentant le code du type d'intervention.
         /// </summary>
-        public string TypeIntervention {
-            get { return typeIntervention; }
+        public int CodeTypeIntervention {
+            get { return codeTypeIntervention; }
             set
             {
-                if (value.Length <= 50)
-                    typeIntervention = value;
+                string codeTypeInterventionStr = value.ToString();
+                if (codeTypeInterventionStr.Length <= 4)
+                    codeTypeIntervention = value;
                 else
-                    throw new Exception("Le type d'intervention doit avoir un maximum de 50 caractères.");
+                    throw new Exception("Le code du type d'intervention n'est pas dans la bonne forme, merci de ne mettre pas plus de 4 chiffres");
             }
         }
 
@@ -111,6 +112,25 @@ namespace ProjetPompier_API.Logics.Models
             }
         }
 
+        /// <summary>
+        /// Attribut représentant le code du type d'intervention.
+        /// </summary>
+        private string vinVehicule;
+        /// <summary>
+        /// Propriété représentant le code du type d'intervention.
+        /// </summary>
+        public string VinVehicule
+        {
+            get { return vinVehicule; }
+            set
+            {
+                if (value.Length <= 17)
+                    resume = value;
+                else
+                    throw new Exception("Le vin du véhicule ne peut contenir plus de 17 caractères.");
+            }
+        }
+
 
         #endregion AttributsProprietes
 
@@ -119,20 +139,21 @@ namespace ProjetPompier_API.Logics.Models
         /// <summary>
         /// Constructeur paramétré
         /// </summary>
-        /// <param name="DateDebut">Date et heure de l'intervention</param>
+        /// <param name="dateDebut">Date et heure de l'intervention</param>
         /// <param name="dateFin">Date et heure de fin de l'intervention/param>
         /// <param name="adresse">Adresse de l'intervention</param>
         /// <param name="typeIntervention">Type d'intervention</param>
         /// <param name="resume">Resumé de l'intervention</param>
         /// <param name="matriculeCapitaine">Matricule du pompier capitaine</param>
-        public FicheInterventionModel(string dateDebut = "1999-01-01 00:00:00", string dateFin = null, string adresse = "", string typeIntervention = "", string resume = "", int matriculeCapitaine = 000000)
+        public FicheInterventionModel(string dateDebut = "1999-01-01 00:00:00", string dateFin = null, string adresse = "", int codeTypeIntervention = 0, string resume = "", int matriculeCapitaine = 000000, string vinvehicule = "")
         {
             DateDebut = dateDebut;
             DateFin = dateFin;
             Adresse = adresse;
-            TypeIntervention = typeIntervention;
+            CodeTypeIntervention = codeTypeIntervention;
             Resume = resume;
             MatriculeCapitaine = matriculeCapitaine;
+            VinVehicule = vinvehicule;
         }
 
         #endregion Constructeurs
