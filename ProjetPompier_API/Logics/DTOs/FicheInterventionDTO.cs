@@ -66,7 +66,7 @@ namespace ProjetPompier_API.Logics.DTOs
         /// <param name="resume">Resumé de l'intervention</param>
         /// <param name="matriculeCapitaine">Matricule du pompier capitaine</param>
         /// <param name="vinVehicule">Vin du véhicule solicité pour l'intervention</param>
-        public FicheInterventionDTO(string dateDebut = "1999-01-01 00:00:00", string dateFin = null, string adresse = "", int codeTypeIntervention = 000, string resume = "", int matriculeCapitaine = 000000, string vinVehicule="")
+        public FicheInterventionDTO(string dateDebut = "1999-01-01 00:00:00", string dateFin = null, string adresse = "", int codeTypeIntervention = 000, string resume = "", int matriculeCapitaine = 000000)
 
         {
             DateDebut = dateDebut;
@@ -75,7 +75,6 @@ namespace ProjetPompier_API.Logics.DTOs
             CodeTypeIntervention = codeTypeIntervention;
             Resume = resume;
             MatriculeCapitaine = matriculeCapitaine;
-            VinVehicule = vinVehicule;
         }
 
         /// <summary>
@@ -91,7 +90,6 @@ namespace ProjetPompier_API.Logics.DTOs
             CodeTypeIntervention = laFiche.CodeTypeIntervention;
             Resume = laFiche.Resume;
             MatriculeCapitaine = laFiche.MatriculeCapitaine;
-            VinVehicule = laFiche.VinVehicule;
         }
 
         #endregion Constructeurs
