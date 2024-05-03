@@ -98,7 +98,7 @@ namespace ProjetPompier_API.Logics.DAOs
                     {
                         dateFin = reader.GetDateTime(1).ToString();
                     }
-                    FicheInterventionDTO ficheInterventionDTO = new FicheInterventionDTO(reader.GetDateTime(0).ToString(), dateFin ,reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5));
+                    FicheInterventionDTO ficheInterventionDTO = new FicheInterventionDTO(reader.GetDateTime(0).ToString(), dateFin ,reader.GetString(2), reader.GetInt32(3), reader.GetString(4), reader.GetInt32(5));
                     liste.Add(ficheInterventionDTO);
                 }
                 reader.Close();
@@ -167,7 +167,7 @@ namespace ProjetPompier_API.Logics.DAOs
                 {
                     dateFin = reader.GetDateTime(1).ToString();
                 }
-                uneFicheIntervention = new FicheInterventionDTO(reader.GetDateTime(0).ToString(), dateFin, reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5));
+                uneFicheIntervention = new FicheInterventionDTO(reader.GetDateTime(0).ToString(), dateFin, reader.GetString(2), reader.GetInt32(3), reader.GetString(4), reader.GetInt32(5));
                 reader.Close();
                 return uneFicheIntervention;
             }
@@ -199,7 +199,7 @@ namespace ProjetPompier_API.Logics.DAOs
 
             int idCaserne = CaserneRepository.Instance.ObtenirIdCaserne(nomCaserne);
             int idPompier = PompierRepository.Instance.ObtenirIdPompier(fiche.MatriculeCapitaine, nomCaserne);
-            int idTypeIntervention = TypeInterventionRepositiory.Instance.ObtenirIdTypeIntervention(fiche.CodeTypeIntervention);
+            int idTypeIntervention = TypesInterventionRepositiory.Instance.ObtenirIdTypeIntervention(fiche.CodeTypeIntervention);
 
             SqlParameter dateDebutParam = new SqlParameter("@dateDebut", SqlDbType.DateTime);
             SqlParameter dateFinParam = new SqlParameter("@dateFin", SqlDbType.DateTime);

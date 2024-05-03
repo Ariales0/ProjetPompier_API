@@ -61,7 +61,7 @@ namespace ProjetPompier_API.Logics.Controleurs
 
             foreach (FicheInterventionDTO ficheIntervention in listeFicheInterventionDTO)
             {
-                listeFicheIntervention.Add(new FicheInterventionModel(ficheIntervention.DateDebut, ficheIntervention.DateFin, ficheIntervention.Adresse, ficheIntervention.TypeIntervention, ficheIntervention.Resume, ficheIntervention.MatriculeCapitaine));
+                listeFicheIntervention.Add(new FicheInterventionModel(ficheIntervention.DateDebut, ficheIntervention.DateFin, ficheIntervention.Adresse, ficheIntervention.CodeTypeIntervention, ficheIntervention.Resume, ficheIntervention.MatriculeCapitaine));
             }
 
             if (listeFicheIntervention.Count == listeFicheInterventionDTO.Count)
@@ -73,7 +73,7 @@ namespace ProjetPompier_API.Logics.Controleurs
         public FicheInterventionDTO ObtenirFicheIntevention(string nomCaserne, int matriculeCapitaine, string dateIntervention)
         {
             FicheInterventionDTO ficheInterventionDTO = InterventionRepository.Instance.ObtenirFicheIntervention(nomCaserne, matriculeCapitaine, dateIntervention);
-            FicheInterventionModel ficheIntervention = new FicheInterventionModel(ficheInterventionDTO.DateDebut, ficheInterventionDTO.DateFin, ficheInterventionDTO.Adresse, ficheInterventionDTO.TypeIntervention, ficheInterventionDTO.Resume, ficheInterventionDTO.MatriculeCapitaine);
+            FicheInterventionModel ficheIntervention = new FicheInterventionModel(ficheInterventionDTO.DateDebut, ficheInterventionDTO.DateFin, ficheInterventionDTO.Adresse, ficheInterventionDTO.CodeTypeIntervention, ficheInterventionDTO.Resume, ficheInterventionDTO.MatriculeCapitaine);
             return new FicheInterventionDTO(ficheIntervention);
         }
 
@@ -86,7 +86,7 @@ namespace ProjetPompier_API.Logics.Controleurs
         {
             try
             {
-                FicheInterventionModel uneFicheIntervention = new FicheInterventionModel(fiche.DateDebut, fiche.DateFin, fiche.Adresse, fiche.TypeIntervention, fiche.Resume, fiche.MatriculeCapitaine);
+                FicheInterventionModel uneFicheIntervention = new FicheInterventionModel(fiche.DateDebut, fiche.DateFin, fiche.Adresse, fiche.CodeTypeIntervention, fiche.Resume, fiche.MatriculeCapitaine);
                 InterventionRepository.Instance.OuvrirFicheIntervention(nomCaserne, fiche);
             }
             catch (Exception e)
@@ -105,7 +105,7 @@ namespace ProjetPompier_API.Logics.Controleurs
         {
             try
             {
-                FicheInterventionModel uneFicheIntervention = new FicheInterventionModel(fiche.DateDebut, fiche.DateFin, fiche.Adresse, fiche.TypeIntervention, fiche.Resume, fiche.MatriculeCapitaine);
+                FicheInterventionModel uneFicheIntervention = new FicheInterventionModel(fiche.DateDebut, fiche.DateFin, fiche.Adresse, fiche.CodeTypeIntervention, fiche.Resume, fiche.MatriculeCapitaine);
                 InterventionRepository.Instance.ModifierIntervention(nomCaserne, fiche);
             }
             catch (Exception e)
@@ -130,7 +130,7 @@ namespace ProjetPompier_API.Logics.Controleurs
             {
                 try
                 {
-                    FicheInterventionModel uneFicheIntervention = new FicheInterventionModel(fiche.DateDebut, fiche.DateFin, fiche.Adresse, fiche.TypeIntervention, fiche.Resume, fiche.MatriculeCapitaine);
+                    FicheInterventionModel uneFicheIntervention = new FicheInterventionModel(fiche.DateDebut, fiche.DateFin, fiche.Adresse, fiche.CodeTypeIntervention, fiche.Resume, fiche.MatriculeCapitaine);
                     InterventionRepository.Instance.FermerFicheIntervention(nomCaserne, fiche);
                 }
                 catch (Exception e)
