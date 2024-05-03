@@ -4,6 +4,7 @@
 /// </summary>
 namespace ProjetPompier_API.Logics.DTOs
 {
+
 	/// <summary>
 	/// Classe représentant le DTO d'un pompier.
 	/// </summary>
