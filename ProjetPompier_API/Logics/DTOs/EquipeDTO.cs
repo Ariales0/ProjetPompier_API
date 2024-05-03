@@ -21,6 +21,11 @@ namespace ProjetPompier_API.Logics.DTOs
         /// </summary>
         public List<PompierDTO> ListePompierEquipe { get; set; }
 
+        /// <summary>
+        /// Propriété représentant le vin du véhicule solicité pour l'intervention.
+        /// </summary>
+        public string VinVehicule { get; set; }
+
         #endregion Proprietes
 
         #region Constructeurs
@@ -34,10 +39,12 @@ namespace ProjetPompier_API.Logics.DTOs
         /// </summary>
         /// <param name="codeEquipe">Le code de l'équipe.</param>
         /// <param name="listePompierEquipe">Liste des pompiers de l'équipe.</param>
-        public EquipeDTO(int codeEquipe = 0, List<PompierDTO> listePompierEquipe = null)
+        /// /// <param name="vinVehiculeEquipe">Le vin du véhicule</param>
+        public EquipeDTO(int codeEquipe = 0, List<PompierDTO> listePompierEquipe = null, string vinVehiculeEquipe = "")
         {
             Code = codeEquipe;
             ListePompierEquipe = listePompierEquipe ?? new List<PompierDTO>();
+            VinVehicule = vinVehiculeEquipe;
         }
 
 

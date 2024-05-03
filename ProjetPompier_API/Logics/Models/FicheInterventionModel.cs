@@ -112,24 +112,6 @@ namespace ProjetPompier_API.Logics.Models
             }
         }
 
-        /// <summary>
-        /// Attribut représentant le code du type d'intervention.
-        /// </summary>
-        private string vinVehicule;
-        /// <summary>
-        /// Propriété représentant le code du type d'intervention.
-        /// </summary>
-        public string VinVehicule
-        {
-            get { return vinVehicule; }
-            set
-            {
-                if (value.Length <= 17)
-                    resume = value;
-                else
-                    throw new Exception("Le vin du véhicule ne peut contenir plus de 17 caractères.");
-            }
-        }
 
 
         #endregion AttributsProprietes

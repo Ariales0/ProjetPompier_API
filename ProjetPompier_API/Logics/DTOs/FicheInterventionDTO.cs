@@ -46,12 +46,6 @@ namespace ProjetPompier_API.Logics.DTOs
         /// </summary>
         public int MatriculeCapitaine { get; set; }
 
-        /// <summary>
-        /// Propriété représentant le vin du véhicule solicité pour l'intervention.
-        /// </summary>
-        public string VinVehicule { get; set; }
-
-
         #endregion Proprietes
 
         #region Constructeurs

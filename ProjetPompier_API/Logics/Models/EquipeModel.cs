@@ -50,6 +50,25 @@ namespace ProjetPompier_API.Logics.Models
             }
         }
 
+        /// <summary>
+        /// Attribut représentant le vin du  véhicule.
+        /// </summary>
+        private string vinVehicule;
+        /// <summary>
+        /// Propriété représentant le vin du véhicule.
+        /// </summary>
+        public string VinVehicule
+        {
+            get { return vinVehicule; }
+            set
+            {
+                if (value.Length <= 17)
+                    vinVehicule = value;
+                else
+                    throw new Exception("Le vin du véhicule ne peut contenir plus de 17 caractères.");
+            }
+        }
+
         #endregion AttributsProprietes
 
         #region Constructeurs
@@ -58,10 +77,12 @@ namespace ProjetPompier_API.Logics.Models
         /// </summary>
         /// <param name="codeEquipe">Le code de l'équipe</param>
         /// <param name="listePompier">La liste des pompiers de l'équipe</param>
-        public EquipeModel(int codeEquipe = 0,List<PompierDTO> listePompier = null)
+        /// <param name="vinVehiculeEquipe">Le vin du véhicule</param>
+        public EquipeModel(int codeEquipe = 0,List<PompierDTO> listePompier = null, string vinVehiculeEquipe = "")
         {
 			Code = codeEquipe;
             ListePompierEquipe = listePompier;
+            VinVehicule = vinVehiculeEquipe;
 		}
 
         #endregion Constructeurs
