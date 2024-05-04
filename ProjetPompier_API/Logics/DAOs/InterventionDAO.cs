@@ -252,7 +252,8 @@ namespace ProjetPompier_API.Logics.DAOs
                                   "SET Adresse = @adresse, " +
                                   "Resume = @resume " +
                                   "WHERE IdPompier = @idPompier " +
-                                  "AND IdCaserne = IdCaserne;";
+                                  "AND IdCaserne = IdCaserne " +
+                                  "AND DateDebut = @dateDebut;";
 
             SqlParameter idCaserneParam = new SqlParameter("@idCaserne", SqlDbType.Int);
             SqlParameter idPompierParam = new SqlParameter("@idPompier", SqlDbType.Int);
@@ -312,22 +313,26 @@ namespace ProjetPompier_API.Logics.DAOs
             command.CommandText = " UPDATE T_FichesIntervention " +
                                   "SET DateFin = @dateFin " +
                                   "WHERE IdPompier = @idPompier " +
-                                  "AND IdCaserne = @idCaserne;";
+                                  "AND IdCaserne = IdCaserne " +
+                                  "AND DateDebut = @dateDebut;";
 
+            SqlParameter dateDebutParam = new SqlParameter("@dateDebut", SqlDbType.DateTime);
             SqlParameter dateFinParam = new SqlParameter("@dateFin", SqlDbType.DateTime);
             SqlParameter idCaserneParam = new SqlParameter("@idCaserne", SqlDbType.Int);
             SqlParameter idPompierParam = new SqlParameter("@idPompier", SqlDbType.Int);
 
-            if (fiche.DateFin == null)
+            if (fiche.DateFin == "" || fiche.DateFin == null)
             {
                 throw new Exception("Erreur - La date de fin de l'intervention est null.");
             }
 
+            dateDebutParam.Value = fiche.DateDebut;
             dateFinParam.Value = fiche.DateFin;
             idCaserneParam.Value = CaserneRepository.Instance.ObtenirIdCaserne(nomCaserne);
             idPompierParam.Value = PompierRepository.Instance.ObtenirIdPompier(fiche.MatriculeCapitaine, nomCaserne);
 
             command.Parameters.Add(dateFinParam);
+            command.Parameters.Add(dateDebutParam);
             command.Parameters.Add(idCaserneParam);
             command.Parameters.Add(idPompierParam);
 
