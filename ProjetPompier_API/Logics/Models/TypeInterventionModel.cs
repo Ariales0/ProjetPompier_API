@@ -1,4 +1,6 @@
-﻿namespace ProjetPompier_API.Logics.Models
+﻿using ProjetPompier_API.Logics.DTOs;
+
+namespace ProjetPompier_API.Logics.Models
 {
     public class TypeInterventionModel
     {
@@ -54,7 +56,17 @@
         public TypeInterventionModel(int codeTypeIntervention = 00, string descriptionTypeIntervention = "")
         {
             Code = codeTypeIntervention;
-            Description = description;
+            Description = descriptionTypeIntervention;
+        }
+
+        /// <summary>
+        /// Constructeur a partir du DTO
+        /// </summary>
+        /// <param name="typeInterventionDTO">L'objet DTO</param>
+        public TypeInterventionModel(TypeInterventionDTO typeInterventionDTO)
+        {
+            Code = typeInterventionDTO.Code;
+            Description = typeInterventionDTO.Description;
         }
 
         #endregion Constructeurs

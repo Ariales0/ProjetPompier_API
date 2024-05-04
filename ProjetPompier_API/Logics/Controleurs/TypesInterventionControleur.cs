@@ -85,6 +85,11 @@ namespace ProjetPompier_API.Logics.Controleurs
             try
             {
                 typeInterventionDTO = TypesInterventionRepository.Instance.ObtenirTypeIntervention(code);
+                TypeInterventionModel typeInterventionModel = new TypeInterventionModel(typeInterventionDTO);
+                if(typeInterventionDTO.Code != typeInterventionModel.Code || typeInterventionDTO.Description != typeInterventionModel.Description)
+                {
+                    throw new Exception("Erreur lors de l'ajout d'un type d'intervention.");
+                }
             }
             catch (Exception ex)
             {
@@ -113,6 +118,7 @@ namespace ProjetPompier_API.Logics.Controleurs
             {
                 try
                 {
+                    TypeInterventionModel nouveauTypeIntervention = new TypeInterventionModel(leTypeInterventionAjout);
                     TypesInterventionRepository.Instance.AjouterTypeIntervention(leTypeInterventionAjout);
                 }
                 catch(Exception ex)
@@ -133,19 +139,29 @@ namespace ProjetPompier_API.Logics.Controleurs
         /// <exception cref="Exception"></exception>
         public void ModifierTypeIntervention(TypeInterventionDTO leTypeInterventionModification)
         {
-            TypeInterventionDTO typeInterventionDTO = TypesInterventionRepository.Instance.ObtenirTypeIntervention(leTypeInterventionModification.Code);
-            if (leTypeInterventionModification.Code != typeInterventionDTO.Code || leTypeInterventionModification.Description != typeInterventionDTO.Description)
+            try
             {
-                try
+                TypeInterventionDTO typeInterventionDTO = TypesInterventionRepository.Instance.ObtenirTypeIntervention(leTypeInterventionModification.Code);
+                if (leTypeInterventionModification.Code == typeInterventionDTO.Code && leTypeInterventionModification.Description != typeInterventionDTO.Description)
                 {
-                    TypesInterventionRepository.Instance.ModifierTypeIntervention(typeInterventionDTO);
+                    try
+                    {
+                        TypeInterventionModel typeInterventionModel = new TypeInterventionModel(leTypeInterventionModification);
+                        TypesInterventionRepository.Instance.ModifierTypeIntervention(typeInterventionDTO);
+                    }
+                    catch (Exception ex) { throw new Exception(ex.Message); }
                 }
-                catch (Exception ex) { throw new Exception(ex.Message); }
+                else
+                {
+                    throw new Exception("Aucune modification n'a été apportée.");
+                }
             }
-            else
+            catch (Exception e)
             {
-                throw new Exception("Aucune modification n'a été apportée.");
+                throw new Exception(e.Message);
             }
+            
+            
         }
 
         /// <summary>

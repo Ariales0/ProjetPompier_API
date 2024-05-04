@@ -217,7 +217,7 @@ namespace ProjetPompier_API.Logics.DAOs
             command.Parameters.Add(dateDebutParam);
             command.Parameters.Add(dateFinParam);
             command.Parameters.Add(adresseParam);
-            command.Parameters.Add(idTypeIntervention);
+            command.Parameters.Add(idTypeInterventionParam);
             command.Parameters.Add(resumeParam);
             command.Parameters.Add(idPompierParam);
             command.Parameters.Add(idCaserneParam);

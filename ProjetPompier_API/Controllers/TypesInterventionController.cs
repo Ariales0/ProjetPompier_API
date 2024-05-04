@@ -21,7 +21,7 @@ namespace ProjetPompier_API.Controllers
         [HttpGet]
         public List<TypeInterventionDTO> ObtenirListeTypesIntervention()
         {
-            return TypesInterventionRepository.Instance.ObtenirListeTypesIntervention();
+            return TypesInterventionControleur.Instance.ObtenirListeTypesIntervention();
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace ProjetPompier_API.Controllers
         [HttpGet]
         public TypeInterventionDTO ObtenirTypeIntervention([FromQuery] int code)
         {
-            return TypesInterventionRepository.Instance.ObtenirTypeIntervention(code);
+            return TypesInterventionControleur.Instance.ObtenirTypeIntervention(code);
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace ProjetPompier_API.Controllers
         [HttpPost]
         public void AjouterTypeIntervention([FromBody] TypeInterventionDTO typeInterventionAjout)
         {
-            TypesInterventionRepository.Instance.AjouterTypeIntervention(typeInterventionAjout);
+            TypesInterventionControleur.Instance.AjouterTypeIntervention(typeInterventionAjout);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace ProjetPompier_API.Controllers
         [HttpPost]
         public void ModifierTypeIntervention([FromBody] TypeInterventionDTO typeInterventionModification)
         {
-            TypesInterventionRepository.Instance.ModifierTypeIntervention(typeInterventionModification);
+            TypesInterventionControleur.Instance.ModifierTypeIntervention(typeInterventionModification);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace ProjetPompier_API.Controllers
         [HttpPost]
         public void SupprimerTypeIntervention([FromQuery] int code)
         {
-            TypesInterventionRepository.Instance.SupprimerTypeIntervention(code);
+            TypesInterventionControleur.Instance.SupprimerTypeIntervention(code);
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace ProjetPompier_API.Controllers
         [HttpPost]
         public void ViderListeTypesIntervention()
         {
-            TypesInterventionRepository.Instance.ViderListeTypesIntervention();
+            TypesInterventionControleur.Instance.ViderListeTypesIntervention();
         }
     }
 }

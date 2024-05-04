@@ -127,7 +127,7 @@ namespace ProjetPompier_API.Logics.Models
         /// <param name="typeIntervention">Type d'intervention</param>
         /// <param name="resume">Resumé de l'intervention</param>
         /// <param name="matriculeCapitaine">Matricule du pompier capitaine</param>
-        public FicheInterventionModel(string dateDebut = "1999-01-01 00:00:00", string dateFin = null, string adresse = "", int codeTypeIntervention = 0, string resume = "", int matriculeCapitaine = 000000, string vinvehicule = "")
+        public FicheInterventionModel(string dateDebut = "1999-01-01 00:00:00", string dateFin = null, string adresse = "", int codeTypeIntervention = 0, string resume = "", int matriculeCapitaine = 000000)
         {
             DateDebut = dateDebut;
             DateFin = dateFin;
@@ -135,7 +135,6 @@ namespace ProjetPompier_API.Logics.Models
             CodeTypeIntervention = codeTypeIntervention;
             Resume = resume;
             MatriculeCapitaine = matriculeCapitaine;
-            VinVehicule = vinvehicule;
         }
 
         #endregion Constructeurs
