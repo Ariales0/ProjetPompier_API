@@ -8,12 +8,10 @@ using ProjetPompier_API.Logics.DTOs;
 namespace ProjetPompier_API.Controllers
 {
     /// <summary>
-    /// Classe représentant le controleur de l'API'.
+    /// Classe représentant le controleur des pompiers de l'API.
     /// </summary>
     public class PompierController : Controller
     {
-
-
         /// <summary>
         /// Méthode de service GET ObtenirListePompier
         /// </summary>
@@ -64,7 +62,6 @@ namespace ProjetPompier_API.Controllers
 			PompierControleur.Instance.ModifierPompier(pompierDTO, nomCaserne);
 		}
 
-
 		/// <summary>
 		/// Méthode de service POST SupprimerPompier
 		/// </summary>
@@ -86,6 +83,5 @@ namespace ProjetPompier_API.Controllers
 		{
 			PompierControleur.Instance.ViderListePompier(nomCaserne);
 		}
-
 	}
 }

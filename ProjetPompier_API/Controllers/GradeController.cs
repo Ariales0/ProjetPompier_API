@@ -8,12 +8,11 @@ using ProjetPompier_API.Logics.DTOs;
 namespace ProjetPompier_API.Controllers
 {
     /// <summary>
-    /// Classe représentant le controleur de l'API'.
+    /// Classe représentant le controleur de l'API des grades d'un pompier.
     /// </summary>
     
     public class GradeController : Controller
     {
-
         /// <summary>
 		/// Méthode de service GET ObtenirListeCaserne
 		/// </summary>
@@ -47,8 +46,6 @@ namespace ProjetPompier_API.Controllers
         {
             GradeControleur.Instance.AjouterGrade(gradeDTO);
         }
-
-
 
         /// <summary>
         /// Méthode de service POST ModifierGrade

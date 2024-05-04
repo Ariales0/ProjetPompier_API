@@ -8,13 +8,11 @@ using ProjetPompier_API.Logics.DTOs;
 namespace ProjetPompier_API.Controllers
 {
     /// <summary>
-    /// Classe représentant le controleur de l'API'.
+    /// Classe représentant le controleur de l'API des Fiches d'intervention.
     /// </summary>
     
     public class InterventionController : Controller
     {
-        
-
         /// <summary>
 		/// Méthode de service GET ObtenirListeFicheIntervention
 		/// </summary>

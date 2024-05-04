@@ -2,8 +2,14 @@
 using ProjetPompier_API.Logics.Controleurs;
 using ProjetPompier_API.Logics.DTOs;
 
+/// <summary>
+/// Namespace pour les classes de type Controller.
+/// </summary>
 namespace ProjetPompier_API.Controllers
 {
+    /// <summary>
+    /// Classe représentant le controleur de l'API des véhicules.
+    /// </summary>
     public class VehiculeController : Controller
     {
 
@@ -78,6 +84,5 @@ namespace ProjetPompier_API.Controllers
         {
             VehiculeControleur.Instance.ViderListeVehicules(nomCaserne);
         }
-
     }
 }

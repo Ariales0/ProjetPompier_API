@@ -1,9 +1,15 @@
-﻿    using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ProjetPompier_API.Logics.Controleurs;
 using ProjetPompier_API.Logics.DTOs;
 
+/// <summary>
+/// Namespace pour les classes de type Controller.
+/// </summary>
 namespace ProjetPompier_API.Controllers
 {
+    /// <summary>
+    /// Classe représentant le controleur de l'API des types de véhicule.
+    /// </summary>
     public class TypesVehiculeController : Controller
     {
         /// <summary>
@@ -71,6 +77,5 @@ namespace ProjetPompier_API.Controllers
         {
             TypesVehiculeControleur.Instance.ViderListeTypesVehicule();
         }
-
     }
 }
