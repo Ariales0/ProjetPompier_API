@@ -84,14 +84,31 @@ namespace ProjetPompier_API.Logics.Controleurs
         /// <param name="fiche">DTO de l'intervention</param>
         public void OuvrirFicheIntervention(string nomCaserne, FicheInterventionDTO fiche)
         {
+            bool aucuneFicheOuverte = true;
             try
             {
-                FicheInterventionModel uneFicheIntervention = new FicheInterventionModel(fiche.DateDebut, fiche.DateFin, fiche.Adresse, fiche.CodeTypeIntervention, fiche.Resume, fiche.MatriculeCapitaine);
-                InterventionRepository.Instance.OuvrirFicheIntervention(nomCaserne, fiche);
+                List<FicheInterventionDTO> listeFicheInterventionDTO = InterventionRepository.Instance.ObtenirListeFicheIntervention(nomCaserne, fiche.MatriculeCapitaine);
+                foreach(FicheInterventionDTO uneFiche in listeFicheInterventionDTO)
+                {
+                    if(uneFiche.DateFin == null || uneFiche.DateFin == "")
+                    {
+                        aucuneFicheOuverte = false;
+                    }
+                }
+
+                if(aucuneFicheOuverte)
+                {
+                    FicheInterventionModel uneFicheIntervention = new FicheInterventionModel(fiche.DateDebut, fiche.DateFin, fiche.Adresse, fiche.CodeTypeIntervention, fiche.Resume, fiche.MatriculeCapitaine);
+                    InterventionRepository.Instance.OuvrirFicheIntervention(nomCaserne, fiche);
+                }
+                else
+                {
+                    throw new Exception("Une fiche d'intervention pour ce capitaine est déjà ouverte.");
+                }
             }
             catch (Exception e)
             {
-                throw new Exception("Erreur - Une fiche d'intervention existe deja a cette date.");
+                throw new Exception(e.Message);
             }
         }
 

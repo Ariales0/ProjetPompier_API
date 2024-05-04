@@ -69,7 +69,7 @@ namespace ProjetPompier_API.Logics.DAOs
                                                         "INNER JOIN T_FichesIntervention " +
                                                         "ON T_Casernes.IdCaserne=T_FichesIntervention.IdCaserne " +
                                                         "INNER JOIN T_Pompiers " +
-                                                        "ON T_FichesIntervention.IdPompier=T_Pompiers.IdPompier" +
+                                                        "ON T_FichesIntervention.IdPompier=T_Pompiers.IdPompier " +
                                                         "INNER JOIN T_TypesIntervention " +
                                                         "ON T_FichesIntervention.IdTypeIntervention = T_TypesIntervention.IdTypeIntervention" +
 
@@ -136,7 +136,7 @@ namespace ProjetPompier_API.Logics.DAOs
                                             "INNER JOIN T_Pompiers " +
                                             "ON T_FichesIntervention.IdPompier=T_Pompiers.IdPompier " +
                                             "INNER JOIN T_TypesIntervention " +
-                                            "ON T_FichesIntervention.IdTypeIntervention = T_TypesIntervention.IdTypeIntervention" +
+                                            "ON T_FichesIntervention.IdTypeIntervention = T_TypesIntervention.IdTypeIntervention " +
 
                                             "WHERE T_Casernes.Nom=@nomCaserne " +
                                             "AND T_Pompiers.Matricule=@matriculeCapitaine " +
