@@ -81,7 +81,44 @@ namespace ProjetPompier_API.Logics.DAOs
             }
         }
 
-       
+
+        /// <summary>
+        /// Méthode de service permettant d'obtenir l'id d'un type d'intervention par son code.
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns>L'id du type d'intervention</returns>
+        public int ObtenirIdTypeIntervention(int code)
+        {
+            SqlCommand command = new SqlCommand(" SELECT IdTypeIntervention " +
+                                                "   FROM T_TypesIntervention " +
+                                                "  WHERE Code= @code ", connexion);
+
+            SqlParameter paramSqlCode = new SqlParameter("@code", SqlDbType.Int);
+
+            paramSqlCode.Value = code;
+
+            command.Parameters.Add(paramSqlCode);
+
+            try
+            {
+                OuvrirConnexion();
+                SqlDataReader reader = command.ExecuteReader();
+                reader.Read();
+                int idTypeIntervention;
+                idTypeIntervention = reader.GetInt32(0);
+                reader.Close();
+                return idTypeIntervention;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de l'obtention de l'id du type d'intervention du code : "+code+".", ex);
+            }
+            finally
+            {
+                FermerConnexion();
+            }
+        }
+
 
         #endregion
     }

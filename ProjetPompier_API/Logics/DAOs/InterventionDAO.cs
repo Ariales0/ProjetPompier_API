@@ -126,7 +126,7 @@ namespace ProjetPompier_API.Logics.DAOs
             SqlCommand command = new SqlCommand(" SELECT T_FichesIntervention.DateDebut," +
                                             "T_FichesIntervention.DateFin, " +
                                             "T_FichesIntervention.Adresse," +
-                                            "T_FichesIntervention.IdTypeIntervention," +
+                                            "T_TypesIntervention.Code," +
                                             "T_FichesIntervention.Resume," +
                                             "T_Pompiers.Matricule " +
 
@@ -182,14 +182,10 @@ namespace ProjetPompier_API.Logics.DAOs
         }
 
         /// <summary>
-        /// Méthode de service permettant d'ouvrir une intervention.
+        /// Méthode de service permettant d'ouvrir une fiche intervention.
         /// </summary>
         /// <param name="nomCaserne">Le nom de la caserne qui prend en charge l'intervention.</param>
-        /// <param name="dateTemps">Date et heure le l'intervention</param>
-        /// <param name="typeIntervention">Type d'intervention</param>
-        /// <param name="adresse">Adresse de l'intervention</param>
-        /// <param name="resume">Resumé de l'intervention</param>
-        /// <param name="matriculeCapitaine">Matricule du Capitaine de l'intervention</param>
+        /// <param name="fiche">La fiche d'intervention en objet DTO</param>
         public void OuvrirFicheIntervention(string nomCaserne, FicheInterventionDTO fiche)
         {
             SqlCommand command = new SqlCommand(null, connexion);
@@ -316,7 +312,7 @@ namespace ProjetPompier_API.Logics.DAOs
             command.CommandText = " UPDATE T_FichesIntervention " +
                                   "SET DateFin = @dateFin " +
                                   "WHERE IdPompier = @idPompier " +
-                                  "AND IdCaserne = IdCaserne;";
+                                  "AND IdCaserne = @idCaserne;";
 
             SqlParameter dateFinParam = new SqlParameter("@dateFin", SqlDbType.DateTime);
             SqlParameter idCaserneParam = new SqlParameter("@idCaserne", SqlDbType.Int);
