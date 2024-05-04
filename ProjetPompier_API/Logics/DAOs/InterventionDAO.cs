@@ -199,7 +199,7 @@ namespace ProjetPompier_API.Logics.DAOs
 
             int idCaserne = CaserneRepository.Instance.ObtenirIdCaserne(nomCaserne);
             int idPompier = PompierRepository.Instance.ObtenirIdPompier(fiche.MatriculeCapitaine, nomCaserne);
-            int idTypeIntervention = TypesInterventionRepositiory.Instance.ObtenirIdTypeIntervention(fiche.CodeTypeIntervention);
+            int idTypeIntervention = TypesInterventionRepository.Instance.ObtenirIdTypeIntervention(fiche.CodeTypeIntervention);
 
             SqlParameter dateDebutParam = new SqlParameter("@dateDebut", SqlDbType.DateTime);
             SqlParameter dateFinParam = new SqlParameter("@dateFin", SqlDbType.DateTime);
