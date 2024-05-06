@@ -37,7 +37,7 @@ namespace ProjetPompier_API.Logics.DTOs
         /// </summary>
         /// <param name="codeTypeIntervention">Le code</param>
         /// <param name="descriptionTypeIntervention">Le type</param>
-        public TypeInterventionDTO(int codeTypeIntervention = 0000, string descriptionTypeIntervention = "")
+        public TypeInterventionDTO(int codeTypeIntervention = 00, string descriptionTypeIntervention = "")
         {
             Code = codeTypeIntervention;
             Description = descriptionTypeIntervention;

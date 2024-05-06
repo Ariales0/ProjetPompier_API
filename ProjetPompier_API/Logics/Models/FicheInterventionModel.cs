@@ -124,10 +124,10 @@ namespace ProjetPompier_API.Logics.Models
         /// <param name="dateDebut">Date et heure de l'intervention</param>
         /// <param name="dateFin">Date et heure de fin de l'intervention/param>
         /// <param name="adresse">Adresse de l'intervention</param>
-        /// <param name="typeIntervention">Type d'intervention</param>
+        /// <param name="codeTypeIntervention">Type d'intervention</param>
         /// <param name="resume">Resumé de l'intervention</param>
         /// <param name="matriculeCapitaine">Matricule du pompier capitaine</param>
-        public FicheInterventionModel(string dateDebut = "1999-01-01 00:00:00", string dateFin = null, string adresse = "", int codeTypeIntervention = 0, string resume = "", int matriculeCapitaine = 000000)
+        public FicheInterventionModel(string dateDebut = "1999-01-01 00:00:00", string dateFin = null, string adresse = "", int codeTypeIntervention = 00, string resume = "", int matriculeCapitaine = 000000)
         {
             DateDebut = dateDebut;
             DateFin = dateFin;
