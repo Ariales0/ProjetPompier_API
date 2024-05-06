@@ -61,7 +61,7 @@ namespace ProjetPompier_API.Logics.DAOs
             SqlCommand command = new SqlCommand(" SELECT T_FichesIntervention.DateDebut," +
                                                         "T_FichesIntervention.DateFin," +
                                                         "T_FichesIntervention.Adresse," +
-                                                        "T_FichesIntervention.IdTypeIntervention," +
+                                                        "T_TypesIntervention.Code," +
                                                         "T_FichesIntervention.Resume," +
                                                         "T_Pompiers.Matricule " +
 
