@@ -147,7 +147,7 @@ namespace ProjetPompier_API.Logics.Controleurs
                     try
                     {
                         TypeInterventionModel typeInterventionModel = new TypeInterventionModel(leTypeInterventionModification);
-                        TypesInterventionRepository.Instance.ModifierTypeIntervention(typeInterventionDTO);
+                        TypesInterventionRepository.Instance.ModifierTypeIntervention(leTypeInterventionModification);
                     }
                     catch (Exception ex) { throw new Exception(ex.Message); }
                 }
@@ -160,8 +160,6 @@ namespace ProjetPompier_API.Logics.Controleurs
             {
                 throw new Exception(e.Message);
             }
-            
-            
         }
 
         /// <summary>
