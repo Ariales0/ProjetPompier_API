@@ -66,7 +66,7 @@ namespace ProjetPompier_API.Logics.Controleurs
 
                 foreach (PompierDTO pompier in listePompierDTO)
                 {
-                    if(pompier.Grade== "Capitaine")
+                    if(pompier.Grade == "Capitaine")
                     {
                         listePompierCapitaine.Add(new PompierModel(pompier.Matricule, pompier.Grade, pompier.Nom, pompier.Prenom));
                         listePompierCapitaineDTO.Add(new PompierDTO(pompier.Matricule, pompier.Grade, pompier.Nom, pompier.Prenom));

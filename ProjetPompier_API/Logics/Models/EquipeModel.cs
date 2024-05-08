@@ -34,11 +34,11 @@ namespace ProjetPompier_API.Logics.Models
         /// <summary>
         /// Attribut représentant la liste des pompiers de l'équipe.
         /// </summary>
-        private List<PompierDTO> listePompierEquipe;
+        private List<PompierModel> listePompierEquipe;
         /// <summary>
         /// Propriété représentant la liste des pompiers de l'équipe.
         /// </summary>
-        public List<PompierDTO> ListePompierEquipe
+        public List<PompierModel> ListePompierEquipe
         {
             get { return listePompierEquipe; }
             set
@@ -78,7 +78,7 @@ namespace ProjetPompier_API.Logics.Models
         /// <param name="codeEquipe">Le code de l'équipe</param>
         /// <param name="listePompier">La liste des pompiers de l'équipe</param>
         /// <param name="vinVehiculeEquipe">Le vin du véhicule</param>
-        public EquipeModel(int codeEquipe = 0,List<PompierDTO> listePompier = null, string vinVehiculeEquipe = "")
+        public EquipeModel(int codeEquipe = 0,List<PompierModel> listePompier = null, string vinVehiculeEquipe = "")
         {
 			Code = codeEquipe;
             ListePompierEquipe = listePompier;

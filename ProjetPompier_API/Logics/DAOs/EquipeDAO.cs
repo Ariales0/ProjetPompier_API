@@ -55,7 +55,7 @@ namespace ProjetPompier_API.Logics.DAOs
         /// Méthode de service permettant d'obtenir la liste des equipes d'une intevention.
         /// </summary>
         /// <returns>Liste des equipes d'une intervention.</returns>
-        public List<EquipeDTO> ObtenirListeEquipe()
+        public List<EquipeDTO> ObtenirListeEquipe(string nomCaserne, int matriculeCapitaine, string dateDebutIntervention)
         {
             SqlCommand command = new SqlCommand(" SELECT T_Equipes.Code, " +
                                                         "T_Pompiers.Matricule," +
@@ -83,6 +83,58 @@ namespace ProjetPompier_API.Logics.DAOs
             SqlParameter matriculeParam = new SqlParameter("@matriculeCapitaine", SqlDbType.Int, 6);
             SqlParameter nomCaserneParam = new SqlParameter("@nomCaserne", SqlDbType.VarChar, 100);
             SqlParameter dateDebutInterventionParam = new SqlParameter("@dateDebutIntervention", SqlDbType.DateTime);
+
+            matriculeParam.Value = matriculeCapitaine;
+            nomCaserneParam.Value = nomCaserne;
+            dateDebutInterventionParam.Value = dateDebutIntervention;
+
+            command.Parameters.Add(matriculeParam);
+            command.Parameters.Add(nomCaserneParam);
+            command.Parameters.Add(dateDebutInterventionParam);
+
+            List<EquipeDTO> listeEquipe = new List<EquipeDTO>();
+            List<PompierDTO> listePompierEquipe = new List<PompierDTO>();
+
+
+            try
+            {
+                OuvrirConnexion();
+                SqlDataReader reader = command.ExecuteReader();
+                int dernierCodeEquipe = -1;
+                int codeEquipe = -1;
+                string vinVehiculeEquipe = "";
+                string dernierVinVehicukeEquipe = "";
+                while (reader.Read())
+                {
+                    codeEquipe = reader.GetInt32(0);
+                    vinVehiculeEquipe = reader.GetString(5);
+                    if (dernierCodeEquipe == -1) { dernierCodeEquipe = codeEquipe; dernierVinVehicukeEquipe = vinVehiculeEquipe; }
+
+                    if (dernierCodeEquipe != codeEquipe)
+                    {
+                        EquipeDTO uneEquipe = new EquipeDTO(dernierCodeEquipe, listePompierEquipe, dernierVinVehicukeEquipe);
+                        listeEquipe.Add(uneEquipe);
+                        listePompierEquipe = new List<PompierDTO>();
+                        dernierCodeEquipe = codeEquipe;
+                        dernierVinVehicukeEquipe = vinVehiculeEquipe;
+                    }
+                    PompierDTO pompier = new PompierDTO(reader.GetInt32(1), reader.GetString(2), reader.GetString(3), reader.GetString(4));
+                    listePompierEquipe.Add(pompier);
+
+                }
+                EquipeDTO derniereEquipe = new EquipeDTO(codeEquipe, listePompierEquipe, vinVehiculeEquipe);
+                listeEquipe.Add(derniereEquipe);
+                reader.Close();
+                return listeEquipe;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de l'obtention de la liste des équipes...", ex);
+            }
+            finally
+            {
+                FermerConnexion();
+            }
         }
         #endregion
 

@@ -48,15 +48,6 @@ namespace ProjetPompier_API.Logics.DTOs
         }
 
 
-        /// <summary>
-        /// Constructeur avec le modèle EquipeModel en paramètre.
-        /// </summary>
-        /// <param name="equipe">L'objet du modèle EquipeModel.</param>
-        public EquipeDTO(EquipeModel equipe)
-        {
-            Code = equipe.Code;
-            ListePompierEquipe = equipe.ListePompierEquipe;
-        }
 
         #endregion Constructeurs
     }
