@@ -49,18 +49,34 @@ namespace ProjetPompier_API.Logics.DAOs
         /// Methode permettant d'obtenir la liste des vehicules.
         /// </summary>
         /// <param name="nomCaserne">Le nom de la caserne</param>
+        /// <param name="disponibleSeulement">Les vehicules qui ne sont pas dans une interventions</param>
         /// <returns>Retourne la liste des vehicules</returns>
-        /// <exception cref="Exception"></exception>
-        public List<VehiculeDTO> ObtenirListeVehicules(string nomCaserne)
+        public List<VehiculeDTO> ObtenirListeVehicules(string nomCaserne, bool disponibleSeulement)
         {
-            SqlCommand command = new SqlCommand(" SELECT * " +
-                                     "   FROM T_Vehicules WHERE IdCaserne=@id ", connexion);
+            string requeteVehiculeCaserne = "SELECT T_Vehicules.Vin, " +
+                                                "T_TypesVehicule.Code, " +
+                                                "T_Vehicules.Marque, " +
+                                                "T_Vehicules.Modele, " +
+                                                "T_Vehicules.Annee " +
+                                                "FROM T_Vehicules " +
+                                                "INNER JOIN T_Casernes ON T_Casernes.IdCaserne = T_Vehicules.IdCaserne " +
+                                                "INNER JOIN T_TypesVehicule ON T_TypesVehicule.IdTypeVehicule = T_Vehicules.IdTypeVehicule " +
+                                                "WHERE T_Casernes.Nom = @nomCaserne";
 
-            SqlParameter idParam = new SqlParameter("@id", SqlDbType.Int);
+            string extensionRequeteVehiculeDisponibleCaserne = " AND T_Vehicules.IdVehicule NOT IN " +
+                                                               "(" +
+                                                               "SELECT T_Equipes.IdVehicule " +
+                                                               "FROM T_Equipes " +
+                                                               "INNER JOIN T_FichesIntervention ON T_Equipes.IdIntervention = T_FichesIntervention.IdFicheIntervention " +
+                                                               "WHERE T_FichesIntervention.DateFin IS NULL " +
+                                                               ")";
 
-            idParam.Value = CaserneRepository.Instance.ObtenirIdCaserne(nomCaserne);
+            string requeteComplete = (disponibleSeulement) ? requeteVehiculeCaserne+extensionRequeteVehiculeDisponibleCaserne : requeteVehiculeCaserne;
+            SqlCommand command = new SqlCommand(requeteComplete, connexion);
 
-            command.Parameters.Add(idParam);
+            SqlParameter nomCaserneParam = new SqlParameter("@nomCaserne", SqlDbType.VarChar, 100);
+            nomCaserneParam.Value = nomCaserne;
+            command.Parameters.Add(nomCaserneParam);
 
             List<VehiculeDTO> listeVehicules = new List<VehiculeDTO>();
 
@@ -70,7 +86,7 @@ namespace ProjetPompier_API.Logics.DAOs
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    VehiculeDTO vehiculeDTO = new VehiculeDTO(reader.GetString(1), TypesVehiculeRepository.Instance.ObtenirTypeVehiculeParId(reader.GetInt32(2)).Code, reader.GetString(3), reader.GetString(4), reader.GetInt32(5));
+                    VehiculeDTO vehiculeDTO = new VehiculeDTO(reader.GetString(0), reader.GetInt32(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4));
                     listeVehicules.Add(vehiculeDTO);
                 }
                 reader.Close();

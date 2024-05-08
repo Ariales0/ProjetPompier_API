@@ -20,9 +20,9 @@ namespace ProjetPompier_API.Controllers
         /// <returns>Retourne la listes des vehicules</returns>
         [Route("Vehicule/ObtenirListeVehicule")]
         [HttpGet]
-        public List<VehiculeDTO> ObtenirListeVehicule(string nomCaserne)
+        public List<VehiculeDTO> ObtenirListeVehicule([FromQuery] string nomCaserne, [FromQuery] bool disponibleSeulement)
         {
-            return VehiculeControleur.Instance.ObtenirListeVehicule(nomCaserne);
+            return VehiculeControleur.Instance.ObtenirListeVehicule(nomCaserne, disponibleSeulement);
         }
 
         /// <summary>

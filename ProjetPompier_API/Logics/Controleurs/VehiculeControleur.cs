@@ -52,9 +52,9 @@ namespace ProjetPompier_API.Logics.Controleurs
         /// <param name="nomCaserne">Le nom de la caserne</param>
         /// <returns>Retourne la liste des vehicules</returns>
         /// <exception cref="Exception"></exception>
-       public List<VehiculeDTO> ObtenirListeVehicule(string nomCaserne)
+       public List<VehiculeDTO> ObtenirListeVehicule(string nomCaserne, bool disponibleSeulement)
         {
-            List<VehiculeDTO> listeVehiculeDTO = VehiculeRepository.Instance.ObtenirListeVehicules(nomCaserne);
+            List<VehiculeDTO> listeVehiculeDTO = VehiculeRepository.Instance.ObtenirListeVehicules(nomCaserne, disponibleSeulement);
             List<VehiculeModel> listeVehicule = new List<VehiculeModel>();
 
             foreach (VehiculeDTO vehiculeDTO in listeVehiculeDTO)
@@ -156,7 +156,7 @@ namespace ProjetPompier_API.Logics.Controleurs
         /// <exception cref="Exception"></exception>
         public void ViderListeVehicules(string nomCaserne)
         {
-            if (!VehiculeRepository.Instance.ObtenirListeVehicules(nomCaserne).Any())
+            if (!VehiculeRepository.Instance.ObtenirListeVehicules(nomCaserne, false).Any())
             {
                 throw new Exception("Erreur lors de la suppression de la liste de véhicules, la liste est déjà vide.");
             }
