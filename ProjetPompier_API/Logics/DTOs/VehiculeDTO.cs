@@ -50,7 +50,7 @@ public class VehiculeDTO
     /// Constructeur avec paramètres.
     /// </summary>
     /// <param name="vin">Le vin</param>
-    /// <param name="typeVehicule">Le type de vehicule</param>
+    /// <param name="code">Le type de vehicule</param>
     /// <param name="marque">La marque</param>
     /// <param name="modele">Le modele</param>
     /// <param name="annee">L'annee</param>

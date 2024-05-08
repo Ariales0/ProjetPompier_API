@@ -33,14 +33,14 @@ namespace ProjetPompier_API.Controllers
         /// <param name="nomCaserne">Nom de la caserne dans laquelle a lieu l'intervention</param>
         /// <param name="matriculeCapitaine">Matricule du capitaine en charge de l'intervention</param>
         /// <param name="dateDebutIntervention">Date du debut de l'intervention</param>
-        /// <param name="vinVehiculeEquipe">Vin du véhicule utilisé par l'équipe</param>
-        /// <returns></returns>
-        //[Route("Equipe/ObtenirEquipe")]
-        //[HttpGet]
-        //public EquipeDTO ObtenirEquipe([FromQuery] string nomCaserne, [FromQuery] int matriculeCapitaine, [FromQuery] string dateDebutIntervention, [FromQuery] string vinVehiculeEquipe)
-        //{
-        //    //return EquipeControleur.Instance.ObtenirEquipe(nomCaserne, matriculeCapitaine, dateDebutIntervention, vinVehiculeEquipe);
-        //}
+        /// <param name="codeEquipe">Vin du véhicule utilisé par l'équipe</param>
+        /// <returns>Le DTO de l'équipe recherchée</returns>
+        [Route("Equipe/ObtenirEquipe")]
+        [HttpGet]
+        public EquipeDTO ObtenirEquipe([FromQuery] string nomCaserne, [FromQuery] int matriculeCapitaine, [FromQuery] string dateDebutIntervention, [FromQuery] int codeEquipe)
+        {
+            return EquipeControleur.Instance.ObtenirEquipe(nomCaserne, matriculeCapitaine, dateDebutIntervention, codeEquipe);
+        }
 
         /// <summary>
         /// Méthode de service POST AjouterEquipe
@@ -48,7 +48,7 @@ namespace ProjetPompier_API.Controllers
         /// <param name="nomCaserne">Nom de la caserne dans laquelle a lieu l'intervention</param>
         /// <param name="matriculeCapitaine">Matricule du capitaine en charge de l'intervention</param>
         /// <param name="dateDebutIntervention">Date du debut de l'intervention</param>
-        /// <param name="equipeDTO">L'équipe à ajouter</param>
+        /// <param name="equipeDTO">L'équipe à ajouter avec code vide</param>
         //[Route("Equipe/AjouterEquipe")]
         //[HttpPost]
         //public void AjouterEquipe([FromQuery] string nomCaserne, [FromQuery] int matriculeCapitaine, [FromQuery] string dateDebutIntervention,[FromBody] EquipeDTO equipeDTO)
