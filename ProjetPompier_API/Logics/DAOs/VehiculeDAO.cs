@@ -63,7 +63,7 @@ namespace ProjetPompier_API.Logics.DAOs
                                                 "INNER JOIN T_TypesVehicule ON T_TypesVehicule.IdTypeVehicule = T_Vehicules.IdTypeVehicule " +
                                                 "WHERE T_Casernes.Nom = @nomCaserne";
 
-            string extensionRequeteVehiculeDisponibleCaserne = " AND T_Vehicules.IdVehicule NOT IN " +
+            string extensionDisponible = " AND T_Vehicules.IdVehicule NOT IN " +
                                                                "(" +
                                                                "SELECT T_Equipes.IdVehicule " +
                                                                "FROM T_Equipes " +
@@ -71,7 +71,7 @@ namespace ProjetPompier_API.Logics.DAOs
                                                                "WHERE T_FichesIntervention.DateFin IS NULL " +
                                                                ")";
 
-            string requeteComplete = (disponibleSeulement) ? requeteVehiculeCaserne+extensionRequeteVehiculeDisponibleCaserne : requeteVehiculeCaserne;
+            string requeteComplete = (disponibleSeulement) ? requeteVehiculeCaserne + extensionDisponible : requeteVehiculeCaserne;
             SqlCommand command = new SqlCommand(requeteComplete, connexion);
 
             SqlParameter nomCaserneParam = new SqlParameter("@nomCaserne", SqlDbType.VarChar, 100);
@@ -109,7 +109,7 @@ namespace ProjetPompier_API.Logics.DAOs
         /// <param name="vinVehicule">Le vin du vehicule</param>
         /// <returns>Retourne le id</returns>
         /// <exception cref="Exception"></exception>
-        public int ObtenirIdVehicule(string nomCaserne ,string vinVehicule)
+        public int ObtenirIdVehicule(string nomCaserne, string vinVehicule)
         {
             SqlCommand command = new SqlCommand(" SELECT IdVehicule " +
                                                     "   FROM T_Vehicules WHERE Vin=@vin AND IdCaserne= @idCaserne  ", connexion);

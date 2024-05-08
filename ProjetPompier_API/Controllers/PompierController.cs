@@ -25,13 +25,25 @@ namespace ProjetPompier_API.Controllers
             return PompierControleur.Instance.ObtenirListePompier(nomCaserne, seulementCapitaine);
         }
 
-		/// <summary>
-		/// Méthode de service GET ObtenirPompier
-		/// </summary>
-		/// <param name="nomCaserne"></param>
-		/// <param name="matriculePompier"></param>
-		/// <returns></returns>
-		[Route("Pompier/ObtenirPompier")]
+        /// <summary>
+        /// Méthode de service GET ObtenirListePompierDisponible
+        /// </summary>
+        /// <param name="nomCaserne">Le nom de la caserne qui prend en charge l'intervention.</param>
+        /// <returns>List<PompierDTO> La liste des pompiers d'une caserne</returns>
+        [Route("Pompier/ObtenirListePompierDisponible")]
+        [HttpGet]
+        public List<PompierDTO> ObtenirListePompierDisponible([FromQuery] string nomCaserne)
+        {
+            return PompierControleur.Instance.ObtenirListePompierDisponible(nomCaserne);
+        }
+
+        /// <summary>
+        /// Méthode de service GET ObtenirPompier
+        /// </summary>
+        /// <param name="nomCaserne"></param>
+        /// <param name="matriculePompier"></param>
+        /// <returns></returns>
+        [Route("Pompier/ObtenirPompier")]
 		[HttpGet]
 		public PompierDTO ObtenirPompier([FromQuery] string nomCaserne, [FromQuery] int matriculePompier)
 		{

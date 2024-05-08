@@ -56,16 +56,25 @@ namespace ProjetPompier_API.Logics.DAOs
         /// Méthode de service permettant d'obtenir la liste des pompiers.
         /// </summary>
         /// <returns>Liste des pompiers.</returns>
-        public List<PompierDTO> ObtenirListePompier(string nomCaserne)
+        public List<PompierDTO> ObtenirListePompier(string nomCaserne, bool seulementCapitaine)
         {
-            SqlCommand command = new SqlCommand(" SELECT * " +
-                                                "   FROM T_Pompiers WHERE IdCaserne=@id ", connexion);
+            string requeteObtenirListePompier = "SELECT T_Pompiers.Matricule, " +
+                                                       "T_Grades.Description, " +
+                                                       "T_Pompiers.Nom, " +
+                                                       "T_Pompiers.Prenom " +
+                                                       "FROM T_Pompiers " +
+                                                       "INNER JOIN T_Grades ON T_Grades.IdGrade = T_Pompiers.IdGrade " +
+                                                       "INNER JOIN T_Casernes ON T_Casernes.IdCaserne = T_Pompiers.IdCaserne " +
+                                                       "WHERE T_Casernes.Nom = @nomCaserne";
 
-            SqlParameter idParam = new SqlParameter("@id", SqlDbType.Int);
+            string extensionCapitaineSeulement = " AND T_Grades.Description = 'Capitaine'";
 
-            idParam.Value = CaserneRepository.Instance.ObtenirIdCaserne(nomCaserne);
+            string requeteComplete = (seulementCapitaine) ? requeteObtenirListePompier + extensionCapitaineSeulement : requeteObtenirListePompier;
+            SqlCommand command = new SqlCommand(requeteComplete, connexion);
 
-            command.Parameters.Add(idParam);
+            SqlParameter nomCaserneParam = new SqlParameter("@nomCaserne", SqlDbType.VarChar, 100);
+            nomCaserneParam.Value = nomCaserne;
+            command.Parameters.Add(nomCaserneParam);
 
             List<PompierDTO> liste = new List<PompierDTO>();
 
@@ -75,7 +84,7 @@ namespace ProjetPompier_API.Logics.DAOs
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    PompierDTO pompierDTO = new PompierDTO(reader.GetInt32(1), GradeRepository.Instance.ObtenirGradeParId(reader.GetInt32(2)).Description, reader.GetString(3), reader.GetString(4));
+                    PompierDTO pompierDTO = new PompierDTO(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3));
                     liste.Add(pompierDTO);
                 }
                 reader.Close();
@@ -90,295 +99,342 @@ namespace ProjetPompier_API.Logics.DAOs
                 FermerConnexion();
             }
         }
-		/// <summary>
-		/// Méthode de service permettant d'obtenir le id d'un pompier par son matricule et sa caserne. 
-		/// </summary>
-		/// <param name="matricule"></param>
-		/// <param name="nomCaserne"></param>
-		/// <returns></returns>
-		/// <exception cref="Exception"></exception>
-		public int ObtenirIdPompier(int matricule, string nomCaserne)
-		{
-			SqlCommand command = new SqlCommand(" SELECT IdPompier " +
-												"   FROM T_Pompiers " +
-												"  WHERE Matricule= @matricule AND IdCaserne= @idCaserne ", connexion);
 
-			SqlParameter matriculeParam = new SqlParameter("@matricule", SqlDbType.Int);
-			SqlParameter idCaserneParam = new SqlParameter("@idCaserne", SqlDbType.Int);
+        /// <summary>
+        /// Méthode de service permettant d'obtenir la liste des pompiers.
+        /// </summary>
+        /// <returns>Liste des pompiers.</returns>
+        public List<PompierDTO> ObtenirListePompierDisponible(string nomCaserne)
+        {
+            string requete = "SELECT T_Pompiers.Matricule, " +
+                                    "T_Grades.Description, " +
+                                    "T_Pompiers.Nom, " +
+                                    "T_Pompiers.Prenom " +
+                                    "FROM T_Pompiers " +
+                                    "INNER JOIN T_Grades ON T_Grades.IdGrade = T_Pompiers.IdGrade " +
+                                    "INNER JOIN T_Casernes ON T_Casernes.IdCaserne = T_Pompiers.IdCaserne " +
+                                    "WHERE T_Casernes.Nom = @nomCaserne AND T_Grades.Description != 'Capitaine' " +
+                                    "AND T_Pompiers.IdPompier NOT IN " +
+                                    "(" +
+                                    "SELECT T_Equipes.IdPompier " +
+                                    "FROM T_Equipes " +
+                                    "INNER JOIN T_FichesIntervention ON T_Equipes.IdIntervention = T_FichesIntervention.IdFicheIntervention " +
+                                    "WHERE T_FichesIntervention.DateFin IS NULL " +
+                                    ")";
 
-			matriculeParam.Value = matricule;
-			idCaserneParam.Value = CaserneRepository.Instance.ObtenirIdCaserne(nomCaserne);
+            SqlCommand command = new SqlCommand(requete, connexion);
 
-			command.Parameters.Add(matriculeParam);
-			command.Parameters.Add(idCaserneParam);
+            SqlParameter nomCaserneParam = new SqlParameter("@nomCaserne", SqlDbType.VarChar, 100);
+            nomCaserneParam.Value = nomCaserne;
+            command.Parameters.Add(nomCaserneParam);
 
-			int id;
+            List<PompierDTO> liste = new List<PompierDTO>();
 
-			try
-			{
-				OuvrirConnexion();
-				SqlDataReader reader = command.ExecuteReader();
-				reader.Read();
-				id = reader.GetInt32(0);
-				reader.Close();
-				return id;
-			}
-			catch (Exception ex)
-			{
-				throw new Exception("Erreur lors de l'obtention d'un id d'une caserne par son matricule...", ex);
-			}
-			finally
-			{
-				FermerConnexion();
-			}
-		}
+            try
+            {
+                OuvrirConnexion();
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    PompierDTO pompierDTO = new PompierDTO(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3));
+                    liste.Add(pompierDTO);
+                }
+                reader.Close();
+                return liste;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de l'obtention de la liste des pompiers...", ex);
+            }
+            finally
+            {
+                FermerConnexion();
+            }
+        }
 
-		/// <summary>
-		/// Méthode de service permettant d'obtenir un pompier par son matricule et sa caserne.
-		/// </summary>
-		/// <param name="matricule"></param>
-		/// <param name="nomCaserne"></param>
-		/// <returns></returns>
-		/// <exception cref="Exception"></exception>
-		public PompierDTO ObtenirPompier(int matricule, string nomCaserne)
-		{
-			SqlCommand command = new SqlCommand(" SELECT * " +
-												" FROM T_Pompiers " +
-												" WHERE Matricule = @matricule AND IdCaserne = @idCaserne ", connexion);
+        /// <summary>
+        /// Méthode de service permettant d'obtenir le id d'un pompier par son matricule et sa caserne. 
+        /// </summary>
+        /// <param name="matricule"></param>
+        /// <param name="nomCaserne"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public int ObtenirIdPompier(int matricule, string nomCaserne)
+        {
+            SqlCommand command = new SqlCommand(" SELECT IdPompier " +
+                                                "   FROM T_Pompiers " +
+                                                "  WHERE Matricule= @matricule AND IdCaserne= @idCaserne ", connexion);
 
-			SqlParameter matriculeParam = new SqlParameter("@matricule", SqlDbType.Int);
-			SqlParameter idCaserneParam = new SqlParameter("@idCaserne", SqlDbType.Int);
+            SqlParameter matriculeParam = new SqlParameter("@matricule", SqlDbType.Int);
+            SqlParameter idCaserneParam = new SqlParameter("@idCaserne", SqlDbType.Int);
 
-			matriculeParam.Value = matricule;
-			idCaserneParam.Value = CaserneRepository.Instance.ObtenirIdCaserne(nomCaserne);
+            matriculeParam.Value = matricule;
+            idCaserneParam.Value = CaserneRepository.Instance.ObtenirIdCaserne(nomCaserne);
 
-			command.Parameters.Add(matriculeParam);
-			command.Parameters.Add(idCaserneParam);
+            command.Parameters.Add(matriculeParam);
+            command.Parameters.Add(idCaserneParam);
 
-			PompierDTO unPompier;
+            int id;
 
-			try
-			{
-				OuvrirConnexion();
-				SqlDataReader reader = command.ExecuteReader();
-				reader.Read();
-				unPompier = new PompierDTO(reader.GetInt32(1), GradeRepository.Instance.ObtenirGradeParId(reader.GetInt32(2)).Description, reader.GetString(3), reader.GetString(4));
-				reader.Close();
+            try
+            {
+                OuvrirConnexion();
+                SqlDataReader reader = command.ExecuteReader();
+                reader.Read();
+                id = reader.GetInt32(0);
+                reader.Close();
+                return id;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de l'obtention d'un id d'une caserne par son matricule...", ex);
+            }
+            finally
+            {
+                FermerConnexion();
+            }
+        }
 
-				return unPompier;
-			}
-			catch (Exception ex)
-			{
-				throw new Exception("Erreur lors de l'obtention d'un pompier par son matricule...", ex);
-			}
-			finally
-			{
-				FermerConnexion();
-			}
-		}
+        /// <summary>
+        /// Méthode de service permettant d'obtenir un pompier par son matricule et sa caserne.
+        /// </summary>
+        /// <param name="matricule"></param>
+        /// <param name="nomCaserne"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public PompierDTO ObtenirPompier(int matricule, string nomCaserne)
+        {
+            SqlCommand command = new SqlCommand(" SELECT * " +
+                                                " FROM T_Pompiers " +
+                                                " WHERE Matricule = @matricule AND IdCaserne = @idCaserne ", connexion);
 
-		/// <summary>
-		/// Méthode de service permettant d'ajouter un pompier.
-		/// </summary>
-		/// <param name="idCaserne"></param>
-		/// <param name="pompierDTO"></param>
-		/// <returns></returns>
-		/// <exception cref="DBUniqueException"></exception>
-		public bool AjouterPompier(int idCaserne, PompierDTO pompierDTO)
-		{
-			SqlCommand command = new SqlCommand(null, connexion);
+            SqlParameter matriculeParam = new SqlParameter("@matricule", SqlDbType.Int);
+            SqlParameter idCaserneParam = new SqlParameter("@idCaserne", SqlDbType.Int);
 
-			command.CommandText = " INSERT INTO T_Pompiers (Matricule, IdGrade, Nom, Prenom, IdCaserne) " +
-								  " VALUES (@matricule, @grade, @nom, @prenom, @idCaserne) ";
+            matriculeParam.Value = matricule;
+            idCaserneParam.Value = CaserneRepository.Instance.ObtenirIdCaserne(nomCaserne);
 
-			SqlParameter matriculeParam = new SqlParameter("@matricule", SqlDbType.Int);
-			SqlParameter gradeParam = new SqlParameter("@grade", SqlDbType.Int);
-			SqlParameter nomParam = new SqlParameter("@nom", SqlDbType.VarChar, 100);
-			SqlParameter prenomParam = new SqlParameter("@prenom", SqlDbType.VarChar, 100);
-			SqlParameter idCaserneParam = new SqlParameter("@idCaserne", SqlDbType.Int);
+            command.Parameters.Add(matriculeParam);
+            command.Parameters.Add(idCaserneParam);
 
-			nomParam.Value = pompierDTO.Nom;
-			prenomParam.Value = pompierDTO.Prenom;
-			gradeParam.Value = GradeRepository.Instance.ObtenirIdGrade(pompierDTO.Grade);
-			matriculeParam.Value = pompierDTO.Matricule;
-			idCaserneParam.Value = idCaserne;
+            PompierDTO unPompier;
 
-			command.Parameters.Add(nomParam);
-			command.Parameters.Add(prenomParam);
-			command.Parameters.Add(gradeParam);
-			command.Parameters.Add(matriculeParam);
-			command.Parameters.Add(idCaserneParam);
+            try
+            {
+                OuvrirConnexion();
+                SqlDataReader reader = command.ExecuteReader();
+                reader.Read();
+                unPompier = new PompierDTO(reader.GetInt32(1), GradeRepository.Instance.ObtenirGradeParId(reader.GetInt32(2)).Description, reader.GetString(3), reader.GetString(4));
+                reader.Close();
 
-			try
-			{
-				OuvrirConnexion();
-				command.Prepare();
-				command.ExecuteNonQuery();
-				return true;
-			}
-			catch (Exception ex)
-			{
-				throw new DBUniqueException("Erreur lors de l'ajout d'un pompier...", ex);
-				return false;
-			}
-			finally
-			{
-				FermerConnexion();
-			}
-		}
+                return unPompier;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de l'obtention d'un pompier par son matricule...", ex);
+            }
+            finally
+            {
+                FermerConnexion();
+            }
+        }
 
-		/// <summary>
-		/// Méthode de service permettant de modifier un pompier.
-		/// </summary>
-		/// <param name="pompierDTO"></param>
-		/// <param name="nomCaserne"></param>
-		/// <returns></returns>
-		/// <exception cref="Exception"></exception>
-		public bool ModifierPompier(PompierDTO pompierDTO, string nomCaserne)
-		{
-			SqlCommand command = new SqlCommand(null, connexion);
+        /// <summary>
+        /// Méthode de service permettant d'ajouter un pompier.
+        /// </summary>
+        /// <param name="idCaserne"></param>
+        /// <param name="pompierDTO"></param>
+        /// <returns></returns>
+        /// <exception cref="DBUniqueException"></exception>
+        public bool AjouterPompier(int idCaserne, PompierDTO pompierDTO)
+        {
+            SqlCommand command = new SqlCommand(null, connexion);
 
-			command.CommandText = " UPDATE T_Pompiers " +
-									 " SET IdGrade = @grade, " +
-									 "     Nom = @nom, " +
-									 "     Prenom = @prenom " +
-								   " WHERE Matricule = @matricule AND IdCaserne = @idCaserne";
+            command.CommandText = " INSERT INTO T_Pompiers (Matricule, IdGrade, Nom, Prenom, IdCaserne) " +
+                                  " VALUES (@matricule, @grade, @nom, @prenom, @idCaserne) ";
 
-			SqlParameter gradeParam = new SqlParameter("@grade", SqlDbType.Int);
-			SqlParameter matriculeParam = new SqlParameter("@matricule", SqlDbType.Int);
-			SqlParameter nomParam = new SqlParameter("@nom", SqlDbType.VarChar, 100);
-			SqlParameter prenomParam = new SqlParameter("@prenom", SqlDbType.VarChar, 100);
-			SqlParameter idCaserneParam = new SqlParameter("@idCaserne", SqlDbType.Int);
+            SqlParameter matriculeParam = new SqlParameter("@matricule", SqlDbType.Int);
+            SqlParameter gradeParam = new SqlParameter("@grade", SqlDbType.Int);
+            SqlParameter nomParam = new SqlParameter("@nom", SqlDbType.VarChar, 100);
+            SqlParameter prenomParam = new SqlParameter("@prenom", SqlDbType.VarChar, 100);
+            SqlParameter idCaserneParam = new SqlParameter("@idCaserne", SqlDbType.Int);
 
-			nomParam.Value = pompierDTO.Nom;
-			prenomParam.Value = pompierDTO.Prenom;
-			gradeParam.Value = GradeRepository.Instance.ObtenirIdGrade(pompierDTO.Grade);
-			matriculeParam.Value = pompierDTO.Matricule;
-			idCaserneParam.Value = CaserneRepository.Instance.ObtenirIdCaserne(nomCaserne);
+            nomParam.Value = pompierDTO.Nom;
+            prenomParam.Value = pompierDTO.Prenom;
+            gradeParam.Value = GradeRepository.Instance.ObtenirIdGrade(pompierDTO.Grade);
+            matriculeParam.Value = pompierDTO.Matricule;
+            idCaserneParam.Value = idCaserne;
 
-			command.Parameters.Add(nomParam);
-			command.Parameters.Add(prenomParam);
-			command.Parameters.Add(gradeParam);
-			command.Parameters.Add(matriculeParam);
-			command.Parameters.Add(idCaserneParam);
+            command.Parameters.Add(nomParam);
+            command.Parameters.Add(prenomParam);
+            command.Parameters.Add(gradeParam);
+            command.Parameters.Add(matriculeParam);
+            command.Parameters.Add(idCaserneParam);
 
-			try
-			{
-				OuvrirConnexion();
-				command.Prepare();
-				command.ExecuteNonQuery();
-			}
-			catch (Exception ex)
-			{
-				throw new Exception("Erreur lors de la modification d'un pompier...", ex);
-			}
-			finally
-			{
-				FermerConnexion();
-			}
+            try
+            {
+                OuvrirConnexion();
+                command.Prepare();
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new DBUniqueException("Erreur lors de l'ajout d'un pompier...", ex);
+                return false;
+            }
+            finally
+            {
+                FermerConnexion();
+            }
+        }
 
-			return true;
-		}
+        /// <summary>
+        /// Méthode de service permettant de modifier un pompier.
+        /// </summary>
+        /// <param name="pompierDTO"></param>
+        /// <param name="nomCaserne"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public bool ModifierPompier(PompierDTO pompierDTO, string nomCaserne)
+        {
+            SqlCommand command = new SqlCommand(null, connexion);
 
-		/// <summary>
-		/// Méthode de service permettant de supprimer un pompier
-		/// </summary>
-		/// <param name="matricule"></param>
-		/// <param name="nomCaserne"></param>
-		/// <returns></returns>
-		/// <exception cref="DBRelationException"></exception>
-		/// <exception cref="Exception"></exception>
-		public bool SupprimerPompier(int matricule, string nomCaserne)
-		{
-			SqlCommand command = new SqlCommand(null, connexion);
+            command.CommandText = " UPDATE T_Pompiers " +
+                                     " SET IdGrade = @grade, " +
+                                     "     Nom = @nom, " +
+                                     "     Prenom = @prenom " +
+                                   " WHERE Matricule = @matricule AND IdCaserne = @idCaserne";
 
-			command.CommandText = " DELETE " +
-									" FROM T_Pompiers " +
-								   " WHERE Matricule = @matricule AND IdCaserne =@idCaserne";
+            SqlParameter gradeParam = new SqlParameter("@grade", SqlDbType.Int);
+            SqlParameter matriculeParam = new SqlParameter("@matricule", SqlDbType.Int);
+            SqlParameter nomParam = new SqlParameter("@nom", SqlDbType.VarChar, 100);
+            SqlParameter prenomParam = new SqlParameter("@prenom", SqlDbType.VarChar, 100);
+            SqlParameter idCaserneParam = new SqlParameter("@idCaserne", SqlDbType.Int);
 
-			SqlParameter matriculeParam = new SqlParameter("@matricule", SqlDbType.Int);
-			SqlParameter idCaserneParam = new SqlParameter("@idCaserne", SqlDbType.Int);
+            nomParam.Value = pompierDTO.Nom;
+            prenomParam.Value = pompierDTO.Prenom;
+            gradeParam.Value = GradeRepository.Instance.ObtenirIdGrade(pompierDTO.Grade);
+            matriculeParam.Value = pompierDTO.Matricule;
+            idCaserneParam.Value = CaserneRepository.Instance.ObtenirIdCaserne(nomCaserne);
 
-			matriculeParam.Value = matricule;
-			idCaserneParam.Value = CaserneRepository.Instance.ObtenirIdCaserne(nomCaserne);
+            command.Parameters.Add(nomParam);
+            command.Parameters.Add(prenomParam);
+            command.Parameters.Add(gradeParam);
+            command.Parameters.Add(matriculeParam);
+            command.Parameters.Add(idCaserneParam);
 
-			command.Parameters.Add(matriculeParam);
-			command.Parameters.Add(idCaserneParam);
+            try
+            {
+                OuvrirConnexion();
+                command.Prepare();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la modification d'un pompier...", ex);
+            }
+            finally
+            {
+                FermerConnexion();
+            }
 
-			try
-			{
-				OuvrirConnexion();
-				command.Prepare();
-				command.ExecuteNonQuery();
-			}
-			catch (SqlException e)
-			{
-				if (e.Number == 547)
-				{
-					throw new DBRelationException("Impossible de supprimer le pompier.", e);
-				}
-				else throw;
-			}
-			catch (Exception ex)
-			{
-				throw new Exception("Erreur lors de la supression d'un pompier...", ex);
-			}
+            return true;
+        }
 
-			finally
-			{
-				FermerConnexion();
-			}
-			return true;
-		}
+        /// <summary>
+        /// Méthode de service permettant de supprimer un pompier
+        /// </summary>
+        /// <param name="matricule"></param>
+        /// <param name="nomCaserne"></param>
+        /// <returns></returns>
+        /// <exception cref="DBRelationException"></exception>
+        /// <exception cref="Exception"></exception>
+        public bool SupprimerPompier(int matricule, string nomCaserne)
+        {
+            SqlCommand command = new SqlCommand(null, connexion);
 
-		/// <summary>
-		/// Méthode de service permettant de vider la liste des pompiers.
-		/// </summary>
-		public void ViderListePompier(string nomCaserne)
-		{
+            command.CommandText = " DELETE " +
+                                    " FROM T_Pompiers " +
+                                   " WHERE Matricule = @matricule AND IdCaserne =@idCaserne";
 
-			int idCaserne = CaserneRepository.Instance.ObtenirIdCaserne(nomCaserne);
+            SqlParameter matriculeParam = new SqlParameter("@matricule", SqlDbType.Int);
+            SqlParameter idCaserneParam = new SqlParameter("@idCaserne", SqlDbType.Int);
 
-			SqlCommand command = new SqlCommand(null, connexion);
+            matriculeParam.Value = matricule;
+            idCaserneParam.Value = CaserneRepository.Instance.ObtenirIdCaserne(nomCaserne);
 
-			command.CommandText = " DELETE FROM T_Pompiers WHERE IdCaserne = @idCaserne";
+            command.Parameters.Add(matriculeParam);
+            command.Parameters.Add(idCaserneParam);
 
-			SqlParameter idCaserneParam = new SqlParameter("@idCaserne", SqlDbType.Int);
+            try
+            {
+                OuvrirConnexion();
+                command.Prepare();
+                command.ExecuteNonQuery();
+            }
+            catch (SqlException e)
+            {
+                if (e.Number == 547)
+                {
+                    throw new DBRelationException("Impossible de supprimer le pompier.", e);
+                }
+                else throw;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la supression d'un pompier...", ex);
+            }
 
-			idCaserneParam.Value = idCaserne;
+            finally
+            {
+                FermerConnexion();
+            }
+            return true;
+        }
 
-			command.Parameters.Add(idCaserneParam);
+        /// <summary>
+        /// Méthode de service permettant de vider la liste des pompiers.
+        /// </summary>
+        public void ViderListePompier(string nomCaserne)
+        {
 
-			try
-			{
-				OuvrirConnexion();
-				command.Prepare();
-				command.ExecuteNonQuery();
-			}
-			catch (SqlException e)
-			{
-				if (e.Number == 547)
-				{
-					throw new DBRelationException("Impossible de supprimer les pompiers.", e);
-				}
-				else throw;
-			}
-			catch (Exception ex)
-			{
-				throw new Exception("Erreur lors de la supression des pompiers...", ex);
-			}
+            int idCaserne = CaserneRepository.Instance.ObtenirIdCaserne(nomCaserne);
 
-			finally
-			{
-				FermerConnexion();
-			}
-		}
+            SqlCommand command = new SqlCommand(null, connexion);
 
+            command.CommandText = " DELETE FROM T_Pompiers WHERE IdCaserne = @idCaserne";
 
+            SqlParameter idCaserneParam = new SqlParameter("@idCaserne", SqlDbType.Int);
 
+            idCaserneParam.Value = idCaserne;
 
-		#endregion
+            command.Parameters.Add(idCaserneParam);
 
+            try
+            {
+                OuvrirConnexion();
+                command.Prepare();
+                command.ExecuteNonQuery();
+            }
+            catch (SqlException e)
+            {
+                if (e.Number == 547)
+                {
+                    throw new DBRelationException("Impossible de supprimer les pompiers.", e);
+                }
+                else throw;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la supression des pompiers...", ex);
+            }
 
-	}
+            finally
+            {
+                FermerConnexion();
+            }
+        }
+        #endregion
+    }
 }
