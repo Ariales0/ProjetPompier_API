@@ -2,6 +2,8 @@
 using System.Data;
 
 using ProjetPompier_API.Logics.DTOs;
+using ProjetPompier_API.Logics.Exceptions;
+using Microsoft.AspNetCore.Mvc.Diagnostics;
 
 /// <summary>
 /// Namespace pour les classe de type DAO.
@@ -54,7 +56,10 @@ namespace ProjetPompier_API.Logics.DAOs
         /// <summary>
         /// Méthode de service permettant d'obtenir la liste des equipes d'une intevention.
         /// </summary>
-        /// <returns>Liste des equipes d'une intervention.</returns>
+        /// <param name="nomCaserne">Nom de la caserne dans laquelle a lieu l'intervention</param>
+        /// <param name="matriculeCapitaine">Matricule du capitaine en charge de l'intervention</param>
+        /// <param name="dateDebutIntervention">Date du debut de l'intervention</param>
+		/// <returns>List<CaserneDTO> La liste des equipes</returns>
         public List<EquipeDTO> ObtenirListeEquipe(string nomCaserne, int matriculeCapitaine, string dateDebutIntervention)
         {
             SqlCommand command = new SqlCommand(" SELECT T_Equipes.Code, " +
@@ -140,7 +145,11 @@ namespace ProjetPompier_API.Logics.DAOs
         /// <summary>
         /// Méthode de service permettant d'obtenir une équipe d'une intevention.
         /// </summary>
-        /// <returns>L'équipe de l'intervention</returns>
+        /// <param name="nomCaserne">Nom de la caserne dans laquelle a lieu l'intervention</param>
+        /// <param name="matriculeCapitaine">Matricule du capitaine en charge de l'intervention</param>
+        /// <param name="dateDebutIntervention">Date du debut de l'intervention</param>
+        /// <param name="codeEquipe">Vin du véhicule utilisé par l'équipe</param>
+        /// <returns>Le DTO de l'équipe recherchée</returns>
         public EquipeDTO ObtenirEquipe(string nomCaserne, int matriculeCapitaine, string dateDebutIntervention, int codeEquipe)
         {
             SqlCommand command = new SqlCommand(" SELECT T_Equipes.Code, " +
@@ -207,6 +216,68 @@ namespace ProjetPompier_API.Logics.DAOs
             catch (Exception ex)
             {
                 throw new Exception("Erreur lors de l'obtention de équipe...", ex);
+            }
+            finally
+            {
+                FermerConnexion();
+            }
+        }
+
+        /// <summary>
+        /// Méthode de service permettant d'ajouter une équipe à une itervention
+        /// </summary>
+        /// <param name="nomCaserne">Nom de la caserne dans laquelle a lieu l'intervention</param>
+        /// <param name="matriculeCapitaine">Matricule du capitaine en charge de l'intervention</param>
+        /// <param name="dateDebutIntervention">Date du debut de l'intervention</param>
+        /// <param name="equipeDTO">L'équipe à ajouter avec code vide</param>
+        public void AjouterEquipe(string nomCaserne, int matriculeCapitaine, string dateDebutIntervention, int codeEquipe, EquipeDTO equipeAjouter)
+        {
+            string obtenirIdCaserne = "SELECT IdCaserne FROM T_Casernes WHERE Nom = @nomCaserne";
+            string obtenirIdPompierAjouter = "SELECT IdPompier  FROM T_Pompiers  WHERE Matricule= @matriculePompier AND IdCaserne = (" + obtenirIdCaserne + ")";
+            string obtenirIdPompierCapitaine = "SELECT IdPompier  FROM T_Pompiers  WHERE Matricule= @matriculeCapitaine AND IdCaserne = (" + obtenirIdCaserne + ")";
+
+            string requete = " INSERT INTO T_Equipes(Code, IdPompier, IdVehicule, IdIntervention)  " +
+                                        "VALUES (" +
+                                        "@codeEquipe" +
+                                        ",(" + obtenirIdPompierAjouter + ")," +
+                                        "(SELECT IdVehicule  FROM T_Vehicules  WHERE Vin= @vinVehiculeEquipe AND IdCaserne= (" + obtenirIdCaserne + "))," +
+                                        "(SELECT IdFicheIntervention FROM T_FichesIntervention " +
+                                        "WHERE IdCaserne= (" + obtenirIdCaserne + ") AND IdPompier = (" + obtenirIdPompierCapitaine + ") AND DateDebut = @dateDebutIntervention)) ";
+            try
+            {
+                OuvrirConnexion();
+                foreach (PompierDTO pompier in equipeAjouter.ListePompierEquipe)
+                {
+                    SqlCommand command = new SqlCommand(requete, connexion);
+
+                    SqlParameter matriculeCapitaineParam = new SqlParameter("@matriculeCapitaine", SqlDbType.Int);
+                    SqlParameter matriculePompierAjoutParam = new SqlParameter("@matriculePompier", SqlDbType.Int);
+                    SqlParameter nomCaserneParam = new SqlParameter("@nomCaserne", SqlDbType.VarChar, 100);
+                    SqlParameter dateDebutInterventionParam = new SqlParameter("@dateDebutIntervention", SqlDbType.DateTime);
+                    SqlParameter codeEquipeParam = new SqlParameter("@codeEquipe", SqlDbType.Int);
+                    SqlParameter vinVehiculeParam = new SqlParameter("@vinVehiculeEquipe", SqlDbType.VarChar, 17);
+
+                    matriculeCapitaineParam.Value = matriculeCapitaine;
+                    matriculePompierAjoutParam.Value = pompier.Matricule;
+                    nomCaserneParam.Value = nomCaserne;
+                    dateDebutInterventionParam.Value = dateDebutIntervention;
+                    codeEquipeParam.Value = codeEquipe;
+                    vinVehiculeParam.Value = equipeAjouter.VinVehicule;
+
+                    command.Parameters.Add(matriculeCapitaineParam);
+                    command.Parameters.Add(matriculePompierAjoutParam);
+                    command.Parameters.Add(nomCaserneParam);
+                    command.Parameters.Add(dateDebutInterventionParam);
+                    command.Parameters.Add(codeEquipeParam);
+                    command.Parameters.Add(vinVehiculeParam);
+
+                    command.Prepare();
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new DBUniqueException("Erreur lors de l'ajout de l'équipe", ex);
             }
             finally
             {

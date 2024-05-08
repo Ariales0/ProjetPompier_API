@@ -1,4 +1,5 @@
-﻿using ProjetPompier_API.Logics.DAOs;
+﻿using Microsoft.AspNetCore.Mvc;
+using ProjetPompier_API.Logics.DAOs;
 using ProjetPompier_API.Logics.DTOs;
 using ProjetPompier_API.Logics.Models;
 
@@ -53,7 +54,10 @@ namespace ProjetPompier_API.Logics.Controleurs
         /// <summary>
         /// Méthode de service permettant d'obtenir la liste des equipes d'une intervention.
         /// </summary>
-        /// <returns>Liste contenant les equipes.</returns>
+        /// <param name="nomCaserne">Nom de la caserne dans laquelle a lieu l'intervention</param>
+        /// <param name="matriculeCapitaine">Matricule du capitaine en charge de l'intervention</param>
+        /// <param name="dateDebutIntervention">Date du debut de l'intervention</param>
+		/// <returns> La liste des equipes</returns>
         public List<EquipeDTO> ObtenirListeEquipe(string nomCaserne, int matriculeCapitaine, string dateDebutIntervention)
         {
             try
@@ -84,33 +88,94 @@ namespace ProjetPompier_API.Logics.Controleurs
                     throw new Exception("Erreur lors du chargement des equipes de l'intervention.");
             }
             catch (Exception ex) { throw new Exception(ex.Message); }
-            
+
         }
 
         /// <summary>
         /// Méthode de service permettant d'obtenir une équipe d'une intervention.
         /// </summary>
-        /// <returns>L'équipe de l'intervention.</returns>
+        /// <param name="nomCaserne">Nom de la caserne dans laquelle a lieu l'intervention</param>
+        /// <param name="matriculeCapitaine">Matricule du capitaine en charge de l'intervention</param>
+        /// <param name="dateDebutIntervention">Date du debut de l'intervention</param>
+        /// <param name="codeEquipe">Vin du véhicule utilisé par l'équipe</param>
+        /// <returns>Le DTO de l'équipe recherchée</returns>
         public EquipeDTO ObtenirEquipe(string nomCaserne, int matriculeCapitaine, string dateDebutIntervention, int codeEquipe)
         {
             try
             {
                 EquipeDTO equipeDTO_Recherchee = EquipeRepository.Instance.ObtenirEquipe(nomCaserne, matriculeCapitaine, dateDebutIntervention, codeEquipe);
+
                 List<PompierModel> listePompierModel = new List<PompierModel>();
-
-
                 foreach (PompierDTO pompierDTO in equipeDTO_Recherchee.ListePompierEquipe)
                 {
                     listePompierModel.Add(new PompierModel(pompierDTO.Matricule, pompierDTO.Grade, pompierDTO.Nom, pompierDTO.Prenom));
                 }
-
                 EquipeModel equipeModel = new EquipeModel(equipeDTO_Recherchee.Code, listePompierModel, equipeDTO_Recherchee.VinVehicule);
+
                 return equipeDTO_Recherchee;
             }
             catch (Exception ex) { throw new Exception(ex.Message); }
-            
         }
 
+        /// <summary>
+        /// Méthode de service permettant d'ajouter une équipe à une itervention
+        /// </summary>
+        /// <param name="nomCaserne">Nom de la caserne dans laquelle a lieu l'intervention</param>
+        /// <param name="matriculeCapitaine">Matricule du capitaine en charge de l'intervention</param>
+        /// <param name="dateDebutIntervention">Date du debut de l'intervention</param>
+        /// <param name="equipeDTO">L'équipe à ajouter avec code vide</param>
+        public void AjouterEquipe(string nomCaserne, int matriculeCapitaine, string dateDebutIntervention, EquipeDTO equipeDTO)
+        {
+            bool OK = false;
+            int codeEquipeInt = 0;
+            try
+            {
+                int codeVehicule = VehiculeRepository.Instance.ObtenirVehicule(nomCaserne, equipeDTO.VinVehicule).Code;
+                int codeIntervention = InterventionRepository.Instance.ObtenirFicheIntervention(nomCaserne, matriculeCapitaine, dateDebutIntervention).CodeTypeIntervention;
+
+                string chiffreCentaineVehicule = codeVehicule.ToString()[0].ToString();
+                string codeEquipeSTR = chiffreCentaineVehicule + codeIntervention.ToString();
+
+                codeEquipeInt = int.Parse(codeEquipeSTR);
+
+                EquipeDTO siEquipeExiste = EquipeRepository.Instance.ObtenirEquipe(nomCaserne, matriculeCapitaine, dateDebutIntervention, codeEquipeInt);
+                if(siEquipeExiste.Code == -1)
+                {
+                    OK = true;
+                }
+                else
+                {
+                    OK = false;
+                }
+            }
+            catch (Exception)
+            {
+                OK = false;
+            }
+
+            if (OK)
+            {
+                try
+                {
+                    List<PompierModel> listePompierModel = new List<PompierModel>();
+                    foreach (PompierDTO pompierDTO in equipeDTO.ListePompierEquipe)
+                    {
+                        listePompierModel.Add(new PompierModel(pompierDTO.Matricule, pompierDTO.Grade, pompierDTO.Nom, pompierDTO.Prenom));
+                    }
+                    EquipeModel equipeModel = new EquipeModel(equipeDTO.Code, listePompierModel, equipeDTO.VinVehicule);
+
+                    EquipeRepository.Instance.AjouterEquipe(nomCaserne, matriculeCapitaine, dateDebutIntervention, codeEquipeInt, equipeDTO);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+            }
+            else
+            {
+                throw new Exception("Une équipe existe déjà pour ce code à la date de l'intervention.");
+            }
+        }
         #endregion
     }
 }

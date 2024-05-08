@@ -19,7 +19,7 @@ namespace ProjetPompier_API.Controllers
         /// <param name="nomCaserne">Nom de la caserne dans laquelle a lieu l'intervention</param>
         /// <param name="matriculeCapitaine">Matricule du capitaine en charge de l'intervention</param>
         /// <param name="dateDebutIntervention">Date du debut de l'intervention</param>
-		/// <returns>List<CaserneDTO> La liste des equipes</returns>
+		/// <returns> La liste des equipes</returns>
         [Route("Equipe/ObtenirListeEquipe")]
         [HttpGet]
         public List<EquipeDTO> ObtenirListeEquipe([FromQuery] string nomCaserne, [FromQuery] int matriculeCapitaine, [FromQuery] string dateDebutIntervention)
@@ -49,11 +49,11 @@ namespace ProjetPompier_API.Controllers
         /// <param name="matriculeCapitaine">Matricule du capitaine en charge de l'intervention</param>
         /// <param name="dateDebutIntervention">Date du debut de l'intervention</param>
         /// <param name="equipeDTO">L'équipe à ajouter avec code vide</param>
-        //[Route("Equipe/AjouterEquipe")]
-        //[HttpPost]
-        //public void AjouterEquipe([FromQuery] string nomCaserne, [FromQuery] int matriculeCapitaine, [FromQuery] string dateDebutIntervention,[FromBody] EquipeDTO equipeDTO)
-        //{
-        //    //return EquipeControleur.Instance.AjouterEquipe(nomCaserne, matriculeCapitaine, dateDebutIntervention, equipeDTO);
-        //}
+        [Route("Equipe/AjouterEquipe")]
+        [HttpPost]
+        public void AjouterEquipe([FromQuery] string nomCaserne, [FromQuery] int matriculeCapitaine, [FromQuery] string dateDebutIntervention, [FromBody] EquipeDTO equipeDTO)
+        {
+            EquipeControleur.Instance.AjouterEquipe(nomCaserne, matriculeCapitaine, dateDebutIntervention, equipeDTO);
+        }
     }
 }
