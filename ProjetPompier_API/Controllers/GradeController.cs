@@ -16,7 +16,7 @@ namespace ProjetPompier_API.Controllers
         /// <summary>
 		/// Méthode de service GET ObtenirListeCaserne
 		/// </summary>
-		/// <returns>List<CaserneDTO> La liste des casernes</returns>
+		/// <returns> La liste des grades pour un pompier</returns>
         [Route("Grade/ObtenirListeGrade")]
         [HttpGet]
         public List<GradeDTO> ObtenirListeGrade()
@@ -27,8 +27,8 @@ namespace ProjetPompier_API.Controllers
 		/// <summary>
         /// Méthode de service GET ObtenirGrade
         /// </summary>
-        /// <param name="idGrade"></param>
-        /// <returns></returns>
+        /// <param name="description">Description du grade</param>
+        /// <returns>L'objet DTO du grade</returns>
 		[Route("Grade/ObtenirGrade")]
         [HttpGet]
         public GradeDTO ObtenirGrade([FromQuery]string description)
@@ -39,7 +39,7 @@ namespace ProjetPompier_API.Controllers
         /// <summary>
         /// Méthode de service POST AjouterGrade
         /// </summary>
-        /// <param name="gradeDTO"></param>
+        /// <param name="gradeDTO">L'objet DTO du grade à ajouter</param>
         [Route("Grade/AjouterGrade")]
         [HttpPost]
         public void AjouterGrade([FromBody] GradeDTO gradeDTO)
@@ -50,8 +50,8 @@ namespace ProjetPompier_API.Controllers
         /// <summary>
         /// Méthode de service POST ModifierGrade
         /// </summary>
-        /// <param name="descriptionAvantChangement"></param>
-        /// <param name="descriptionApresChangement"></param>
+        /// <param name="descriptionAvantChangement">Description du grade avant modification</param>
+        /// <param name="descriptionApresChangement">La nouvelle description du grade à modifier</param>
         [Route("Grade/ModifierGrade")]
         [HttpPost]
         public void ModifierGrade([FromQuery] string descriptionAvantChangement, [FromQuery] string descriptionApresChangement)
@@ -62,7 +62,7 @@ namespace ProjetPompier_API.Controllers
         /// <summary>
         /// Méthode de service POST SupprimerGrade
         /// </summary>
-        /// <param name="idGrade"></param>
+        /// <param name="description">Description du grade à supprimer</param>
 
         [Route("Grade/SupprimerGrade")]
         [HttpPost]

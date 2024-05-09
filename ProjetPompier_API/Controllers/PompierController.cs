@@ -29,7 +29,7 @@ namespace ProjetPompier_API.Controllers
         /// Méthode de service GET ObtenirListePompierDisponible
         /// </summary>
         /// <param name="nomCaserne">Le nom de la caserne qui prend en charge l'intervention.</param>
-        /// <returns>List<PompierDTO> La liste des pompiers d'une caserne</returns>
+        /// <returns>List<PompierDTO> La liste des pompiers disponible d'une caserne</returns>
         [Route("Pompier/ObtenirListePompierDisponible")]
         [HttpGet]
         public List<PompierDTO> ObtenirListePompierDisponible([FromQuery] string nomCaserne)
@@ -42,7 +42,7 @@ namespace ProjetPompier_API.Controllers
         /// </summary>
         /// <param name="nomCaserne"></param>
         /// <param name="matriculePompier"></param>
-        /// <returns></returns>
+        /// <returns>Le DTO du pompier recherché</returns>
         [Route("Pompier/ObtenirPompier")]
 		[HttpGet]
 		public PompierDTO ObtenirPompier([FromQuery] string nomCaserne, [FromQuery] int matriculePompier)

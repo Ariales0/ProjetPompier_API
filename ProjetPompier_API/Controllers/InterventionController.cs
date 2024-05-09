@@ -10,13 +10,12 @@ namespace ProjetPompier_API.Controllers
     /// <summary>
     /// Classe représentant le controleur de l'API des Fiches d'intervention.
     /// </summary>
-    
     public class InterventionController : Controller
     {
         /// <summary>
 		/// Méthode de service GET ObtenirListeFicheIntervention
 		/// </summary>
-		/// <returns>List<PompierDTO> La liste des fiches d'intervention d'une caserne</returns>
+		/// <returns>La liste des fiches d'intervention d'une caserne</returns>
         [Route("Intervention/ObtenirListeFicheIntervention")]
         [HttpGet]
         public List<FicheInterventionDTO> ObtenirListeFicheIntervention([FromQuery] string nomCaserne, [FromQuery] int matriculeCapitaine)
@@ -24,15 +23,22 @@ namespace ProjetPompier_API.Controllers
             return InterventionControleur.Instance.ObtenirListeFicheIntervention(nomCaserne, matriculeCapitaine);
         }
 
+        /// <summary>
+		/// Méthode de service GET ObtenirFicheIntervention
+		/// </summary>
+        /// <param name="nomCaserne">Nom de la caserne dans laquelle a lieu l'intervention</param>
+        /// <param name="matriculeCapitaine">Matricule du capitaine en charge de l'intervention</param>
+        /// <param name="dateDebutIntervention">Date du debut de l'intervention</param>
+		/// <returns>La fiche d'intervention d'une caserne</returns>
         [Route("Intervention/ObtenirFicheIntervention")]
         [HttpGet]
-        public FicheInterventionDTO ObtenirFicheIntervention([FromQuery] string nomCaserne, [FromQuery] int matriculeCapitaine, [FromQuery] string dateIntervention)
+        public FicheInterventionDTO ObtenirFicheIntervention([FromQuery] string nomCaserne, [FromQuery] int matriculeCapitaine, [FromQuery] string dateDebutIntervention)
         {
-            return InterventionControleur.Instance.ObtenirFicheIntevention(nomCaserne, matriculeCapitaine, dateIntervention);
+            return InterventionControleur.Instance.ObtenirFicheIntevention(nomCaserne, matriculeCapitaine, dateDebutIntervention);
         }
 
         /// <summary>
-        /// Méthode de service permettant d'ouvrir une fiche d'intervention'.
+        /// Méthode de service permettant d'ouvrir une fiche d'intervention.
         /// </summary>
         /// <param name="nomCaserne">Le nom de la caserne qui prend en charge l'intervention.</param>
         /// <param name="fiche">DTO de l'intervention</param>
@@ -44,7 +50,7 @@ namespace ProjetPompier_API.Controllers
         }
 
         /// <summary>
-        /// Méthode de service permettant de modifier une fiche d'intervention'.
+        /// Méthode de service permettant de modifier une fiche d'intervention.
         /// </summary>
         /// <param name="nomCaserne">Le nom de la caserne</param>
         /// <param name="fiche">Le DTO de la fiche</param>
@@ -56,7 +62,7 @@ namespace ProjetPompier_API.Controllers
         }
 
         /// <summary>
-        /// Méthode de service permettant de fermer une fiche d'intervention'.
+        /// Méthode de service permettant de fermer une fiche d'intervention.
         /// </summary>
         /// <param name="nomCaserne">Le nom de la caserne</param>
         /// <param name="fiche">Le DTO de la fiche</param>

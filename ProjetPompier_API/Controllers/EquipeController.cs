@@ -8,7 +8,7 @@ using ProjetPompier_API.Logics.DTOs;
 namespace ProjetPompier_API.Controllers
 {
     /// <summary>
-    /// Classe représentant le controleur de l'API des grades d'un pompier.
+    /// Classe représentant le controleur de l'API des équipes d'intervention.
     /// </summary>
 
     public class EquipeController : Controller
@@ -19,7 +19,7 @@ namespace ProjetPompier_API.Controllers
         /// <param name="nomCaserne">Nom de la caserne dans laquelle a lieu l'intervention</param>
         /// <param name="matriculeCapitaine">Matricule du capitaine en charge de l'intervention</param>
         /// <param name="dateDebutIntervention">Date du debut de l'intervention</param>
-		/// <returns> La liste des equipes</returns>
+		/// <returns> La liste des équipes</returns>
         [Route("Equipe/ObtenirListeEquipe")]
         [HttpGet]
         public List<EquipeDTO> ObtenirListeEquipe([FromQuery] string nomCaserne, [FromQuery] int matriculeCapitaine, [FromQuery] string dateDebutIntervention)
@@ -48,7 +48,7 @@ namespace ProjetPompier_API.Controllers
         /// <param name="nomCaserne">Nom de la caserne dans laquelle a lieu l'intervention</param>
         /// <param name="matriculeCapitaine">Matricule du capitaine en charge de l'intervention</param>
         /// <param name="dateDebutIntervention">Date du debut de l'intervention</param>
-        /// <param name="equipeDTO">L'équipe à ajouter avec code vide</param>
+        /// <param name="equipeDTO">L'équipe à ajouter avec code queleconque (On ne regarde pas le code de l'objet ici)</param>
         [Route("Equipe/AjouterEquipe")]
         [HttpPost]
         public void AjouterEquipe([FromQuery] string nomCaserne, [FromQuery] int matriculeCapitaine, [FromQuery] string dateDebutIntervention, [FromBody] EquipeDTO equipeDTO)
