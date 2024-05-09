@@ -95,9 +95,9 @@ namespace ProjetPompier_API.Logics.Controleurs
         /// <summary>
         /// Méthode de service permettant d'obtenir un pompier.
         /// </summary>
-        /// <param name="matricule"></param>
-        /// <param name="nomCaserne"></param>
-        /// <returns></returns>
+        /// <param name="matricule">Le matricule du pompier</param>
+        /// <param name="nomCaserne">Le nom de la caserne du pompier</param>
+        /// <returns>Le pompier recherché</returns>
         public PompierDTO ObtenirPompier(int matricule, string nomCaserne)
         {
             PompierDTO pompierDTO = PompierRepository.Instance.ObtenirPompier(matricule, nomCaserne);
@@ -106,38 +106,24 @@ namespace ProjetPompier_API.Logics.Controleurs
         }
 
         /// <summary>
-        /// Méthode de service permettant d'obtenir l'id d'un pompier.
+        /// Méthode de service permettant d'ajouter un pompier.
         /// </summary>
-        /// <param name="matricule"></param>
-        /// <param name="nomCaserne"></param>
+        /// <param name="pompierDTO">Le pompier à ajouter</param>
+        /// <param name="nomCaserne">Le nom de la caserne du pompier</param>
         /// <returns></returns>
-        public int ObtenirIdPompier(int matricule, string nomCaserne)
-        {
-            return PompierRepository.Instance.ObtenirIdPompier(matricule, nomCaserne);
-        }
-
         public void AjouterPompier(string nomCaserne, PompierDTO pompierDTO)
         {
             bool OK = false;
-            int idCaserne = CaserneRepository.Instance.ObtenirIdCaserne(nomCaserne);
             try
             {
-                PompierRepository.Instance.ObtenirIdPompier(pompierDTO.Matricule, nomCaserne);
-            }
-            catch (Exception)
-            {
-                OK = true;
-            }
-
-            if (OK)
-            {
+                PompierRepository.Instance.ObtenirPompier(pompierDTO.Matricule, nomCaserne);
                 PompierModel unPompier = new PompierModel(pompierDTO.Matricule, pompierDTO.Grade, pompierDTO.Nom, pompierDTO.Prenom);
-
-
-                PompierRepository.Instance.AjouterPompier(idCaserne, pompierDTO);
+                PompierRepository.Instance.AjouterPompier(nomCaserne, pompierDTO);
             }
-            else
-                throw new Exception("Erreur - Le pompier est déjà existant.");
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
 
         }
 

@@ -90,24 +90,16 @@ namespace ProjetPompier_API.Logics.Controleurs
 		/// <exception cref="Exception"></exception>
 		public void AjouterGrade(GradeDTO gradeDTO)
 		{
-			bool OK = false;
 			try
 			{
-				GradeRepository.Instance.ObtenirIdGrade(gradeDTO.Description);
-			}
-			catch (Exception)
+				GradeRepository.Instance.ObtenirGrade(gradeDTO.Description);
+                GradeModel unGrade = new GradeModel(gradeDTO.Description);
+                GradeRepository.Instance.AjouterGrade(gradeDTO);
+            }
+			catch (Exception ex)
 			{
-				OK = true;
-			}
-
-			if (OK)
-			{
-				GradeModel unGrade = new GradeModel(gradeDTO.Description);
-				GradeRepository.Instance.AjouterGrade(gradeDTO);
-			}
-			else
-				throw new Exception("Erreur - Le grade est déjà existant.");
-
+                throw new Exception(ex.Message);
+            }
 		}
 
 		/// <summary>

@@ -86,44 +86,6 @@ namespace ProjetPompier_API.Logics.DAOs
         }
 
         /// <summary>
-        /// Méthode de service permettant d'obtenir le ID d'une caserne selon son nom unique.
-        /// </summary>
-        /// <param name="nomCaserne">Le titre de la caserne.</param>
-        /// <returns>Le ID de la caserne.</returns>
-        public int ObtenirIdCaserne(string nomCaserne)
-        {
-            SqlCommand command = new SqlCommand(" SELECT IdCaserne " +
-                                                "   FROM T_Casernes " +
-                                                "  WHERE Nom = @nom ", connexion);
-
-            SqlParameter nomCaserneParam = new SqlParameter("@nom", SqlDbType.VarChar, 100);
-
-            nomCaserneParam.Value = nomCaserne;
-
-            command.Parameters.Add(nomCaserneParam);
-
-            int id;
-
-            try
-            {
-                OuvrirConnexion();
-                SqlDataReader reader = command.ExecuteReader();
-                reader.Read();
-                id = reader.GetInt32(0);
-                reader.Close();
-                return id;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Erreur lors de l'obtention d'un id d'une caserne par son nom...", ex);
-            }
-            finally
-            {
-                FermerConnexion();
-            }
-        }
-
-        /// <summary>
         /// Méthode de service permettant d'obtenir une caserne selon son nom unique.
         /// </summary>
         /// <param name="nomCaserne">Nom de la caserne.</param>
@@ -269,13 +231,11 @@ namespace ProjetPompier_API.Logics.DAOs
 
             command.CommandText = " DELETE " +
                                     " FROM T_Casernes " +
-                                   " WHERE IdCaserne = @id ";
+                                   " WHERE Nom = @nomCaserne ";
 
-            SqlParameter idParam = new SqlParameter("@id", SqlDbType.Int);
-
-            idParam.Value = ObtenirIdCaserne(nomCaserne);
-
-            command.Parameters.Add(idParam);
+            SqlParameter nomCaserneParam = new SqlParameter("@nomCaserne", SqlDbType.VarChar, 100);;
+            nomCaserneParam.Value = nomCaserne;
+            command.Parameters.Add(nomCaserneParam);
 
             try
             {
@@ -308,9 +268,8 @@ namespace ProjetPompier_API.Logics.DAOs
         /// </summary>
         public void ViderListeCaserne()
         {
-            SqlCommand command = new SqlCommand(null, connexion);
+            SqlCommand command = new SqlCommand(" DELETE FROM T_Casernes", connexion);
 
-            command.CommandText = " DELETE FROM T_Casernes";
             try
             {
                 OuvrirConnexion();

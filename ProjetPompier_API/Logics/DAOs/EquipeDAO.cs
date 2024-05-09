@@ -3,7 +3,6 @@ using System.Data;
 
 using ProjetPompier_API.Logics.DTOs;
 using ProjetPompier_API.Logics.Exceptions;
-using Microsoft.AspNetCore.Mvc.Diagnostics;
 
 /// <summary>
 /// Namespace pour les classe de type DAO.
@@ -229,7 +228,7 @@ namespace ProjetPompier_API.Logics.DAOs
         /// <param name="nomCaserne">Nom de la caserne dans laquelle a lieu l'intervention</param>
         /// <param name="matriculeCapitaine">Matricule du capitaine en charge de l'intervention</param>
         /// <param name="dateDebutIntervention">Date du debut de l'intervention</param>
-        /// <param name="equipeDTO">L'équipe à ajouter avec code vide</param>
+        /// <param name="equipeAjouter">L'équipe à ajouter avec code vide</param>
         public void AjouterEquipe(string nomCaserne, int matriculeCapitaine, string dateDebutIntervention, int codeEquipe, EquipeDTO equipeAjouter)
         {
             string obtenirIdCaserne = "SELECT IdCaserne FROM T_Casernes WHERE Nom = @nomCaserne";

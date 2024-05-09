@@ -10,10 +10,9 @@ namespace ProjetPompier_API.Logics.Controleurs
     /// <summary>
     /// Classe représentant le controleur de l'application.
     /// </summary>
-    public class CaserneControleur 
+    public class CaserneControleur
     {
         #region AttributsProprietes
-
         /// <summary>
         /// Attribut représentant l'instance unique de la classe CaserneControleur.
         /// </summary>
@@ -36,11 +35,9 @@ namespace ProjetPompier_API.Logics.Controleurs
                 return instance;
             }
         }
-
         #endregion AttributsProprietes
 
         #region Controleurs
-
         /// <summary>
         /// Constructeur par défaut de la classe.
         /// </summary>
@@ -49,7 +46,6 @@ namespace ProjetPompier_API.Logics.Controleurs
         #endregion Controleurs
 
         #region MethodesCaserne
-
         /// <summary>
         /// Méthode de service permettant d'obtenir la liste des casernes.
         /// </summary>
@@ -78,7 +74,7 @@ namespace ProjetPompier_API.Logics.Controleurs
         public CaserneDTO ObtenirCaserne(string nomCaserne)
         {
             CaserneDTO caserneDTO = CaserneRepository.Instance.ObtenirCaserne(nomCaserne);
-            CaserneModel caserne = new CaserneModel(caserneDTO.Nom, caserneDTO.Adresse, caserneDTO.Ville, caserneDTO.Province ,caserneDTO.Telephone);
+            CaserneModel caserne = new CaserneModel(caserneDTO.Nom, caserneDTO.Adresse, caserneDTO.Ville, caserneDTO.Province, caserneDTO.Telephone);
             return new CaserneDTO(caserne);
         }
 
@@ -91,7 +87,7 @@ namespace ProjetPompier_API.Logics.Controleurs
             bool OK = false;
             try
             {
-                CaserneRepository.Instance.ObtenirIdCaserne(caserneDTO.Nom);
+                CaserneRepository.Instance.ObtenirCaserne(caserneDTO.Nom);
             }
             catch (Exception)
             {
@@ -117,7 +113,7 @@ namespace ProjetPompier_API.Logics.Controleurs
             CaserneDTO caserneDTOBD = ObtenirCaserne(caserneDTO.Nom);
             CaserneModel caserneBD = new CaserneModel(caserneDTOBD.Nom, caserneDTOBD.Adresse, caserneDTOBD.Ville, caserneDTOBD.Province, caserneDTOBD.Telephone);
 
-            if (caserneDTO.Adresse != caserneBD.Adresse || caserneDTO.Ville != caserneBD.Ville || caserneDTO.Province != caserneBD.Province || caserneDTO.Telephone != caserneBD.Telephone )
+            if (caserneDTO.Adresse != caserneBD.Adresse || caserneDTO.Ville != caserneBD.Ville || caserneDTO.Province != caserneBD.Province || caserneDTO.Telephone != caserneBD.Telephone)
                 CaserneRepository.Instance.ModifierCaserne(caserneDTO);
             else
                 throw new Exception("Erreur - Veuillez modifier au moins une valeur.");

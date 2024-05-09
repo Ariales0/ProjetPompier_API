@@ -80,45 +80,7 @@ namespace ProjetPompier_API.Logics.DAOs
                 FermerConnexion();
             }
         }
-        
-        /// <summary>
-        /// Methode permettant d'obtenir l'id d'un type de vehicule par son code.
-        /// </summary>
-        /// <param name="code">Le code du vehicule</param>
-        /// <returns>Retourne l'id</returns>
-        /// <exception cref="Exception"></exception>
-        public int ObtenirIdTypeVehicule(int code)
-        {
-            SqlCommand command = new SqlCommand(" SELECT * " +
-                                                 "  FROM T_TypesVehicule " +
-                                                 " WHERE Code = @code", connexion);
-
-            SqlParameter paramCode = new SqlParameter("@code", SqlDbType.Int);
-
-            paramCode.Value = code;
-
-            command.Parameters.Add(paramCode);
-
-            int id;
-
-            try
-            {
-                OuvrirConnexion();
-                SqlDataReader reader = command.ExecuteReader();
-                reader.Read();
-                id = reader.GetInt32(0);
-                reader.Close();
-                return id;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Erreur lors de l'obtention d'un id d'un type par son code...", ex);
-            }
-            finally
-            {
-                FermerConnexion();
-            }
-        }   
+     
 
         /// <summary>
         /// Methode permettant d'obtenir un type de vehicule par son code.
@@ -152,45 +114,6 @@ namespace ProjetPompier_API.Logics.DAOs
             catch (Exception ex)
             {
                 throw new Exception("Erreur lors de l'obtention d'un type de vehicule par son code...", ex);
-            }
-            finally
-            {
-                FermerConnexion();
-            }
-        }
-
-        /// <summary>
-        /// Methode permettant d'obtenir un type de vehicule par son id.
-        /// </summary>
-        /// <param name="id">Le id</param>
-        /// <returns>Retourne le type de vehicule</returns>
-        /// <exception cref="Exception"></exception>
-        public TypeVehiculeDTO ObtenirTypeVehiculeParId(int id)
-        {
-            SqlCommand command = new SqlCommand(" SELECT * " +
-                                                "  FROM T_TypesVehicule " +
-                                                " WHERE IdTypeVehicule = @id", connexion);
-
-            SqlParameter idParam = new SqlParameter("@id", SqlDbType.Int);
-
-            idParam.Value = id;
-
-            command.Parameters.Add(idParam);
-
-            TypeVehiculeDTO typeVehicule;
-
-            try
-            {
-                OuvrirConnexion();
-                SqlDataReader reader = command.ExecuteReader();
-                reader.Read();
-                typeVehicule = new TypeVehiculeDTO(reader.GetInt32(1), reader.GetString(2), reader.GetInt32(3));
-                reader.Close();
-                return typeVehicule;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Erreur lors de l'obtention d'un type de vehicule par son id...", ex);
             }
             finally
             {
