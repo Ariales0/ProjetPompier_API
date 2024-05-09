@@ -95,7 +95,6 @@ namespace ProjetPompier_API.Logics.Controleurs
         {
             try
             {
-                VehiculeRepository.Instance.ObtenirVehicule(nomCaserne, vehicule.Vin);
                 VehiculeRepository.Instance.AjouterVehicule(nomCaserne, vehicule);
             }
             catch (Exception ex)

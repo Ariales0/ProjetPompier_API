@@ -167,7 +167,7 @@ namespace ProjetPompier_API.Logics.DAOs
 
 			command.CommandText = " UPDATE T_Grades " +
                                      " SET Description = @nouvelleDescription " +
-								   " WHERE IdGrade = @description ";
+								   " WHERE Description = @description ";
 
 			SqlParameter descriptionParam = new SqlParameter("@description", SqlDbType.VarChar,50);
             SqlParameter nouvelleDescriptionParam = new SqlParameter("@nouvelleDescription", SqlDbType.VarChar, 50);

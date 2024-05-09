@@ -92,7 +92,6 @@ namespace ProjetPompier_API.Logics.Controleurs
 		{
 			try
 			{
-				GradeRepository.Instance.ObtenirGrade(gradeDTO.Description);
                 GradeModel unGrade = new GradeModel(gradeDTO.Description);
                 GradeRepository.Instance.AjouterGrade(gradeDTO);
             }
