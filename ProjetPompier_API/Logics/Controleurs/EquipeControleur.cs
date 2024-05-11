@@ -139,7 +139,7 @@ namespace ProjetPompier_API.Logics.Controleurs
                 codeEquipeInt = int.Parse(codeEquipeSTR);
 
                 EquipeDTO siEquipeExiste = EquipeRepository.Instance.ObtenirEquipe(nomCaserne, matriculeCapitaine, dateDebutIntervention, codeEquipeInt);
-                if(siEquipeExiste.Code == -1)
+                if (siEquipeExiste.Code == -1)
                 {
                     OK = true;
                 }
@@ -174,6 +174,68 @@ namespace ProjetPompier_API.Logics.Controleurs
             else
             {
                 throw new Exception("Une équipe existe déjà pour ce code à la date de l'intervention.");
+            }
+        }
+
+        /// <summary>
+        /// Méthode de service permettant d'ajouter une équipe à une itervention
+        /// </summary>
+        /// <param name="nomCaserne">Nom de la caserne dans laquelle a lieu l'intervention</param>
+        /// <param name="matriculeCapitaine">Matricule du capitaine en charge de l'intervention</param>
+        /// <param name="dateDebutIntervention">Date du debut de l'intervention</param>
+        /// <param name="matriculePompier">Le matricule du pompier à jouter à l'équipe</param>
+        public void AjouterPompierEquipe(string nomCaserne, int matriculeCapitaine, string dateDebutIntervention, string vinVehicule, int matriculePompier)
+        {
+            bool OK = false;
+            int codeEquipeInt = 0;
+            try
+            {
+                VehiculeDTO vehiculeIntervention = VehiculeRepository.Instance.ObtenirVehicule(nomCaserne, vinVehicule);
+                int codeIntervention = InterventionRepository.Instance.ObtenirFicheIntervention(nomCaserne, matriculeCapitaine, dateDebutIntervention).CodeTypeIntervention;
+
+                string chiffreCentaineVehicule = vehiculeIntervention.Code.ToString()[0].ToString();
+                string codeEquipeSTR = chiffreCentaineVehicule + codeIntervention.ToString();
+
+                codeEquipeInt = int.Parse(codeEquipeSTR);
+
+                EquipeDTO equipeExiste = EquipeRepository.Instance.ObtenirEquipe(nomCaserne, matriculeCapitaine, dateDebutIntervention, codeEquipeInt);
+                if (equipeExiste.Code == -1)
+                {
+                    //Premier pompier à être ajouté à l'équipe
+                    OK = true;
+                }
+                else
+                {
+                    int nombreDePlaceRestante = TypesVehiculeRepository.Instance.ObtenirTypeVehicule(vehiculeIntervention.Code).Personnes;
+                    if (equipeExiste.ListePompierEquipe.Count < nombreDePlaceRestante)
+                    {
+                        OK = true;
+                    }
+                }
+
+                if (OK)
+                {
+                    PompierDTO pompierDTO = PompierRepository.Instance.ObtenirPompier(matriculePompier, nomCaserne);
+                    PompierModel pompierModel = new PompierModel(pompierDTO.Matricule, pompierDTO.Grade, pompierDTO.Nom, pompierDTO.Prenom);
+                    List<PompierModel> listePompierModel = new List<PompierModel>();
+                    listePompierModel.Add(pompierModel);
+                    EquipeModel equipeModel = new EquipeModel(vehiculeIntervention.Code, listePompierModel, vinVehicule);
+
+                    List<PompierDTO> listePompierDTO = new List<PompierDTO>();
+                    listePompierDTO.Add(pompierDTO);
+                    EquipeDTO equipeDTO = new EquipeDTO(vehiculeIntervention.Code, listePompierDTO, vinVehicule);
+
+                    EquipeRepository.Instance.AjouterEquipe(nomCaserne, matriculeCapitaine, dateDebutIntervention, codeEquipeInt, equipeDTO);
+                }
+                else
+                {
+                    throw new Exception("L'équipe est déjà complète.");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
         #endregion

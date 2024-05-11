@@ -55,5 +55,20 @@ namespace ProjetPompier_API.Controllers
         {
             EquipeControleur.Instance.AjouterEquipe(nomCaserne, matriculeCapitaine, dateDebutIntervention, equipeDTO);
         }
+
+        /// <summary>
+        /// Méthode de service POST AjouterPompierEquipe
+        /// </summary>
+        /// <param name="nomCaserne">Nom de la caserne dans laquelle a lieu l'intervention</param>
+        /// <param name="matriculeCapitaine">Matricule du capitaine en charge de l'intervention</param>
+        /// <param name="dateDebutIntervention">Date du debut de l'intervention</param>
+        /// <param name="matriculePompier">Le matricule du pompier à ajouter </param>
+        /// <param name="vinVehicule">Vin du véhicule de l'équipe</param>
+        [Route("Equipe/AjouterPompierEquipe")]
+        [HttpPost]
+        public void AjouterPompierEquipe([FromQuery] string nomCaserne, [FromQuery] int matriculeCapitaine, [FromQuery] string dateDebutIntervention, string vinVehicule, [FromQuery] int matriculePompier)
+        {
+            EquipeControleur.Instance.AjouterPompierEquipe(nomCaserne, matriculeCapitaine, dateDebutIntervention, vinVehicule, matriculePompier);
+        }
     }
 }

@@ -128,7 +128,7 @@ namespace ProjetPompier_API.Logics.DAOs
             vinParam.Value = vinVehicule;
 
             command.Parameters.Add(vinParam);
-            command.Parameters.Add(nomCaserne);
+            command.Parameters.Add(nomCaserneParam);
 
             try
             {
