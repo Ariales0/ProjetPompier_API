@@ -138,29 +138,43 @@ namespace ProjetPompier_API.Logics.Controleurs
 
                 codeEquipeInt = int.Parse(codeEquipeSTR);
 
-                //EquipeDTO siEquipeExiste = EquipeRepository.Instance.ObtenirEquipe(nomCaserne, matriculeCapitaine, dateDebutIntervention, codeEquipeInt);
-                //if(siEquipeExiste.Code == -1)
-                //{
-                //    OK = true;
-                //}
-                //else
-                //{
-                //    OK = false;
-                //}
-                List<PompierModel> listePompierModel = new List<PompierModel>();
-                foreach (PompierDTO pompierDTO in equipeDTO.ListePompierEquipe)
+                EquipeDTO siEquipeExiste = EquipeRepository.Instance.ObtenirEquipe(nomCaserne, matriculeCapitaine, dateDebutIntervention, codeEquipeInt);
+                if(siEquipeExiste.Code == -1)
                 {
-                    listePompierModel.Add(new PompierModel(pompierDTO.Matricule, pompierDTO.Grade, pompierDTO.Nom, pompierDTO.Prenom));
+                    OK = true;
                 }
-                EquipeModel equipeModel = new EquipeModel(equipeDTO.Code, listePompierModel, equipeDTO.VinVehicule);
-
-                EquipeRepository.Instance.AjouterEquipe(nomCaserne, matriculeCapitaine, dateDebutIntervention, codeEquipeInt, equipeDTO);
+                else
+                {
+                    OK = false;
+                }
             }
             catch (Exception)
             {
-                //OK = false;
+                OK = false;
             }
-                
+
+            if (OK)
+            {
+                try
+                {
+                    List<PompierModel> listePompierModel = new List<PompierModel>();
+                    foreach (PompierDTO pompierDTO in equipeDTO.ListePompierEquipe)
+                    {
+                        listePompierModel.Add(new PompierModel(pompierDTO.Matricule, pompierDTO.Grade, pompierDTO.Nom, pompierDTO.Prenom));
+                    }
+                    EquipeModel equipeModel = new EquipeModel(equipeDTO.Code, listePompierModel, equipeDTO.VinVehicule);
+
+                    EquipeRepository.Instance.AjouterEquipe(nomCaserne, matriculeCapitaine, dateDebutIntervention, codeEquipeInt, equipeDTO);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+            }
+            else
+            {
+                throw new Exception("Une équipe existe déjà pour ce code à la date de l'intervention.");
+            }
         }
         #endregion
     }
