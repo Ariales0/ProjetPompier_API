@@ -113,8 +113,10 @@ namespace ProjetPompier_API.Logics.Controleurs
         /// <returns></returns>
         public void AjouterPompier(string nomCaserne, PompierDTO pompierDTO)
         {
+            bool OK = false;
             try
             {
+                PompierRepository.Instance.ObtenirPompier(pompierDTO.Matricule, nomCaserne);
                 PompierModel unPompier = new PompierModel(pompierDTO.Matricule, pompierDTO.Grade, pompierDTO.Nom, pompierDTO.Prenom);
                 PompierRepository.Instance.AjouterPompier(nomCaserne, pompierDTO);
             }

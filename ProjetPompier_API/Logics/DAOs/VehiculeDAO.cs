@@ -128,7 +128,7 @@ namespace ProjetPompier_API.Logics.DAOs
             vinParam.Value = vinVehicule;
 
             command.Parameters.Add(vinParam);
-            command.Parameters.Add(nomCaserneParam);
+            command.Parameters.Add(nomCaserne);
 
             try
             {
@@ -257,7 +257,7 @@ namespace ProjetPompier_API.Logics.DAOs
         /// <exception cref="Exception"></exception>
         public void SupprimerVehicule(string nomCaserne, string vinVehicule)
         {
-            SqlCommand command = new SqlCommand(" DELETE T_Vehicules FROM T_Vehicules " +
+            SqlCommand command = new SqlCommand(" DELETE FROM T_Vehicules " +
                                                 "INNER JOIN T_Casernes ON T_Casernes.IdCaserne = T_Vehicules.IdCaserne " +
                                                 " WHERE Vin = @vin AND T_Casernes.Nom = @nomCaserne ", connexion);
 
