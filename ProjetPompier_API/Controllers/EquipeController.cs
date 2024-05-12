@@ -66,7 +66,7 @@ namespace ProjetPompier_API.Controllers
         /// <param name="vinVehicule">Vin du véhicule de l'équipe</param>
         [Route("Equipe/AjouterPompierEquipe")]
         [HttpPost]
-        public void AjouterPompierEquipe([FromQuery] string nomCaserne, [FromQuery] int matriculeCapitaine, [FromQuery] string dateDebutIntervention, string vinVehicule, [FromQuery] int matriculePompier)
+        public void AjouterPompierEquipe([FromQuery] string nomCaserne, [FromQuery] int matriculeCapitaine, [FromQuery] string dateDebutIntervention, [FromQuery] string vinVehicule, [FromQuery] int matriculePompier)
         {
             EquipeControleur.Instance.AjouterPompierEquipe(nomCaserne, matriculeCapitaine, dateDebutIntervention, vinVehicule, matriculePompier);
         }
