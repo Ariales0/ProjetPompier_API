@@ -43,10 +43,10 @@ namespace ProjetPompier_API.Logics.Models
             get { return listePompierEquipe; }
             set
             {
-                if (value != null && value.Count > 0)
+                if (value != null && value.Count >= 0)
                     listePompierEquipe = value;
                 else
-                    throw new Exception("La liste de l'équipe est vide ou inexistante.");
+                    throw new Exception("Erreur en rapport avec la liste des pompiers");
             }
         }
 

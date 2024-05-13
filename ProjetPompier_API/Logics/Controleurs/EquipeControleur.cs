@@ -63,6 +63,10 @@ namespace ProjetPompier_API.Logics.Controleurs
             try
             {
                 List<EquipeDTO> listeEquipeDTO = EquipeRepository.Instance.ObtenirListeEquipe(nomCaserne, matriculeCapitaine, dateDebutIntervention);
+                if(listeEquipeDTO.Count == 1 && listeEquipeDTO[0].Code == -1)
+                {
+                    return new List<EquipeDTO>();
+                }
                 List<EquipeModel> listeEquipe = new List<EquipeModel>();
                 List<PompierModel> listePompierModel = new List<PompierModel>();
 
