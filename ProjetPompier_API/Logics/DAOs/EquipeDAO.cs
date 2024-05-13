@@ -167,7 +167,11 @@ namespace ProjetPompier_API.Logics.DAOs
 
 
                                                         " WHERE T_Casernes.Nom = @nomCaserne " +
-                                                        "AND T_FichesIntervention.IdPompier = (SELECT IdPompier FROM T_Pompiers WHERE Matricule = @matriculeCapitaine) " +
+                                                        "AND T_FichesIntervention.IdPompier = " +
+                                                        "(SELECT IdPompier " +
+                                                        "FROM T_Pompiers " +
+                                                        "INNER JOIN T_Casernes ON T_Casernes.IdCaserne = T_Pompiers.IdCaserne " +
+                                                        "WHERE Matricule = @matriculeCapitaine AND T_Casernes.Nom = @nomCaserne) " +
                                                         "AND T_FichesIntervention.DateDebut = @dateDebutIntervention " +
                                                         "AND T_Equipes.Code = @codeEquipe " +
                                                         "GROUP BY T_Equipes.Code, " +
