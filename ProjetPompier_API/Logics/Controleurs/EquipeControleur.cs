@@ -197,21 +197,30 @@ namespace ProjetPompier_API.Logics.Controleurs
                 string codeEquipeSTR = chiffreCentaineVehicule + codeIntervention.ToString();
 
                 codeEquipeInt = int.Parse(codeEquipeSTR);
-
-                EquipeDTO equipeExiste = EquipeRepository.Instance.ObtenirEquipe(nomCaserne, matriculeCapitaine, dateDebutIntervention, codeEquipeInt);
-                if (equipeExiste.Code == -1)
+                try
                 {
-                    //Premier pompier à être ajouté à l'équipe
-                    OK = true;
-                }
-                else
-                {
-                    int nombreDePlaceRestante = TypesVehiculeRepository.Instance.ObtenirTypeVehicule(vehiculeIntervention.Code).Personnes;
-                    if (equipeExiste.ListePompierEquipe.Count < nombreDePlaceRestante)
+                    EquipeDTO equipeExiste = EquipeRepository.Instance.ObtenirEquipe(nomCaserne, matriculeCapitaine, dateDebutIntervention, codeEquipeInt);
+                    if (equipeExiste.Code == -1)
                     {
+                        //Premier pompier à être ajouté à l'équipe
                         OK = true;
                     }
+                    else
+                    {
+                        int nombreDePlaceRestante = TypesVehiculeRepository.Instance.ObtenirTypeVehicule(vehiculeIntervention.Code).Personnes;
+                        if (equipeExiste.ListePompierEquipe.Count < nombreDePlaceRestante)
+                        {
+                            OK = true;
+                        }
+                    }
                 }
+                catch(Exception exception)
+                {
+                    //Si on arrive ici, c'est parceque l'équipe n'existe pas encore
+                    OK = true;
+                }
+                
+                
 
                 if (OK)
                 {
