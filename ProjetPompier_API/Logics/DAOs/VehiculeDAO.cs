@@ -258,8 +258,7 @@ namespace ProjetPompier_API.Logics.DAOs
         public void SupprimerVehicule(string nomCaserne, string vinVehicule)
         {
             SqlCommand command = new SqlCommand(" DELETE FROM T_Vehicules " +
-                                                "INNER JOIN T_Casernes ON T_Casernes.IdCaserne = T_Vehicules.IdCaserne " +
-                                                " WHERE Vin = @vin AND T_Casernes.Nom = @nomCaserne ", connexion);
+                                                " WHERE Vin = @vin AND IdCaserne = (SELECT IdCaserne FROM T_Casernes WHERE Nom = @nomCaserne) ", connexion);
 
             SqlParameter vinParam = new SqlParameter("@vin", SqlDbType.VarChar, 17);
             SqlParameter nomCaserneParam = new SqlParameter("@nomCaserne", SqlDbType.VarChar, 100);
