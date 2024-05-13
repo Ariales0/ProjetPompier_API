@@ -293,8 +293,7 @@ namespace ProjetPompier_API.Logics.DAOs
         public void ViderListeVehicules(string nomCaserne)
         {
             SqlCommand command = new SqlCommand(" DELETE FROM T_Vehicules " +
-                                                "INNER JOIN T_Casernes ON T_Casernes.IdCaserne = T_Vehicules.IdCaserne " +
-                                                "T_Casernes.Nom = @nomCaserne ", connexion);
+                                                "IdCaserne = (SELECT IdCaserne FROM T_Casernes WHERE Nom = @nomCaserne)  ", connexion);
 
             SqlParameter nomCaserneParam = new SqlParameter("@nomCaserne", SqlDbType.Int);
             nomCaserneParam.Value = nomCaserne;
