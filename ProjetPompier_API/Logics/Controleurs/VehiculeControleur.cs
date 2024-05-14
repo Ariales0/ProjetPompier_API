@@ -93,14 +93,31 @@ namespace ProjetPompier_API.Logics.Controleurs
         /// <exception cref="Exception"></exception>
         public void AjouterVehicule(string nomCaserne, VehiculeDTO vehicule)
         {
+            bool OK = false;
             try
             {
-                VehiculeRepository.Instance.AjouterVehicule(nomCaserne, vehicule);
+                VehiculeRepository.Instance.ObtenirVehicule(nomCaserne, vehicule.Vin);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception(ex.Message);
+                OK = true;
             }
+            if (OK)
+            {
+                try
+                {
+                    VehiculeRepository.Instance.AjouterVehicule(nomCaserne, vehicule);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+            }
+            else
+            {
+                throw new Exception("Un véhicule existe déjà pour ce code dans la caserne.");
+            }
+            
         }
 
         /// <summary>

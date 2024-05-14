@@ -1,9 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
 using ProjetPompier_API.Logics.Controleurs;
 using ProjetPompier_API.Logics.DTOs;
 using ProjetPompier_API.Logics.Models;
-using ProjetPompier_API.Controllers;
-using ProjetPompier_API.DTOs;
 
 /// <summary>
 /// Namespace pour la classe de test unitaire
@@ -129,7 +126,7 @@ namespace TestUnitaireCaserneModele
             int nouveauNombreDeVehicule = nouvelleListeVehicule.Count;
 
             VehiculeControleur.Instance.SupprimerVehicule("Caserne Test", "Test");
-            Assert.Equal(nombreDeVehicule+1, nouveauNombreDeVehicule);
+            Assert.Equal(nombreDeVehicule + 1, nouveauNombreDeVehicule);
         }
 
     }

@@ -256,7 +256,6 @@ namespace ProjetPompier_API.Logics.DAOs
                 foreach (PompierDTO pompier in equipeAjouter.ListePompierEquipe)
                 {
                     SqlCommand command = new SqlCommand(requete, connexion);
-
                     SqlParameter matriculeCapitaineParam = new SqlParameter("@matriculeCapitaine", SqlDbType.Int);
                     SqlParameter matriculePompierAjoutParam = new SqlParameter("@matriculePompier", SqlDbType.Int);
                     SqlParameter nomCaserneParam = new SqlParameter("@nomCaserne", SqlDbType.VarChar, 100);
